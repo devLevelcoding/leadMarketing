@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id             Int         @id @default(autoincrement())
+  name           String
+  category       String?
+  searchCategory String?     @map("search_category")
+  address        String?
+  phone          String?
+  website        String?
+  rating         String?
+  reviewCount    String?     @map("review_count")
+  city           String?
+  country        String?
+  mapsUrl        String?     @map("maps_url")
+  scrapedAt      String?     @map("scraped_at")
+  domain         String      // crm | no_website | health | b2b | tourism
+  phase          Int         @default(1) // 1=Europe | 2=Dubai/UAE | 3=USA
+  state          String?                 // US state (phase 3 only)
+  status         String      @default("NEW")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+
+  notes       Note[]
+  emailLogs   EmailLog[]
+  warmupLeads WarmupBatchLead[]
+
+  @@map("leads")
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  leadId    Int      @map("lead_id")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("notes")
+}
+
+model EmailTemplate {
+  id        Int      @id @default(autoincrement())
+  name      String
+  language  String   @default("en") // en | da | no | nl | sv | et | de | fr | is
+  domain    String?  // which lead type (null = all)
+  subject   String
+  body      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  emailLogs EmailLog[]
+
+  @@map("email_templates")
+}
+
+model EmailLog {
+  id         Int         @id @default(autoincrement())
+  leadId     Int         @map("lead_id")
+  templateId Int?        @map("template_id")
+  sentAt     DateTime    @default(now()) @map("sent_at")
+  subject    String
+  body       String
+  status     String      @default("SENT")
+  notes      String?
+
+  lead     Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  template EmailTemplate? @relation(fields: [templateId], references: [id])
+
+  @@map("email_logs")
+}
+
+model WarmupPlan {
+  id        Int           @id @default(autoincrement())
+  phase     Int           @default(0) // 0=all | 1=Europe | 2=Dubai | 3=USA
+  startDate DateTime      @map("start_date")
+  totalDays Int           @default(130) @map("total_days")
+  createdAt DateTime      @default(now()) @map("created_at")
+  batches   WarmupBatch[]
+
+  @@map("warmup_plans")
+}
+
+model WarmupBatch {
+  id        Int               @id @default(autoincrement())
+  planId    Int               @map("plan_id")
+  dayNumber Int               @map("day_number")
+  date      DateTime
+  quota     Int
+  plan      WarmupPlan        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  leads     WarmupBatchLead[]
+
+  @@map("warmup_batches")
+}
+
+model WarmupBatchLead {
+  id      Int       @id @default(autoincrement())
+  batchId Int       @map("batch_id")
+  leadId  Int       @map("lead_id")
+  status  String    @default("PENDING")
+  sentAt  DateTime? @map("sent_at")
+
+  batch WarmupBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  lead  Lead        @relation(fields: [leadId], references: [id])
+
+  @@unique([batchId, leadId])
+  @@map("warmup_batch_leads")
+}

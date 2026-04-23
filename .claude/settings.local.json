@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pg_isready)",
+      "Bash(psql -U postgres -l)",
+      "Bash(psql --version)",
+      "Bash(brew services *)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl -s http://localhost:3000/api/warmup)",
+      "Bash(curl -s -X POST http://localhost:3000/api/warmup -H 'Content-Type: application/json' -d '{\"startDate\":\"__CMDSUB_OUTPUT__\"}')",
+      "Bash(curl -s http://localhost:3000/api/warmup/today)",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s -X DELETE http://localhost:3000/api/warmup)",
+      "Bash(curl -s http://localhost:3001/api/templates)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'{len\\(d\\)} templates'\\); [print\\(f'  [{t[\\\\\"domain\\\\\"] or \\\\\"generic\\\\\"}] {t[\\\\\"name\\\\\"]}'\\) for t in d]\")",
+      "Bash(curl -s http://localhost:3000/api/templates)",
+      "Bash(python3 *)",
+      "Bash(awk '{print $NF}')",
+      "Bash(sqlite3 *)",
+      "Bash(chmod +x *)"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "/page": "app/page.js",
+  "/api/campaign/route": "app/api/campaign/route.js",
+  "/api/stats/route": "app/api/stats/route.js",
+  "/warmup/page": "app/warmup/page.js",
+  "/api/warmup/route": "app/api/warmup/route.js",
+  "/api/warmup/today/route": "app/api/warmup/today/route.js",
+  "/api/templates/route": "app/api/templates/route.js",
+  "/api/warmup/history/route": "app/api/warmup/history/route.js"
+}
