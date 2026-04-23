@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     ? { phase: parseInt(phaseParam) }
     : {};
 
-  const [total, byDomain, byStatus, byCountry, byPhase] = await Promise.all([
+  const [total, byDomain, byStatus, byCountry, byPhase, byCountryContacted] = await Promise.all([
     prisma.lead.count({ where }),
     prisma.lead.groupBy({ by: ["domain"], where, _count: { id: true } }),
     prisma.lead.groupBy({ by: ["status"], where, _count: { id: true } }),
@@ -23,7 +23,22 @@ export async function GET(req: Request) {
       _count: { id: true },
       orderBy: { phase: "asc" },
     }),
+    prisma.lead.groupBy({
+      by: ["country"],
+      where: { ...where, status: { not: "NEW" } },
+      _count: { id: true },
+    }),
   ]);
 
-  return NextResponse.json({ total, byDomain, byStatus, byCountry, byPhase });
+  const contactedByCountry: Record<string, number> = {};
+  for (const row of byCountryContacted) {
+    contactedByCountry[row.country ?? ""] = row._count.id;
+  }
+
+  const byCountryWithProgress = byCountry.map(c => ({
+    ...c,
+    contacted: contactedByCountry[c.country ?? ""] ?? 0,
+  }));
+
+  return NextResponse.json({ total, byDomain, byStatus, byCountry: byCountryWithProgress, byPhase });
 }

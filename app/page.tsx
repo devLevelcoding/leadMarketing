@@ -36,7 +36,7 @@ type Stats = {
   total: number;
   byDomain: { domain: string; _count: { id: number } }[];
   byStatus: { status: string; _count: { id: number } }[];
-  byCountry: { country: string; _count: { id: number } }[];
+  byCountry: { country: string; _count: { id: number }; contacted: number }[];
   byPhase:   { phase: number; _count: { id: number } }[];
 };
 
@@ -136,13 +136,34 @@ function PhaseTabContent({ phase, tabColor }: { phase: string; tabColor: string 
         {/* Top Countries */}
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <h2 className="font-semibold text-gray-700 mb-4">Top Countries / Regions</h2>
-          <div className="space-y-2">
-            {stats.byCountry.map(c => (
-              <div key={c.country} className="flex justify-between text-sm">
-                <span>{c.country || "—"}</span>
-                <span className="font-medium text-blue-600">{c._count.id.toLocaleString()}</span>
-              </div>
-            ))}
+          <div className="space-y-3">
+            {stats.byCountry.map(c => {
+              const total = c._count.id;
+              const contacted = c.contacted;
+              const remaining = total - contacted;
+              const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
+              return (
+                <div key={c.country}>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-800 font-medium">{c.country || "—"}</span>
+                    <span className="tabular-nums flex items-center gap-1">
+                      <span className="text-blue-500 font-bold">{contacted}</span>
+                      <span className="text-gray-600">/</span>
+                      <span className="text-gray-600 font-bold">{total}</span>
+                      {remaining > 0 && (
+                        <span className="text-gray-600 font-bold ml-1">({remaining} left)</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-blue-500 rounded-full transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

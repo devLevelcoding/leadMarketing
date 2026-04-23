@@ -56,6 +56,28 @@ const WARMUP_SCHEDULE = [
   { range: "Days 22–30", quota: 25, perDomain: 5 },
 ];
 
+const COUNTRY_CODE: Record<string, string> = {
+  "Albania": "AL", "Andorra": "AD", "Austria": "AT", "Belarus": "BY", "Belgium": "BE",
+  "Bosnia and Herzegovina": "BA", "Bulgaria": "BG", "Croatia": "HR", "Cyprus": "CY",
+  "Czech Republic": "CZ", "Denmark": "DK", "Estonia": "EE", "Finland": "FI", "France": "FR",
+  "Germany": "DE", "Greece": "GR", "Hungary": "HU", "Iceland": "IS", "Ireland": "IE",
+  "Italy": "IT", "Kosovo": "XK", "Latvia": "LV", "Liechtenstein": "LI", "Lithuania": "LT",
+  "Luxembourg": "LU", "Malta": "MT", "Moldova": "MD", "Monaco": "MC", "Montenegro": "ME",
+  "Netherlands": "NL", "North Macedonia": "MK", "Norway": "NO", "Poland": "PL",
+  "Portugal": "PT", "Romania": "RO", "San Marino": "SM", "Serbia": "RS", "Slovakia": "SK",
+  "Slovenia": "SI", "Spain": "ES", "Sweden": "SE", "Switzerland": "CH", "Ukraine": "UA",
+  "United Kingdom": "GB", "Vatican City": "VA",
+  "UAE": "AE", "United Arab Emirates": "AE", "Dubai": "AE",
+  "United States": "US", "USA": "US",
+};
+
+function countryFlag(country: string | null): string {
+  if (!country) return "";
+  const code = COUNTRY_CODE[country];
+  if (!code) return "";
+  return [...code.toUpperCase()].map(c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65)).join("");
+}
+
 function fmtDate(d: string | Date) {
   return new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
@@ -118,12 +140,13 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
   const [loading, setLoading]   = useState(true);
   const [initiating, setInitiating] = useState(false);
   const [startDate, setStartDate]   = useState(new Date().toISOString().slice(0, 10));
-  const [activeTab, setActiveTab]   = useState<"today" | "plan" | "history" | "next5" | "next10">("today");
+  const [activeTab, setActiveTab]   = useState<"today" | "plan" | "plan90" | "history" | "next5" | "next10">("today");
 
   const [todayBatch, setTodayBatch]   = useState<TodayBatch | null>(null);
   const [todayLoading, setTodayLoading] = useState(false);
   const [showAdvanceModal, setShowAdvanceModal] = useState(false);
   const [advancing, setAdvancing]     = useState(false);
+  const [todayPage, setTodayPage]     = useState(1);
   const initialBatchId = useRef<number | null | undefined>(undefined);
   const [historyBatches, setHistoryBatches] = useState<HistoryBatch[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -339,7 +362,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
         ))}
       </div>
 
-      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} />}
+      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} />}
       {activeTab === "next5"   && <UpcomingTab batches={upcoming5}  loading={upcoming5Loading}  days={5}  />}
       {activeTab === "next10"  && <UpcomingTab batches={upcoming10} loading={upcoming10Loading} days={10} />}
 {activeTab === "plan"    && <MonthPlanTab batches={plan.batches.slice(0, 30)} />}
@@ -614,21 +637,56 @@ function MonthPlanTab({ batches }: { batches: BatchSummary[] }) {
 
 // ─── Today Tab ────────────────────────────────────────────────────────────────
 
-function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal }: {
+function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage }: {
   batch: TodayBatch | null; loading: boolean;
   updating: Record<number, boolean>; onStatus: (id: number, s: string) => void;
   templates: Template[]; showAdvanceModal: boolean; advancing: boolean;
   onOpenModal: () => void; onAdvance: () => void; onCloseModal: () => void;
+  page: number; setPage: (p: number) => void;
 }) {
+  const PAGE_SIZE = 10;
+
   const allDone = !!batch && batch.leads.length > 0 &&
     batch.leads.every(l => l.status === "SENT" || l.status === "SKIPPED");
 
   if (loading) return <p className="text-gray-400 text-sm py-8 text-center">Loading…</p>;
   if (!batch) return (
-    <div className="bg-white border rounded-xl p-8 text-center text-gray-400">
-      <p className="text-lg font-medium mb-1">No leads scheduled for today</p>
-      <p className="text-sm">Check back on your plan start date or view the Month Plan tab.</p>
-    </div>
+    <>
+      {showAdvanceModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center space-y-4">
+            <div className="text-4xl">⏭</div>
+            <h2 className="text-xl font-bold text-gray-800">Skip to next day?</h2>
+            <p className="text-gray-500 text-sm">No leads are scheduled for today. Advance the plan to the next day?</p>
+            <div className="flex gap-3 justify-center pt-2">
+              <button
+                onClick={onCloseModal}
+                className="px-5 py-2 rounded-lg border text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onAdvance}
+                disabled={advancing}
+                className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition"
+              >
+                {advancing ? "Advancing…" : "Yes, next day →"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="bg-white border rounded-xl p-8 text-center text-gray-400">
+        <p className="text-lg font-medium mb-1">No leads scheduled for today</p>
+        <p className="text-sm mb-4">Check back on your plan start date or view the Month Plan tab.</p>
+        <button
+          onClick={onOpenModal}
+          className="px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
+        >
+          Skip to next day →
+        </button>
+      </div>
+    </>
   );
 
   const sent    = batch.leads.filter(l => l.status === "SENT").length;
@@ -638,6 +696,8 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
     const order: Record<string, number> = { PENDING: 0, SKIPPED: 1, SENT: 2 };
     return (order[a.status] ?? 0) - (order[b.status] ?? 0);
   });
+  const totalPages = Math.ceil(sortedLeads.length / PAGE_SIZE);
+  const paginated  = sortedLeads.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div className="space-y-4">
@@ -699,11 +759,49 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
             </tr>
           </thead>
           <tbody className="divide-y">
-            {sortedLeads.map((bl, idx) => (
-              <LeadRow key={bl.id} index={idx + 1} bl={bl} batchDate={batch.date} busy={!!updating[bl.id]} onStatus={onStatus} templates={templates} />
+            {paginated.map((bl, idx) => (
+              <LeadRow key={bl.id} index={(page - 1) * PAGE_SIZE + idx + 1} bl={bl} batchDate={batch.date} busy={!!updating[bl.id]} onStatus={onStatus} templates={templates} />
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex items-center justify-center gap-1 pt-2">
+        <button
+          onClick={() => { if (page > 1) setPage(page - 1); }}
+          disabled={page === 1}
+          className="px-3 py-1.5 rounded border text-sm font-medium bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
+        >
+          ← Prev
+        </button>
+
+        {(() => {
+          const VISIBLE = 5;
+          let start = Math.max(1, page - Math.floor(VISIBLE / 2));
+          const end = Math.min(totalPages, start + VISIBLE - 1);
+          start = Math.max(1, end - VISIBLE + 1);
+          return Array.from({ length: end - start + 1 }, (_, i) => start + i).map(n => (
+            <button
+              key={n}
+              onClick={() => setPage(n)}
+              className={`w-9 h-9 rounded border text-sm font-medium transition ${
+                n === page
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              {n}
+            </button>
+          ));
+        })()}
+
+        <button
+          onClick={() => { if (page < totalPages) setPage(page + 1); }}
+          disabled={page === totalPages}
+          className="px-3 py-1.5 rounded border text-sm font-medium bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition"
+        >
+          Next →
+        </button>
       </div>
     </div>
   );
@@ -732,8 +830,31 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
           {DOMAIN_LABEL[lead.domain] ?? lead.domain}
         </span>
       </td>
-      <td className="px-4 py-3 text-gray-600 text-xs">{[lead.city, lead.country].filter(Boolean).join(", ") || "—"}</td>
-      <td className="px-4 py-3 text-gray-600 text-xs">{lead.phone || "—"}</td>
+      <td className="px-4 py-3 text-gray-600 text-xs">
+        <span className="flex items-center gap-1">
+          {lead.country && <span className="text-base leading-none">{countryFlag(lead.country)}</span>}
+          <span>{[lead.city, lead.country].filter(Boolean).join(", ") || "—"}</span>
+        </span>
+      </td>
+      <td className="px-4 py-3 text-gray-600 text-xs">
+        <div className="flex items-center gap-1.5">
+          <span>{lead.phone || "—"}</span>
+          {lead.phone && !lead.website && (
+            <a
+              href={`https://wa.me/${lead.phone.replace(/[\s\-().]/g, "")}`}
+              target="_blank"
+              rel="noreferrer"
+              title="Send WhatsApp message"
+              className="text-green-500 hover:text-green-600 transition flex-shrink-0"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.122 1.523 5.854L.057 23.527a.75.75 0 0 0 .916.916l5.673-1.466A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 0 1-4.945-1.355l-.355-.21-3.668.948.968-3.558-.23-.368A9.699 9.699 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+              </svg>
+            </a>
+          )}
+        </div>
+      </td>
       <td className="px-4 py-3 text-xs max-w-[140px] truncate">
         {lead.website
           ? <a href={lead.website} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">{lead.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}</a>
@@ -753,6 +874,9 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
         <div className="flex gap-1.5 flex-wrap items-center">
           <CopyButton lead={lead} templates={templates} />
           <CopyLeadDataButton lead={lead} batchDate={batchDate} />
+          {lead.phone && !lead.website && (
+            <CopyPhoneButton phone={lead.phone} />
+          )}
           {bl.status === "PENDING" && (
             <>
               <button disabled={busy} onClick={() => onStatus(bl.id, "SENT")} className="bg-green-600 text-white text-xs px-2.5 py-1 rounded hover:bg-green-700 disabled:opacity-40 transition">Mark Sent</button>
@@ -989,6 +1113,20 @@ function CopyButton({ lead, templates }: { lead: Lead; templates: Template[] }) 
         </div>
       )}
     </div>
+  );
+}
+
+function CopyPhoneButton({ phone }: { phone: string }) {
+  const [copied, setCopied] = useState(false);
+  function copy() {
+    navigator.clipboard.writeText(phone);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+  return (
+    <button onClick={copy} className="bg-teal-100 text-teal-700 text-xs px-2.5 py-1 rounded hover:bg-teal-200 transition font-medium">
+      {copied ? "Copied!" : "Copy Phone"}
+    </button>
   );
 }
 

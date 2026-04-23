@@ -40,5 +40,25 @@ export async function GET(req: NextRequest) {
       include: batchInclude,
     }));
 
+  // Reorder leads round-robin by country for diversity (1 per country before repeating)
+  if (batch) {
+    const groups = new Map<string, typeof batch.leads>();
+    for (const bl of batch.leads) {
+      const key = bl.lead.country ?? "";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key)!.push(bl);
+    }
+    const interleaved: typeof batch.leads = [];
+    const queues = [...groups.values()];
+    let i = 0;
+    while (interleaved.length < batch.leads.length) {
+      const q = queues[i % queues.length];
+      if (q.length) interleaved.push(q.shift()!);
+      i++;
+      if (i > queues.length * 10000) break; // safety
+    }
+    (batch as any).leads = interleaved;
+  }
+
   return NextResponse.json({ batch });
 }

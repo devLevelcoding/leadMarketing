@@ -16,11 +16,11 @@ const NAV = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body>
         <div className="min-h-screen flex flex-col">
           {/* Top nav */}
-          <header className="bg-blue-700 text-white shadow">
+          <header className="bg-gray-900 border-b border-gray-800 text-white shadow">
             <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
               <div className="flex items-center gap-8">
                 <span className="font-bold text-lg tracking-tight">

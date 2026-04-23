@@ -91,17 +91,32 @@ export async function POST(req: NextRequest) {
   const startDate = body.startDate ? new Date(body.startDate) : new Date();
   startDate.setHours(0, 0, 0, 0);
 
-  // Load leads per domain (filtered by phase if not 0)
+  // Load leads per domain, interleaved round-robin by country for diversity
   const leadsByDomain: Record<string, number[]> = {};
   for (const domain of DOMAINS) {
     const where: { domain: string; phase?: number } = { domain };
     if (phase !== 0) where.phase = phase;
     const leads = await prisma.lead.findMany({
       where,
-      select: { id: true },
+      select: { id: true, country: true },
       orderBy: { id: "asc" },
     });
-    leadsByDomain[domain] = leads.map(l => l.id);
+    // Group by country, then interleave so each batch gets diverse countries
+    const byCountry = new Map<string, number[]>();
+    for (const l of leads) {
+      const key = l.country ?? "__unknown__";
+      if (!byCountry.has(key)) byCountry.set(key, []);
+      byCountry.get(key)!.push(l.id);
+    }
+    const queues = [...byCountry.values()];
+    const interleaved: number[] = [];
+    let i = 0;
+    while (interleaved.length < leads.length) {
+      const q = queues[i % queues.length];
+      if (q.length) interleaved.push(q.shift()!);
+      i++;
+    }
+    leadsByDomain[domain] = interleaved;
   }
 
   const plan = await prisma.warmupPlan.create({
