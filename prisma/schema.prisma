@@ -28,9 +28,10 @@ model Lead {
   createdAt      DateTime    @default(now()) @map("created_at")
   updatedAt      DateTime    @updatedAt @map("updated_at")
 
-  notes       Note[]
-  emailLogs   EmailLog[]
-  warmupLeads WarmupBatchLead[]
+  notes        Note[]
+  emailLogs    EmailLog[]
+  warmupLeads  WarmupBatchLead[]
+  whatsappLeads WhatsAppBatchLead[]
 
   @@map("leads")
 }
@@ -112,4 +113,41 @@ model WarmupBatchLead {
 
   @@unique([batchId, leadId])
   @@map("warmup_batch_leads")
+}
+
+model WhatsAppPlan {
+  id        Int              @id @default(autoincrement())
+  phase     Int              @default(1) // 1=Europe | 2=Dubai | 3=USA
+  startDate DateTime         @map("start_date")
+  totalDays Int              @default(30) @map("total_days")
+  createdAt DateTime         @default(now()) @map("created_at")
+  batches   WhatsAppBatch[]
+
+  @@map("whatsapp_plans")
+}
+
+model WhatsAppBatch {
+  id        Int                 @id @default(autoincrement())
+  planId    Int                 @map("plan_id")
+  dayNumber Int                 @map("day_number")
+  date      DateTime
+  quota     Int
+  plan      WhatsAppPlan        @relation(fields: [planId], references: [id], onDelete: Cascade)
+  leads     WhatsAppBatchLead[]
+
+  @@map("whatsapp_batches")
+}
+
+model WhatsAppBatchLead {
+  id      Int       @id @default(autoincrement())
+  batchId Int       @map("batch_id")
+  leadId  Int       @map("lead_id")
+  status  String    @default("PENDING") // PENDING | SENT | NO_ANSWER | REPLIED
+  sentAt  DateTime? @map("sent_at")
+
+  batch WhatsAppBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  lead  Lead          @relation(fields: [leadId], references: [id])
+
+  @@unique([batchId, leadId])
+  @@map("whatsapp_batch_leads")
 }
