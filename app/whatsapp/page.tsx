@@ -6,7 +6,7 @@ import Link from "next/link";
 
 type WaBatchSummary = {
   id: number; dayNumber: number; date: string; quota: number;
-  sent: number; noAnswer: number; replied: number; total: number;
+  sent: number; noAnswer: number; replied: number; skipped: number; total: number;
   isToday: boolean; isPast: boolean;
 };
 
@@ -301,15 +301,17 @@ function PhaseWa({ phase }: { phase: number }) {
               <span>Today</span>
               <span>
                 {todayBatchSummary.sent} sent ·{" "}
-                {todayBatchSummary.noAnswer} no answer ·{" "}
                 {todayBatchSummary.replied} replied ·{" "}
-                {todayBatchSummary.quota - todayBatchSummary.sent - todayBatchSummary.noAnswer - todayBatchSummary.replied} pending
+                {todayBatchSummary.noAnswer} no answer ·{" "}
+                {todayBatchSummary.skipped} skipped ·{" "}
+                {todayBatchSummary.quota - todayBatchSummary.sent - todayBatchSummary.noAnswer - todayBatchSummary.replied - todayBatchSummary.skipped} pending
               </span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden flex">
-              <div className="h-2.5 bg-green-500" style={{ width: `${(todayBatchSummary.sent / todayBatchSummary.quota) * 100}%` }} />
-              <div className="h-2.5 bg-purple-400" style={{ width: `${(todayBatchSummary.replied / todayBatchSummary.quota) * 100}%` }} />
+              <div className="h-2.5 bg-green-500"  style={{ width: `${(todayBatchSummary.sent    / todayBatchSummary.quota) * 100}%` }} />
+              <div className="h-2.5 bg-purple-400" style={{ width: `${(todayBatchSummary.replied  / todayBatchSummary.quota) * 100}%` }} />
               <div className="h-2.5 bg-yellow-300" style={{ width: `${(todayBatchSummary.noAnswer / todayBatchSummary.quota) * 100}%` }} />
+              <div className="h-2.5 bg-red-300"    style={{ width: `${(todayBatchSummary.skipped  / todayBatchSummary.quota) * 100}%` }} />
             </div>
           </div>
         )}
@@ -390,10 +392,11 @@ function WaTodayTab({ batch, loading, updating, onStatus, showAdvanceModal, adva
   const sent     = batch.leads.filter(l => l.status === "SENT").length;
   const noAnswer = batch.leads.filter(l => l.status === "NO_ANSWER").length;
   const replied  = batch.leads.filter(l => l.status === "REPLIED").length;
+  const skipped  = batch.leads.filter(l => l.status === "SKIPPED").length;
   const pending  = batch.leads.filter(l => l.status === "PENDING").length;
 
   const sortedLeads = [...batch.leads].sort((a, b) => {
-    const order: Record<string, number> = { PENDING: 0, NO_ANSWER: 1, SENT: 2, REPLIED: 3 };
+    const order: Record<string, number> = { PENDING: 0, NO_ANSWER: 1, SENT: 2, REPLIED: 3, SKIPPED: 4 };
     return (order[a.status] ?? 0) - (order[b.status] ?? 0);
   });
   const totalPages = Math.ceil(sortedLeads.length / PAGE_SIZE);
@@ -410,6 +413,7 @@ function WaTodayTab({ batch, loading, updating, onStatus, showAdvanceModal, adva
           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">✓ {sent} sent</span>
           <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">↩ {replied} replied</span>
           <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-medium">— {noAnswer} no answer</span>
+          <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full font-medium">✕ {skipped} skipped</span>
           <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">○ {pending} pending</span>
         </div>
         {allDone && (
@@ -496,6 +500,7 @@ function WaLeadRow({ index, bl, busy, onStatus }: {
     bl.status === "REPLIED"   ? "bg-purple-50 hover:bg-purple-100" :
     bl.status === "SENT"      ? "bg-green-50 hover:bg-green-100" :
     bl.status === "NO_ANSWER" ? "bg-yellow-50 hover:bg-yellow-100" :
+    bl.status === "SKIPPED"   ? "bg-red-50 hover:bg-red-100" :
                                 "hover:bg-green-50";
 
   return (
@@ -548,6 +553,11 @@ function WaLeadRow({ index, bl, busy, onStatus }: {
                 className="bg-yellow-100 text-yellow-700 text-xs px-2.5 py-1 rounded hover:bg-yellow-200 disabled:opacity-40 transition">
                 No Answer
               </button>
+              <button disabled={busy} onClick={() => onStatus(bl.id, "SKIPPED")}
+                className="bg-red-100 text-red-600 text-xs px-2.5 py-1 rounded hover:bg-red-200 disabled:opacity-40 transition"
+                title="Phone not working / wrong number">
+                Skip
+              </button>
             </>
           )}
           {bl.status === "SENT" && (
@@ -586,6 +596,7 @@ function WaHistoryTab({ batches, loading }: { batches: WaHistoryBatch[]; loading
         const sent     = batch.leads.filter(l => l.status === "SENT").length;
         const noAnswer = batch.leads.filter(l => l.status === "NO_ANSWER").length;
         const replied  = batch.leads.filter(l => l.status === "REPLIED").length;
+        const skipped  = batch.leads.filter(l => l.status === "SKIPPED").length;
         const pending  = batch.leads.filter(l => l.status === "PENDING").length;
         const isOpen   = expandedDay === batch.id;
 
@@ -604,6 +615,7 @@ function WaHistoryTab({ batches, loading }: { batches: WaHistoryBatch[]; loading
                 <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">{sent} sent</span>
                 {replied  > 0 && <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">{replied} replied</span>}
                 {noAnswer > 0 && <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">{noAnswer} no answer</span>}
+                {skipped  > 0 && <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">{skipped} skipped</span>}
                 {pending  > 0 && <span className="bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-medium">{pending} pending</span>}
                 <span className="text-gray-400 ml-2">{isOpen ? "▲" : "▼"}</span>
               </div>
@@ -692,7 +704,8 @@ function WaPlanTab({ batches }: { batches: WaBatchSummary[] }) {
                 {(b.isPast || b.isToday) ? (
                   <p className="text-xs mt-0.5">
                     <span className="text-green-600 font-medium">{b.sent}</span>
-                    {b.replied > 0 && <span className="text-purple-600 font-medium ml-0.5">+{b.replied}r</span>}
+                    {b.replied  > 0 && <span className="text-purple-600 font-medium ml-0.5">+{b.replied}r</span>}
+                    {b.skipped  > 0 && <span className="text-red-400 font-medium ml-0.5">-{b.skipped}s</span>}
                     <span className="text-gray-400">/{b.quota}</span>
                   </p>
                 ) : (
@@ -731,6 +744,7 @@ function WaStatusBadge({ status, sentAt }: { status: string; sentAt: string | nu
   if (status === "REPLIED")   return <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-medium">Replied {time}</span>;
   if (status === "SENT")      return <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">Sent {time}</span>;
   if (status === "NO_ANSWER") return <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-medium">No Answer {time}</span>;
+  if (status === "SKIPPED")   return <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded font-medium">Skipped {time}</span>;
   return <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded font-medium">Pending</span>;
 }
 

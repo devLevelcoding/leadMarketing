@@ -347,9 +347,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
           { key: "next5",   label: "Next 5 Days" },
           { key: "next10",  label: "Next 10 Days" },
           { key: "plan",    label: "Month Plan" },
-          { key: "plan",    label: " 3 Month Plan" },
-          { key: "plan90",  label: "90-Day Projection" }, // New Key
-        
+          { key: "plan90",  label: "90-Day Projection" },
           { key: "history", label: "History" },
         ] as const).map(({ key, label }) => (
           <button key={key} onClick={() => setActiveTab(key)}

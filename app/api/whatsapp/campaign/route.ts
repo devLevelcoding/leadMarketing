@@ -45,6 +45,7 @@ export async function GET(req: NextRequest) {
         sent:      b.leads.filter(l => l.status === "SENT").length,
         noAnswer:  b.leads.filter(l => l.status === "NO_ANSWER").length,
         replied:   b.leads.filter(l => l.status === "REPLIED").length,
+        skipped:   b.leads.filter(l => l.status === "SKIPPED").length,
         total:     b.leads.length,
         isToday:   bDate >= start && bDate < end,
         isPast:    bDate < start,
