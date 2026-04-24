@@ -97,7 +97,7 @@ function interpolate(text: string, lead: Lead): string {
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
 export default function WarmupPage() {
-  const [activePhase, setActivePhase] = useState(0);
+  const [activePhase, setActivePhase] = useState(1);
   const [templates, setTemplates] = useState<Template[]>([]);
 
   useEffect(() => {
@@ -232,7 +232,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
     });
     // Update locally — never re-fetch batch on status change so grid stays stable
     setTodayBatch(prev =>
-      prev ? { ...prev, leads: prev.leads.map(l => l.id === batchLeadId ? { ...l, status } : l) } : prev
+      prev ? { ...prev, leads: prev.leads.map(l => l.id === batchLeadId ? { ...l, status, sentAt: status === "SENT" ? new Date().toISOString() : l.sentAt } : l) } : prev
     );
     const refreshes: Promise<void>[] = [fetchPlan()];
     if (activeTab === "history") refreshes.push(fetchHistory());
@@ -644,7 +644,7 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
   onOpenModal: () => void; onAdvance: () => void; onCloseModal: () => void;
   page: number; setPage: (p: number) => void;
 }) {
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = typeof window !== "undefined" ? parseInt(localStorage.getItem("warmup_pageSize") || "10") : 10;
 
   const allDone = !!batch && batch.leads.length > 0 &&
     batch.leads.every(l => l.status === "SENT" || l.status === "SKIPPED");
@@ -872,6 +872,7 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
       <td className="px-4 py-3"><WarmupStatusBadge status={bl.status} sentAt={bl.sentAt} /></td>
       <td className="px-4 py-3">
         <div className="flex gap-1.5 flex-wrap items-center">
+          <GenerateEmailButton lead={lead} />
           <CopyButton lead={lead} templates={templates} />
           <CopyLeadDataButton lead={lead} batchDate={batchDate} />
           {lead.phone && !lead.website && (
@@ -1063,7 +1064,11 @@ function Stat({ label, value }: { label: string; value: string }) {
 }
 
 function WarmupStatusBadge({ status, sentAt }: { status: string; sentAt: string | null }) {
-  if (status === "SENT")    return <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">Sent {sentAt ? fmtDate(sentAt) : ""}</span>;
+  if (status === "SENT") {
+    const time = sentAt ? new Date(sentAt).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : "";
+    const date = sentAt ? fmtDate(sentAt) : "";
+    return <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">Sent {date} {time}</span>;
+  }
   if (status === "SKIPPED") return <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-medium">Skipped</span>;
   return <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded font-medium">Pending</span>;
 }
@@ -1127,6 +1132,117 @@ function CopyPhoneButton({ phone }: { phone: string }) {
     <button onClick={copy} className="bg-teal-100 text-teal-700 text-xs px-2.5 py-1 rounded hover:bg-teal-200 transition font-medium">
       {copied ? "Copied!" : "Copy Phone"}
     </button>
+  );
+}
+
+function buildEmail(lead: Lead): { subject: string; body: string } {
+  const location = [lead.city, lead.country].filter(Boolean).join(", ");
+  const site = lead.website ? lead.website.replace(/^https?:\/\//, "").replace(/\/$/, "") : null;
+
+  const domainIntros: Record<string, { subject: string; p1: string; p2: string }> = {
+    crm: {
+      subject: `Grow your customer base — CRM & Digital Solutions for ${lead.name}`,
+      p1: `We are reaching out to the ${location || "your"} team because ${lead.name} represents exactly the kind of business that benefits most from a modern CRM and digital infrastructure. For a ${lead.category ?? "retail"} business${site ? ` with a presence like ${site}` : ""}, managing customers, automating follow-ups, and building a loyalty programme can directly translate into repeat revenue and stronger brand recognition.`,
+      p2: `We have helped businesses like yours turn one-time customers into loyal regulars through custom CRM solutions, high-speed web platforms, and seamless mobile integrations. Our systems are built to handle high volumes of local and international clients while keeping data secure and the customer journey frictionless.`,
+    },
+    no_website: {
+      subject: `Get online and grow — Web Presence for ${lead.name}`,
+      p1: `We are reaching out to the ${location || "your"} team because ${lead.name} is exactly the kind of local business that could unlock significant new revenue with the right digital presence. In today's market, customers search online before they walk through the door — without a website, you are invisible to a large share of your potential audience.`,
+      p2: `We specialize in building fast, professional websites for local businesses — clean design, mobile-ready, easy to manage. We also handle SEO setup and Google Business optimization so your business shows up when customers in ${lead.city ?? "your area"} are searching for what you offer. Our solutions are affordable, delivered quickly, and built to generate real results from day one.`,
+    },
+    health: {
+      subject: `Digital Growth for Health & Wellness — ${lead.name} | LevelCoding`,
+      p1: `We are reaching out to the ${location || "your"} team because ${lead.name} represents a wonderful opportunity to connect with more clients through a stronger digital presence. For a ${lead.category ?? "wellness"} business${site ? ` like ${site}` : ""}, the online experience — from booking a class to reading about your philosophy — is often the first impression a new client has of your brand.`,
+      p2: `We help health and wellness businesses build seamless booking systems, engaging mobile experiences, and automated client communication flows that reduce no-shows and keep your community engaged. Our platforms are designed to feel as calm and professional as the services you offer, while working hard behind the scenes to grow your client base.`,
+    },
+    b2b: {
+      subject: `Technical Partnership Opportunity — ${lead.name} | LevelCoding`,
+      p1: `We are reaching out to the ${location || "your"} team because ${lead.name} is the kind of established B2B firm that we enjoy partnering with. For a ${lead.category ?? "professional services"} company${site ? ` like ${site}` : ""}, having robust, scalable internal tools and a polished client-facing digital presence is not optional — it is a competitive advantage.`,
+      p2: `We provide end-to-end technical solutions for B2B companies: custom dashboards, client portals, API integrations, and workflow automation. As a European engineering partner based in Romania, we offer the agility of a boutique agency with the technical depth of a larger firm — at a cost structure that makes CFOs happy.`,
+    },
+    tourism: {
+      subject: `More Bookings, Better Experience — Digital Solutions for ${lead.name}`,
+      p1: `We are reaching out to the ${location || "your"} team because ${lead.name} represents exactly the kind of travel and hospitality business that can dramatically grow through smarter digital tools. For a tourism business${site ? ` like ${site}` : ""}, the booking journey — from the first Google search to the confirmation email — must be fast, trustworthy, and beautiful.`,
+      p2: `We specialize in building high-converting booking platforms, multilingual travel websites, and automated guest communication systems for hotels, tour operators, and hospitality brands across Europe. Our solutions are designed to reduce abandoned bookings, increase direct reservations, and build the kind of online reputation that fills your calendar.`,
+    },
+  };
+
+  const d = domainIntros[lead.domain] ?? domainIntros.crm;
+
+  const subject = d.subject;
+  const body = `Dear ${lead.name} Team,
+
+Hello,
+
+My name is Marian Pirvan and I represent LevelCoding, a European IT-services firm based in Romania. We specialize in high-performance web development, mobile solutions, and platform integrations for businesses across Europe.
+
+${d.p1}
+
+${d.p2}
+
+As a European partner, we provide top-tier engineering expertise — spanning Web, Mobile development, and AI-driven insights — offering a highly agile and cost-effective alternative to local agencies. We focus on delivering the technical precision required to support a business with your profile and ambitions.
+
+If you would be interested in discussing how we can support your upcoming digital projects, please see our work and schedule a brief introductory chat here: https://consulting.levelcoding.com/book/3
+
+Best regards,
+
+Marian Pirvan
+LevelCoding
+Phone: +40 746 628 424
+Email: marian@outreach.levelcoding.com
+LinkedIn: marian-pirvan-a182ab95`;
+
+  return { subject, body };
+}
+
+function GenerateEmailButton({ lead }: { lead: Lead }) {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const { subject, body } = buildEmail(lead);
+
+  function copyAll() {
+    navigator.clipboard.writeText(`Subject: ${subject}\n\n${body}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded hover:bg-blue-200 transition font-medium"
+      >
+        Generate Email
+      </button>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b">
+              <h2 className="font-bold text-gray-800">Email Draft — {lead.name}</h2>
+              <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
+            </div>
+            <div className="px-6 py-4 overflow-y-auto flex-1 space-y-3">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Subject</p>
+                <p className="text-sm text-gray-800 bg-gray-50 rounded px-3 py-2">{subject}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Body</p>
+                <pre className="text-sm text-gray-800 bg-gray-50 rounded px-3 py-2 whitespace-pre-wrap font-sans">{body}</pre>
+              </div>
+            </div>
+            <div className="px-6 py-4 border-t flex justify-end gap-2">
+              <button onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg border text-sm text-gray-600 hover:bg-gray-50 transition">Close</button>
+              <button onClick={copyAll} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition">
+                {copied ? "Copied!" : "Copy Full Email"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
