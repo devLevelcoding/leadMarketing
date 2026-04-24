@@ -131,23 +131,27 @@ function PhaseWa({ phase }: { phase: number }) {
   const [historyLoading, setHistoryLoading] = useState(false);
   const [updating, setUpdating]           = useState<Record<number, boolean>>({});
 
+  async function safeJson(r: Response) {
+    try { return await r.json(); } catch { return {}; }
+  }
+
   const fetchPlan = useCallback(async () => {
     setLoading(true);
-    const d = await fetch(`/api/whatsapp/campaign?phase=${phase}`).then(r => r.json());
-    setPlan(d.plan);
+    const d = await fetch(`/api/whatsapp/campaign?phase=${phase}`).then(safeJson);
+    setPlan(d.plan ?? null);
     setLoading(false);
   }, [phase]);
 
   const fetchToday = useCallback(async () => {
     setTodayLoading(true);
-    const d = await fetch(`/api/whatsapp/today?phase=${phase}`).then(r => r.json());
+    const d = await fetch(`/api/whatsapp/today?phase=${phase}`).then(safeJson);
     setTodayBatch(d.batch ?? null);
     setTodayLoading(false);
   }, [phase]);
 
   const fetchHistory = useCallback(async () => {
     setHistoryLoading(true);
-    const d = await fetch(`/api/whatsapp/history?phase=${phase}`).then(r => r.json());
+    const d = await fetch(`/api/whatsapp/history?phase=${phase}`).then(safeJson);
     setHistoryBatches(d.batches || []);
     setHistoryLoading(false);
   }, [phase]);
@@ -169,7 +173,7 @@ function PhaseWa({ phase }: { phase: number }) {
     });
     if (res.ok) { await fetchPlan(); fetchToday(); }
     else {
-      const err = await res.json();
+      const err = await safeJson(res);
       alert(err.error || "Failed to create plan");
     }
     setInitiating(false);

@@ -11,13 +11,17 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
-  const updated = await prisma.whatsAppBatchLead.update({
-    where: { id: parseInt(params.id) },
-    data: {
-      status,
-      sentAt: status !== "PENDING" ? new Date() : null,
-    },
-  });
-
-  return NextResponse.json({ success: true, batchLead: updated });
+  try {
+    const updated = await prisma.whatsAppBatchLead.update({
+      where: { id: parseInt(params.id) },
+      data: {
+        status,
+        sentAt: status !== "PENDING" ? new Date() : null,
+      },
+    });
+    return NextResponse.json({ success: true, batchLead: updated });
+  } catch (e) {
+    console.error("[whatsapp/batch-leads PATCH]", e);
+    return NextResponse.json({ error: String(e) }, { status: 500 });
+  }
 }
