@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push *)",
+      "Bash(npx prisma *)",
+      "Bash(curl -s \"http://localhost:3000/api/warmup?phase=1\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const j=JSON.parse\\(d\\); console.log\\('Plan ID:', j.plan?.id, '| Phase:', j.plan?.phase, '| Start:', j.plan?.startDate, '| Days:', j.plan?.totalDays\\)\")",
+      "Bash(npx tsx *)",
+      "Bash(curl -s \"http://localhost:3000/api/warmup/today?phase=1\")",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const j=JSON.parse\\(d\\);const leads=j.batch?.leads||[];console.log\\('Total leads today:',leads.length\\);const countries=[...new Set\\(leads.map\\(l=>l.lead.country\\)\\)];console.log\\('Countries:',countries.join\\(', '\\)\\);}\\)\")",
+      "Bash(node -e \"process.stdin.resume\\(\\);let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const j=JSON.parse\\(d\\);const leads=j.batch?.leads||[];const countries=[...new Set\\(leads.map\\(l=>l.lead.country\\)\\)];console.log\\('Leads:',leads.length,'| Countries:',countries.join\\(', '\\)\\);}\\);\")",
+      "Bash(node --input-type=module)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

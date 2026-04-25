@@ -5,7 +5,6 @@ const DOMAINS = ["crm", "no_website", "health", "b2b", "tourism"];
 
 function getQuota(workingDay: number): number {
   if (workingDay <= 3)  return 5;
-  if (workingDay <= 7)  return 10;
   if (workingDay <= 14) return 15;
   if (workingDay <= 21) return 20;
   if (workingDay <= 30) return 25;

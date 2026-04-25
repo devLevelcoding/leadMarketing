@@ -48,6 +48,10 @@ export default function LeadsPage() {
   const [sortBy,   setSortBy]   = useState("createdAt");
   const [sortDir,  setSortDir]  = useState("desc");
 
+  // Column-level inline filters (client-side on current page)
+  const [col, setCol] = useState({ name:"", domain:"", category:"", city:"", country:"", status:"", website:"", phone:"" });
+  const setColFilter = (k: keyof typeof col, v: string) => setCol(c => ({ ...c, [k]: v }));
+
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams({
@@ -69,6 +73,18 @@ export default function LeadsPage() {
   useEffect(() => { fetchLeads(); }, [fetchLeads]);
 
   const totalPages = Math.ceil(total / 50);
+
+  const q = (s: string) => s.toLowerCase();
+  const visibleLeads = leads.filter(l =>
+    (!col.name     || q(l.name).includes(q(col.name))) &&
+    (!col.domain   || l.domain === col.domain) &&
+    (!col.category || q(l.category ?? "").includes(q(col.category))) &&
+    (!col.city     || q(l.city ?? "").includes(q(col.city))) &&
+    (!col.country  || q(l.country ?? "").includes(q(col.country))) &&
+    (!col.status   || l.status === col.status) &&
+    (!col.website  || q(l.website ?? "").includes(q(col.website))) &&
+    (!col.phone    || (l.phone ?? "").includes(col.phone))
+  );
 
   function sort(col: string) {
     if (sortBy === col) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -141,16 +157,49 @@ export default function LeadsPage() {
                   ["name","Name"],["domain","Domain"],["category","Category"],
                   ["city","City"],["country","Country"],["status","Status"],
                   ["website","Website"],["phone","Phone"],
-                ].map(([col, label]) => (
+                ].map(([c, label]) => (
                   <th
-                    key={col}
+                    key={c}
                     className="text-left px-4 py-3 font-medium text-gray-600 cursor-pointer hover:text-blue-600"
-                    onClick={() => sort(col)}
+                    onClick={() => sort(c)}
                   >
-                    {label}<SortIcon col={col} />
+                    {label}<SortIcon col={c} />
                   </th>
                 ))}
                 <th className="px-4 py-3 text-gray-400">Activity</th>
+              </tr>
+              <tr className="bg-white border-b">
+                <td className="px-2 py-1.5">
+                  <input value={col.name} onChange={e => setColFilter("name", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td className="px-2 py-1.5">
+                  <select value={col.domain} onChange={e => setColFilter("domain", e.target.value)} className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white">
+                    <option value="">All</option>
+                    {DOMAINS.map(d => <option key={d} value={d}>{DOMAIN_LABELS[d]}</option>)}
+                  </select>
+                </td>
+                <td className="px-2 py-1.5">
+                  <input value={col.category} onChange={e => setColFilter("category", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td className="px-2 py-1.5">
+                  <input value={col.city} onChange={e => setColFilter("city", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td className="px-2 py-1.5">
+                  <input value={col.country} onChange={e => setColFilter("country", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td className="px-2 py-1.5">
+                  <select value={col.status} onChange={e => setColFilter("status", e.target.value)} className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white">
+                    <option value="">All</option>
+                    {STATUSES.map(s => <option key={s} value={s}>{s.replace("_"," ")}</option>)}
+                  </select>
+                </td>
+                <td className="px-2 py-1.5">
+                  <input value={col.website} onChange={e => setColFilter("website", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td className="px-2 py-1.5">
+                  <input value={col.phone} onChange={e => setColFilter("phone", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                </td>
+                <td />
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -158,7 +207,7 @@ export default function LeadsPage() {
                 <tr><td colSpan={9} className="text-center py-12 text-gray-400">Loading…</td></tr>
               ) : leads.length === 0 ? (
                 <tr><td colSpan={9} className="text-center py-12 text-gray-400">No leads found</td></tr>
-              ) : leads.map(lead => (
+              ) : visibleLeads.map(lead => (
                 <tr key={lead.id} className="hover:bg-blue-50 transition-colors">
                   <td className="px-4 py-3">
                     <Link href={`/leads/${lead.id}`} className="font-medium text-blue-700 hover:underline">

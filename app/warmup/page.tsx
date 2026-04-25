@@ -642,7 +642,7 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
   onOpenModal: () => void; onAdvance: () => void; onCloseModal: () => void;
   page: number; setPage: (p: number) => void;
 }) {
-  const PAGE_SIZE = typeof window !== "undefined" ? parseInt(localStorage.getItem("warmup_pageSize") || "10") : 10;
+  const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s && parseInt(s) !== 10 ? parseInt(s) : 15; })();
 
   const allDone = !!batch && batch.leads.length > 0 &&
     batch.leads.every(l => l.status === "SENT" || l.status === "SKIPPED");

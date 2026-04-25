@@ -353,7 +353,9 @@ function WaTodayTab({ batch, loading, updating, onStatus, showAdvanceModal, adva
   onOpenModal: () => void; onAdvance: () => void; onCloseModal: () => void;
   page: number; setPage: (p: number) => void;
 }) {
-  const PAGE_SIZE = typeof window !== "undefined" ? parseInt(localStorage.getItem("warmup_pageSize") || "10") : 10;
+  const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s && parseInt(s) !== 10 ? parseInt(s) : 15; })();
+  const [filters, setFilters] = useState({ name: "", category: "", location: "", phone: "", rating: "", status: "" });
+  const setFilter = (key: keyof typeof filters, val: string) => { setFilters(f => ({ ...f, [key]: val })); setPage(1); };
 
   const AdvanceModal = ({ title, body }: { title: string; body: string }) => (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -399,8 +401,23 @@ function WaTodayTab({ batch, loading, updating, onStatus, showAdvanceModal, adva
     const order: Record<string, number> = { PENDING: 0, NO_ANSWER: 1, SENT: 2, REPLIED: 3, SKIPPED: 4 };
     return (order[a.status] ?? 0) - (order[b.status] ?? 0);
   });
-  const totalPages = Math.ceil(sortedLeads.length / PAGE_SIZE);
-  const paginated  = sortedLeads.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const q = (s: string) => s.toLowerCase();
+  const filteredLeads = sortedLeads.filter(bl => {
+    const l = bl.lead;
+    const loc = [l.city, l.country].filter(Boolean).join(", ");
+    return (
+      (!filters.name     || q(l.name).includes(q(filters.name))) &&
+      (!filters.category || q(l.category ?? "").includes(q(filters.category))) &&
+      (!filters.location || q(loc).includes(q(filters.location))) &&
+      (!filters.phone    || (l.phone ?? "").includes(filters.phone)) &&
+      (!filters.rating   || (l.rating ?? "").includes(filters.rating)) &&
+      (!filters.status   || bl.status === filters.status)
+    );
+  });
+
+  const totalPages = Math.ceil(filteredLeads.length / PAGE_SIZE);
+  const paginated  = filteredLeads.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div className="space-y-4">
@@ -435,6 +452,35 @@ function WaTodayTab({ batch, loading, updating, onStatus, showAdvanceModal, adva
               <th className="text-left px-4 py-3 font-medium text-gray-600 text-xs">Rating</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600 text-xs">Status</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600 text-xs">Actions</th>
+            </tr>
+            <tr className="bg-white border-b">
+              <td />
+              <td className="px-2 py-1.5">
+                <input value={filters.name} onChange={e => setFilter("name", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400" />
+              </td>
+              <td className="px-2 py-1.5">
+                <input value={filters.category} onChange={e => setFilter("category", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400" />
+              </td>
+              <td className="px-2 py-1.5">
+                <input value={filters.location} onChange={e => setFilter("location", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400" />
+              </td>
+              <td className="px-2 py-1.5">
+                <input value={filters.phone} onChange={e => setFilter("phone", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400" />
+              </td>
+              <td className="px-2 py-1.5">
+                <input value={filters.rating} onChange={e => setFilter("rating", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400" />
+              </td>
+              <td className="px-2 py-1.5">
+                <select value={filters.status} onChange={e => setFilter("status", e.target.value)} className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 bg-white">
+                  <option value="">All</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="SENT">Sent</option>
+                  <option value="NO_ANSWER">No Answer</option>
+                  <option value="REPLIED">Replied</option>
+                  <option value="SKIPPED">Skipped</option>
+                </select>
+              </td>
+              <td />
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -542,6 +588,7 @@ function WaLeadRow({ index, bl, busy, onStatus }: {
       <td className="px-4 py-3">
         <div className="flex gap-1.5 flex-wrap items-center">
           {lead.phone && <WaMessageButton lead={lead} />}
+          <WaCopyLeadButton lead={lead} />
           {lead.phone && <CopyPhoneButton phone={lead.phone} />}
           {bl.status === "PENDING" && (
             <>
@@ -746,6 +793,34 @@ function WaStatusBadge({ status, sentAt }: { status: string; sentAt: string | nu
   if (status === "NO_ANSWER") return <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-medium">No Answer {time}</span>;
   if (status === "SKIPPED")   return <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded font-medium">Skipped {time}</span>;
   return <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded font-medium">Pending</span>;
+}
+
+function WaCopyLeadButton({ lead }: { lead: Lead }) {
+  const [copied, setCopied] = useState(false);
+
+  function copy() {
+    const lines = [
+      `Business: ${lead.name}`,
+      lead.category  ? `Category: ${lead.category}` : null,
+      [lead.city, lead.country].filter(Boolean).length
+        ? `Location: ${[lead.city, lead.country].filter(Boolean).join(", ")}`
+        : null,
+      lead.phone  ? `Phone: ${lead.phone}` : null,
+      lead.rating ? `Rating: ${lead.rating}` : null,
+    ].filter(Boolean).join("\n");
+    navigator.clipboard.writeText(lines);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
+
+  return (
+    <button
+      onClick={copy}
+      className="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-1 rounded hover:bg-indigo-200 transition font-medium"
+    >
+      {copied ? "Copied!" : "Copy Lead"}
+    </button>
+  );
 }
 
 function CopyPhoneButton({ phone }: { phone: string }) {

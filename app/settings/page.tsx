@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const DEFAULTS = { pageSize: 10 };
+const DEFAULTS = { pageSize: 15 };
 
 export default function SettingsPage() {
   const [pageSize, setPageSize] = useState(DEFAULTS.pageSize);
