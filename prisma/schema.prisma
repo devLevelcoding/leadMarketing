@@ -28,10 +28,11 @@ model Lead {
   createdAt      DateTime    @default(now()) @map("created_at")
   updatedAt      DateTime    @updatedAt @map("updated_at")
 
-  notes        Note[]
-  emailLogs    EmailLog[]
-  warmupLeads  WarmupBatchLead[]
-  whatsappLeads WhatsAppBatchLead[]
+  notes           Note[]
+  emailLogs       EmailLog[]
+  warmupLeads     WarmupBatchLead[]
+  whatsappLeads   WhatsAppBatchLead[]
+  lighthouseScans LighthouseScan[]
 
   @@map("leads")
 }
@@ -150,4 +151,46 @@ model WhatsAppBatchLead {
 
   @@unique([batchId, leadId])
   @@map("whatsapp_batch_leads")
+}
+
+model LighthouseScan {
+  id        Int      @id @default(autoincrement())
+  leadId    Int      @map("lead_id")
+  url       String
+  scannedAt DateTime @default(now()) @map("scanned_at")
+
+  // Security headers
+  https       Boolean @default(false)
+  hsts        Boolean @default(false)
+  xfo         Boolean @default(false)
+  csp         Boolean @default(false)
+  xcto        Boolean @default(false)
+  xssHeader   Boolean @default(false) @map("xss_header")
+  secScore    Int     @default(0) @map("sec_score")
+
+  // SEO signals
+  hasTitle     Boolean @default(false) @map("has_title")
+  hasMeta      Boolean @default(false) @map("has_meta")
+  hasH1        Boolean @default(false) @map("has_h1")
+  hasCanonical Boolean @default(false) @map("has_canonical")
+  hasOg        Boolean @default(false) @map("has_og")
+  hasRobots    Boolean @default(false) @map("has_robots")
+  hasSitemap   Boolean @default(false) @map("has_sitemap")
+  seoScore     Int     @default(0) @map("seo_score")
+
+  // SEM pixels / tracking
+  hasGa        Boolean @default(false) @map("has_ga")
+  hasGtm       Boolean @default(false) @map("has_gtm")
+  hasFbPixel   Boolean @default(false) @map("has_fb_pixel")
+  hasLinkedIn  Boolean @default(false) @map("has_linkedin")
+  hasSchemaOrg Boolean @default(false) @map("has_schema_org")
+  hasHotjar    Boolean @default(false) @map("has_hotjar")
+  semScore     Int     @default(0) @map("sem_score")
+
+  statusCode Int?    @map("status_code")
+  error      String?
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("lighthouse_scans")
 }
