@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import LighthouseAuditButton from "@/app/components/LighthouseAuditButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -156,6 +157,24 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
   const [upcoming10Loading, setUpcoming10Loading] = useState(false);
   const [updating, setUpdating]     = useState<Record<number, boolean>>({});
 
+  // ── Lighthouse scores keyed by leadId ──────────────────────────────────────
+  type LhScore = { sec: number; seo: number; sem: number };
+  const [lhScores,   setLhScores]   = useState<Record<number, LhScore | null>>({});
+  const [lhScanning, setLhScanning] = useState(false);
+  const [lhProgress, setLhProgress] = useState({ done: 0, total: 0 });
+
+  const fetchLhScores = useCallback(async (leadIds: number[]) => {
+    if (!leadIds.length) return;
+    const res  = await fetch(`/api/lighthouse/scans?leadIds=${leadIds.join(",")}`);
+    const data = await res.json();
+    const map: Record<number, LhScore | null> = {};
+    for (const id of leadIds) map[id] = null;
+    for (const s of data.scans ?? []) {
+      map[s.leadId] = { sec: s.secScore, seo: s.seoScore, sem: s.semScore };
+    }
+    setLhScores(map);
+  }, []);
+
   const fetchPlan = useCallback(async () => {
     setLoading(true);
     const data = await fetch(`/api/warmup?phase=${phase}`).then(r => r.json());
@@ -201,6 +220,67 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
     if (activeTab === "next10")  fetchUpcoming10();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
+
+  // Auto-fetch LH scores whenever today's batch changes
+  useEffect(() => {
+    if (!todayBatch) return;
+    const ids = todayBatch.leads
+      .filter(bl => bl.lead.website)
+      .map(bl => bl.lead.id);
+    fetchLhScores(ids);
+  }, [todayBatch, fetchLhScores]);
+
+  async function runLhScan() {
+    if (!todayBatch) return;
+
+    // Scan exactly the leads visible in today's batch that have websites
+    const batchLeadIds = todayBatch.leads
+      .filter(bl => bl.lead.website)
+      .map(bl => bl.lead.id);
+
+    if (!batchLeadIds.length) return;
+
+    setLhScanning(true);
+    setLhProgress({ done: 0, total: 0 });
+
+    try {
+      const res = await fetch("/api/lighthouse/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadIds: batchLeadIds }),
+      });
+
+      if (!res.body) throw new Error("No response body");
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n\n");
+        buf = lines.pop() ?? "";
+        for (const line of lines) {
+          const raw = line.replace(/^data: /, "").trim();
+          if (!raw) continue;
+          try {
+            const msg = JSON.parse(raw);
+            if (msg.type === "start")    setLhProgress({ done: 0, total: msg.total });
+            if (msg.type === "progress") setLhProgress({ done: msg.done, total: msg.total });
+          } catch { /* skip */ }
+        }
+      }
+    } catch (err) {
+      console.error("Lighthouse scan error:", err);
+    } finally {
+      setLhScanning(false);
+      // Always refresh scores for today's leads after scan finishes or errors
+      const ids = todayBatch.leads.filter(bl => bl.lead.website).map(bl => bl.lead.id);
+      fetchLhScores(ids);
+    }
+  }
 
   async function initPlan() {
     setInitiating(true);
@@ -360,7 +440,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
         ))}
       </div>
 
-      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} />}
+      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} lhScores={lhScores} lhScanning={lhScanning} lhProgress={lhProgress} onRunLhScan={runLhScan} />}
       {activeTab === "next5"   && <UpcomingTab batches={upcoming5}  loading={upcoming5Loading}  days={5}  />}
       {activeTab === "next10"  && <UpcomingTab batches={upcoming10} loading={upcoming10Loading} days={10} />}
 {activeTab === "plan"    && <MonthPlanTab batches={plan.batches.slice(0, 30)} />}
@@ -635,12 +715,17 @@ function MonthPlanTab({ batches }: { batches: BatchSummary[] }) {
 
 // ─── Today Tab ────────────────────────────────────────────────────────────────
 
-function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage }: {
+type LhScore = { sec: number; seo: number; sem: number };
+
+function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage, lhScores, lhScanning, lhProgress, onRunLhScan }: {
   batch: TodayBatch | null; loading: boolean;
   updating: Record<number, boolean>; onStatus: (id: number, s: string) => void;
   templates: Template[]; showAdvanceModal: boolean; advancing: boolean;
   onOpenModal: () => void; onAdvance: () => void; onCloseModal: () => void;
   page: number; setPage: (p: number) => void;
+  lhScores: Record<number, LhScore | null>;
+  lhScanning: boolean; lhProgress: { done: number; total: number };
+  onRunLhScan: () => void;
 }) {
   const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s && parseInt(s) !== 10 ? parseInt(s) : 15; })();
 
@@ -728,6 +813,29 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
         </div>
       )}
 
+      {/* Lighthouse scan button + progress */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <button
+          onClick={onRunLhScan}
+          disabled={lhScanning}
+          className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+        >
+          {lhScanning
+            ? `Scanning… ${lhProgress.done}/${lhProgress.total}`
+            : "Update Lighthouse Scores"}
+        </button>
+        {lhScanning && (
+          <div className="flex-1 max-w-xs">
+            <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-indigo-500 rounded-full transition-all duration-300"
+                style={{ width: lhProgress.total > 0 ? `${Math.round((lhProgress.done / lhProgress.total) * 100)}%` : "0%" }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-sm">
           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">✓ {sent} sent</span>
@@ -751,6 +859,7 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
               <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Phone</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Website</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-600 text-xs">Audit 🔒/🔍/📊</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Email History</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Actions</th>
@@ -758,7 +867,7 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
           </thead>
           <tbody className="divide-y">
             {paginated.map((bl, idx) => (
-              <LeadRow key={bl.id} index={(page - 1) * PAGE_SIZE + idx + 1} bl={bl} batchDate={batch.date} busy={!!updating[bl.id]} onStatus={onStatus} templates={templates} />
+              <LeadRow key={bl.id} index={(page - 1) * PAGE_SIZE + idx + 1} bl={bl} batchDate={batch.date} busy={!!updating[bl.id]} onStatus={onStatus} templates={templates} lhScore={lhScores[bl.lead.id]} />
             ))}
           </tbody>
         </table>
@@ -805,9 +914,10 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
   );
 }
 
-function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
+function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore }: {
   index: number; bl: BatchLead; batchDate: string;
   busy: boolean; onStatus: (id: number, s: string) => void; templates: Template[];
+  lhScore?: LhScore | null;
 }) {
   const lead = bl.lead;
   const lastLog = lead.emailLogs[0];
@@ -859,6 +969,19 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
           : <span className="text-gray-300">—</span>}
       </td>
       <td className="px-4 py-3 text-xs">
+        {lhScore === undefined && lead.website
+          ? <span className="text-gray-300 text-xs">…</span>
+          : lhScore
+            ? <span className="flex items-center gap-1 font-mono text-xs">
+                <span className={lhScore.sec >= 70 ? "text-green-600 font-bold" : lhScore.sec >= 40 ? "text-yellow-600 font-bold" : "text-red-500 font-bold"}>{lhScore.sec}</span>
+                <span className="text-gray-300">/</span>
+                <span className={lhScore.seo >= 70 ? "text-green-600 font-bold" : lhScore.seo >= 40 ? "text-yellow-600 font-bold" : "text-red-500 font-bold"}>{lhScore.seo}</span>
+                <span className="text-gray-300">/</span>
+                <span className={lhScore.sem >= 70 ? "text-green-600 font-bold" : lhScore.sem >= 40 ? "text-yellow-600 font-bold" : "text-red-500 font-bold"}>{lhScore.sem}</span>
+              </span>
+            : <span className="text-gray-300">—</span>}
+      </td>
+      <td className="px-4 py-3 text-xs">
         {lastLog ? (
           <div>
             <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${emailStatusColor(lastLog.status)}`}>{lastLog.status}</span>
@@ -870,9 +993,10 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates }: {
       <td className="px-4 py-3"><WarmupStatusBadge status={bl.status} sentAt={bl.sentAt} /></td>
       <td className="px-4 py-3">
         <div className="flex gap-1.5 flex-wrap items-center">
+          <LighthouseAuditButton leadId={lead.id} leadName={lead.name} website={lead.website ?? null} />
           <GenerateEmailButton lead={lead} />
           <CopyButton lead={lead} templates={templates} />
-          <CopyLeadDataButton lead={lead} batchDate={batchDate} />
+          <CopyLeadDataButton lead={lead} batchDate={batchDate} lhScore={lhScore} />
           {lead.phone && !lead.website && (
             <CopyPhoneButton phone={lead.phone} />
           )}
@@ -1262,24 +1386,139 @@ function GenerateEmailButton({ lead }: { lead: Lead }) {
   );
 }
 
-function CopyLeadDataButton({ lead, batchDate }: { lead: Lead; batchDate: string }) {
-  const [copied, setCopied] = useState(false);
-  function copyData() {
-    const lines = [
-      `Name: ${lead.name}`, `Domain: ${DOMAIN_LABEL[lead.domain] ?? lead.domain}`,
-      lead.category ? `Category: ${lead.category}` : null,
-      [lead.city, lead.country].filter(Boolean).length ? `Location: ${[lead.city, lead.country].filter(Boolean).join(", ")}` : null,
-      lead.phone ? `Phone: ${lead.phone}` : null, lead.website ? `Website: ${lead.website}` : null,
-      lead.rating ? `Rating: ${lead.rating}` : null, `Scheduled: ${batchDate}`,
-      lead.emailLogs.length > 0 ? `Emails: ${lead.emailLogs.length} (last: ${lead.emailLogs[0].status} on ${fmtDate(lead.emailLogs[0].sentAt)})` : "Emails: none",
-    ].filter(Boolean).join("\n");
-    navigator.clipboard.writeText(lines);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+type FullScan = {
+  url: string; secScore: number; seoScore: number; semScore: number;
+  https: boolean; hsts: boolean; xfo: boolean; csp: boolean; xcto: boolean; xssHeader: boolean;
+  hasTitle: boolean; hasMeta: boolean; hasH1: boolean; hasCanonical: boolean;
+  hasOg: boolean; hasRobots: boolean; hasSitemap: boolean;
+  hasGa: boolean; hasGtm: boolean; hasGtm2?: boolean; hasFbPixel: boolean;
+  hasLinkedIn: boolean; hasSchemaOrg: boolean; hasHotjar: boolean;
+  error: string | null;
+};
+
+function buildLeadCopyText(lead: Lead, batchDate: string, scan: FullScan | null): string {
+  const hr = "─────────────────────────────────";
+  const lines: string[] = [];
+
+  // ── Lead info ──
+  lines.push(`${lead.name}  ·  ${DOMAIN_LABEL[lead.domain] ?? lead.domain}`);
+  if (lead.category) lines.push(`Category : ${lead.category}`);
+  const loc = [lead.city, lead.country].filter(Boolean).join(", ");
+  if (loc)          lines.push(`Location : ${loc}`);
+  if (lead.phone)   lines.push(`Phone    : ${lead.phone}`);
+  if (lead.website) lines.push(`Website  : ${lead.website}`);
+  if (lead.rating)  lines.push(`Rating   : ${lead.rating} ★`);
+  lines.push(`Scheduled: ${fmtDate(batchDate)}`);
+  if (lead.emailLogs.length > 0) {
+    const last = lead.emailLogs[0];
+    lines.push(`Emails   : ${lead.emailLogs.length} sent  (last: ${last.status} · ${fmtDate(last.sentAt)})`);
+  } else {
+    lines.push(`Emails   : none yet`);
   }
+
+  if (!scan) return lines.join("\n");
+
+  // ── Audit ──
+  lines.push("", hr, "LIGHTHOUSE AUDIT", hr);
+
+  function scoreLabel(s: number) { return s >= 70 ? "GOOD" : s >= 40 ? "WEAK" : "CRITICAL"; }
+  function ck(ok: boolean, label: string) { return `  ${ok ? "✓" : "✗"} ${label}`; }
+
+  lines.push(`🔒 Security   ${scan.secScore}/100  ${scoreLabel(scan.secScore)}`);
+  lines.push(ck(scan.https,     "HTTPS (encrypted connection)"));
+  lines.push(ck(scan.hsts,      "HSTS header (force HTTPS in browsers)"));
+  lines.push(ck(scan.csp,       "Content-Security-Policy (XSS protection)"));
+  lines.push(ck(scan.xfo,       "X-Frame-Options (anti-clickjacking)"));
+  lines.push(ck(scan.xcto,      "X-Content-Type-Options"));
+
+  lines.push("");
+  lines.push(`🔍 SEO   ${scan.seoScore}/100  ${scoreLabel(scan.seoScore)}`);
+  lines.push(ck(scan.hasTitle,     "<title> tag"));
+  lines.push(ck(scan.hasMeta,      "Meta description (Google snippet)"));
+  lines.push(ck(scan.hasH1,        "H1 heading"));
+  lines.push(ck(scan.hasCanonical, "Canonical URL (no duplicate-content risk)"));
+  lines.push(ck(scan.hasOg,        "Open Graph tags (social sharing preview)"));
+  lines.push(ck(scan.hasRobots,    "robots.txt"));
+  lines.push(ck(scan.hasSitemap,   "sitemap.xml (full page indexing)"));
+
+  lines.push("");
+  lines.push(`📊 Marketing   ${scan.semScore}/100  ${scoreLabel(scan.semScore)}`);
+  lines.push(ck(scan.hasGa,        "Google Analytics (traffic data)"));
+  lines.push(ck(scan.hasGtm,       "Google Tag Manager"));
+  lines.push(ck(scan.hasFbPixel,   "Facebook Pixel (retargeting)"));
+  lines.push(ck(scan.hasSchemaOrg, "Schema.org markup (Google rich results)"));
+  lines.push(ck(scan.hasLinkedIn,  "LinkedIn Insight Tag"));
+  lines.push(ck(scan.hasHotjar,    "Hotjar (user behaviour recording)"));
+
+  // ── Email pitch angles ──
+  const pitches: string[] = [];
+
+  // Security pitches
+  if (!scan.https) {
+    pitches.push('🔒 SECURITY HOOK — "Your website currently loads over plain HTTP. Chrome and Firefox show a red "Not Secure" warning to every visitor before they read a single word — this alone kills trust and conversions. An SSL certificate takes under an hour to install."');
+  } else if (scan.secScore < 60) {
+    pitches.push('🔒 SECURITY HOOK — "Your site uses HTTPS, but is missing critical security headers (CSP, HSTS). A quick security audit would bring it up to enterprise standard and protect against common injection attacks."');
+  }
+
+  // SEO pitches
+  const seoMissing: string[] = [];
+  if (!scan.hasMeta)      seoMissing.push("no meta description (Google generates a random, usually gibberish snippet instead of your pitch)");
+  if (!scan.hasSitemap)   seoMissing.push("no sitemap.xml (search crawlers may miss entire sections of your site)");
+  if (!scan.hasCanonical) seoMissing.push("no canonical URL (risk of duplicate-content penalty across pages)");
+  if (!scan.hasOg)        seoMissing.push("no Open Graph tags (social shares look broken with no image or title)");
+  if (seoMissing.length > 0) {
+    pitches.push(`🔍 SEO HOOK — "We noticed ${seoMissing.join("; ")}. These are fast wins — we can fix all of them in a single afternoon and submit a clean sitemap to Google Search Console so your pages start ranking within 48 hours."`);
+  }
+
+  // Marketing pitches
+  if (!scan.hasGa && !scan.hasGtm) {
+    pitches.push('📊 MARKETING HOOK — "Right now you have zero visibility into your website traffic — no Google Analytics, no tag manager. You don\'t know how many people visit, where they come from, or which pages convert. We can fix this in under an hour and give you a live dashboard you can check every morning."');
+  } else if (!scan.hasFbPixel && !scan.hasSchemaOrg) {
+    const missing2: string[] = [];
+    if (!scan.hasFbPixel)   missing2.push("Facebook Pixel (no retargeting — you\'re paying for ads with no way to follow up)");
+    if (!scan.hasSchemaOrg) missing2.push("Schema.org markup (your business doesn\'t show star ratings or rich cards in Google results)");
+    pitches.push(`📊 MARKETING HOOK — "Two quick wins available: ${missing2.join("; ")}."`);
+  }
+
+  if (pitches.length > 0) {
+    lines.push("", hr, "EMAIL PITCH ANGLES", hr);
+    lines.push("Use whichever resonates most — paste directly into your email:\n");
+    pitches.forEach((p, i) => { lines.push(`${i + 1}. ${p}`); lines.push(""); });
+  }
+
+  return lines.join("\n");
+}
+
+function CopyLeadDataButton({ lead, batchDate, lhScore }: {
+  lead: Lead; batchDate: string; lhScore?: LhScore | null;
+}) {
+  const [state, setState] = useState<"idle" | "loading" | "copied">("idle");
+
+  async function copyData() {
+    setState("loading");
+    let scan: FullScan | null = null;
+
+    if (lhScore && lead.website) {
+      try {
+        const res  = await fetch(`/api/lighthouse/lead/${lead.id}`);
+        const data = await res.json();
+        scan = data.scan ?? null;
+      } catch { /* proceed without scan */ }
+    }
+
+    const text = buildLeadCopyText(lead, batchDate, scan);
+    await navigator.clipboard.writeText(text);
+    setState("copied");
+    setTimeout(() => setState("idle"), 1800);
+  }
+
   return (
-    <button onClick={copyData} className="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded hover:bg-purple-200 transition font-medium">
-      {copied ? "Copied!" : "Copy Lead"}
+    <button
+      onClick={copyData}
+      disabled={state === "loading"}
+      className="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded hover:bg-purple-200 disabled:opacity-50 transition font-medium"
+    >
+      {state === "copied" ? "Copied!" : state === "loading" ? "…" : lhScore ? "Copy Lead + Audit" : "Copy Lead"}
     </button>
   );
 }

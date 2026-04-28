@@ -7,21 +7,28 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
-  const limit  = Math.min(parseInt(body.limit  ?? "100"), 200);
-  const phase  = body.phase  ? parseInt(body.phase)  : undefined;
-  const domain = body.domain ?? undefined;
+  const limit      = Math.min(parseInt(body.limit ?? "100"), 200);
+  const phase      = body.phase  ? parseInt(body.phase)  : undefined;
+  const domain     = body.domain ?? undefined;
+  const explicitIds: number[] | undefined = Array.isArray(body.leadIds) ? body.leadIds : undefined;
 
-  // Fetch leads with websites
-  const leads = await prisma.lead.findMany({
-    where: {
-      website: { not: null },
-      ...(phase  !== undefined ? { phase }  : {}),
-      ...(domain !== undefined ? { domain } : {}),
-    },
-    select: { id: true, name: true, website: true },
-    take: limit,
-    orderBy: { createdAt: "desc" },
-  });
+  // If specific lead IDs are provided, scan exactly those (ignores limit/phase/domain)
+  // Otherwise fall back to newest-N bulk scan
+  const leads = await (explicitIds
+    ? prisma.lead.findMany({
+        where: { id: { in: explicitIds }, website: { not: null } },
+        select: { id: true, name: true, website: true },
+      })
+    : prisma.lead.findMany({
+        where: {
+          website: { not: null },
+          ...(phase  !== undefined ? { phase }  : {}),
+          ...(domain !== undefined ? { domain } : {}),
+        },
+        select: { id: true, name: true, website: true },
+        take: limit,
+        orderBy: { id: "asc" },  // oldest-first so we cover all leads evenly
+      }));
 
   // Delete previous scans for these leads so we always have fresh data
   if (leads.length > 0) {

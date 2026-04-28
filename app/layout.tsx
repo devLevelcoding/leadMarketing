@@ -20,7 +20,7 @@ const NAV = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body>
+      <body suppressHydrationWarning>
         <div className="min-h-screen flex flex-col">
           {/* Top nav */}
           <header className="bg-gray-900 border-b border-gray-800 text-white shadow">
