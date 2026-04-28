@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import LighthouseAuditButton from "@/app/components/LighthouseAuditButton";
+import FullReportModal from "@/app/components/FullReportModal";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -163,6 +164,10 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
   const [lhScanning, setLhScanning] = useState(false);
   const [lhProgress, setLhProgress] = useState({ done: 0, total: 0 });
 
+  // ── Full Report batch scan ─────────────────────────────────────────────────
+  const [repScanning, setRepScanning] = useState(false);
+  const [repProgress, setRepProgress] = useState({ done: 0, total: 0 });
+
   const fetchLhScores = useCallback(async (leadIds: number[]) => {
     if (!leadIds.length) return;
     const res  = await fetch(`/api/lighthouse/scans?leadIds=${leadIds.join(",")}`);
@@ -279,6 +284,49 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
       // Always refresh scores for today's leads after scan finishes or errors
       const ids = todayBatch.leads.filter(bl => bl.lead.website).map(bl => bl.lead.id);
       fetchLhScores(ids);
+    }
+  }
+
+  async function runReportScan() {
+    if (!todayBatch) return;
+    const batchLeadIds = todayBatch.leads.filter(bl => bl.lead.website).map(bl => bl.lead.id);
+    if (!batchLeadIds.length) return;
+
+    setRepScanning(true);
+    setRepProgress({ done: 0, total: 0 });
+
+    try {
+      const res = await fetch("/api/report/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadIds: batchLeadIds }),
+      });
+      if (!res.body) throw new Error("No response body");
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n\n");
+        buf = lines.pop() ?? "";
+        for (const line of lines) {
+          const raw = line.replace(/^data: /, "").trim();
+          if (!raw) continue;
+          try {
+            const msg = JSON.parse(raw);
+            if (msg.type === "start")    setRepProgress({ done: 0, total: msg.total });
+            if (msg.type === "progress") setRepProgress({ done: msg.done, total: msg.total });
+          } catch { /* skip */ }
+        }
+      }
+    } catch (err) {
+      console.error("Report scan error:", err);
+    } finally {
+      setRepScanning(false);
     }
   }
 
@@ -440,7 +488,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
         ))}
       </div>
 
-      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} lhScores={lhScores} lhScanning={lhScanning} lhProgress={lhProgress} onRunLhScan={runLhScan} />}
+      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} lhScores={lhScores} lhScanning={lhScanning} lhProgress={lhProgress} onRunLhScan={runLhScan} repScanning={repScanning} repProgress={repProgress} onRunReportScan={runReportScan} />}
       {activeTab === "next5"   && <UpcomingTab batches={upcoming5}  loading={upcoming5Loading}  days={5}  />}
       {activeTab === "next10"  && <UpcomingTab batches={upcoming10} loading={upcoming10Loading} days={10} />}
 {activeTab === "plan"    && <MonthPlanTab batches={plan.batches.slice(0, 30)} />}
@@ -717,7 +765,7 @@ function MonthPlanTab({ batches }: { batches: BatchSummary[] }) {
 
 type LhScore = { sec: number; seo: number; sem: number };
 
-function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage, lhScores, lhScanning, lhProgress, onRunLhScan }: {
+function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage, lhScores, lhScanning, lhProgress, onRunLhScan, repScanning, repProgress, onRunReportScan }: {
   batch: TodayBatch | null; loading: boolean;
   updating: Record<number, boolean>; onStatus: (id: number, s: string) => void;
   templates: Template[]; showAdvanceModal: boolean; advancing: boolean;
@@ -726,6 +774,8 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
   lhScores: Record<number, LhScore | null>;
   lhScanning: boolean; lhProgress: { done: number; total: number };
   onRunLhScan: () => void;
+  repScanning: boolean; repProgress: { done: number; total: number };
+  onRunReportScan: () => void;
 }) {
   const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s && parseInt(s) !== 10 ? parseInt(s) : 15; })();
 
@@ -813,24 +863,38 @@ function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceMo
         </div>
       )}
 
-      {/* Lighthouse scan button + progress */}
-      <div className="flex items-center gap-3 flex-wrap">
+      {/* Scan buttons + progress bars */}
+      <div className="flex flex-wrap gap-3 items-center">
+        {/* Lighthouse */}
         <button
           onClick={onRunLhScan}
-          disabled={lhScanning}
+          disabled={lhScanning || repScanning}
           className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
         >
-          {lhScanning
-            ? `Scanning… ${lhProgress.done}/${lhProgress.total}`
-            : "Update Lighthouse Scores"}
+          {lhScanning ? `Scanning… ${lhProgress.done}/${lhProgress.total}` : "Update Lighthouse Scores"}
         </button>
         {lhScanning && (
-          <div className="flex-1 max-w-xs">
+          <div className="w-32">
             <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-indigo-500 rounded-full transition-all duration-300"
-                style={{ width: lhProgress.total > 0 ? `${Math.round((lhProgress.done / lhProgress.total) * 100)}%` : "0%" }}
-              />
+              <div className="h-full bg-indigo-500 rounded-full transition-all duration-300"
+                style={{ width: lhProgress.total > 0 ? `${Math.round((lhProgress.done / lhProgress.total) * 100)}%` : "0%" }} />
+            </div>
+          </div>
+        )}
+
+        {/* Full Report */}
+        <button
+          onClick={onRunReportScan}
+          disabled={repScanning || lhScanning}
+          className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+        >
+          {repScanning ? `Scanning… ${repProgress.done}/${repProgress.total}` : "Update Full Reports"}
+        </button>
+        {repScanning && (
+          <div className="w-32">
+            <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-violet-500 rounded-full transition-all duration-300"
+                style={{ width: repProgress.total > 0 ? `${Math.round((repProgress.done / repProgress.total) * 100)}%` : "0%" }} />
             </div>
           </div>
         )}
@@ -921,6 +985,7 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore }: {
 }) {
   const lead = bl.lead;
   const lastLog = lead.emailLogs[0];
+  const [showReport, setShowReport] = useState(false);
   const rowBg =
     bl.status === "SENT"    ? "bg-green-50 hover:bg-green-100" :
     bl.status === "SKIPPED" ? "bg-yellow-50 hover:bg-yellow-100" :
@@ -994,9 +1059,18 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore }: {
       <td className="px-4 py-3">
         <div className="flex gap-1.5 flex-wrap items-center">
           <LighthouseAuditButton leadId={lead.id} leadName={lead.name} website={lead.website ?? null} />
+          {lead.website && (
+            <button
+              onClick={() => setShowReport(true)}
+              className="text-xs px-2 py-1 rounded bg-violet-600 text-white hover:bg-violet-700 transition font-medium"
+              title="Full website report (speed, SSL, mobile, links, social, DNS)"
+            >
+              Full Report
+            </button>
+          )}
           <GenerateEmailButton lead={lead} />
           <CopyButton lead={lead} templates={templates} />
-          <CopyLeadDataButton lead={lead} batchDate={batchDate} lhScore={lhScore} />
+          <CopyLeadDataButton lead={lead} batchDate={batchDate} />
           {lead.phone && !lead.website && (
             <CopyPhoneButton phone={lead.phone} />
           )}
@@ -1010,6 +1084,14 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore }: {
             <button disabled={busy} onClick={() => onStatus(bl.id, "PENDING")} className="bg-gray-100 text-gray-600 text-xs px-2.5 py-1 rounded hover:bg-gray-200 disabled:opacity-40 transition">Undo</button>
           )}
         </div>
+        {showReport && (
+          <FullReportModal
+            leadId={lead.id}
+            leadName={lead.name}
+            website={lead.website ?? null}
+            onClose={() => setShowReport(false)}
+          />
+        )}
       </td>
     </tr>
   );
@@ -1396,6 +1478,78 @@ type FullScan = {
   error: string | null;
 };
 
+type LeadReport = {
+  scannedAt: string;
+  loadTimeMs: number | null;
+  sslValid: boolean | null; sslExpiryDays: number | null; sslIssuer: string | null;
+  hasViewport: boolean | null; hasTouchIcon: boolean | null;
+  totalLinks: number | null; brokenLinks: number | null; brokenUrls: string | null;
+  hasFacebook: boolean | null; hasInstagram: boolean | null; hasLinkedIn: boolean | null;
+  hasTiktok: boolean | null; hasYoutube: boolean | null; hasTwitter: boolean | null;
+  hasSPF: boolean | null; hasDKIM: boolean | null; hasDMARC: boolean | null;
+  spfValue: string | null; dmarcPolicy: string | null;
+};
+
+function buildReportSection(report: LeadReport): string {
+  const hr = "─────────────────────────────────";
+  const L: string[] = [];
+  L.push("", hr, "FULL WEBSITE REPORT", hr);
+
+  // Page speed
+  L.push("⚡ PAGE SPEED");
+  if (report.loadTimeMs != null) {
+    const s = (report.loadTimeMs / 1000).toFixed(1);
+    L.push(`  Load time: ${s}s${report.loadTimeMs > 3000 ? " ⚠ SLOW (>3s)" : " ✓"}`);
+    if (report.loadTimeMs > 3000)
+      L.push(`  → Your homepage takes ${s}s to load. Google penalises anything over 3s — 53% of mobile visitors leave before it finishes.`);
+  } else { L.push("  Not measured"); }
+
+  // SSL
+  L.push("", "🔐 SSL CERTIFICATE");
+  if (report.sslValid != null) {
+    L.push(`  ${report.sslValid ? "✓ Valid" : "✗ INVALID/EXPIRED"}${report.sslExpiryDays != null ? `  ·  expires in ${report.sslExpiryDays} days` : ""}${report.sslIssuer ? `  ·  ${report.sslIssuer}` : ""}`);
+    if (report.sslExpiryDays != null && report.sslExpiryDays < 30)
+      L.push(`  → Expires in ${report.sslExpiryDays} days — every browser blocks visitors with a full-screen red warning when it lapses.`);
+  } else { L.push("  Could not check"); }
+
+  // Mobile
+  L.push("", "📱 MOBILE");
+  if (report.hasViewport != null) {
+    L.push(`  ${report.hasViewport ? "✓" : "✗"} Viewport meta tag  ·  ${report.hasTouchIcon ? "✓" : "✗"} Touch icon`);
+    if (!report.hasViewport)
+      L.push("  → No mobile viewport tag — 60%+ of local searches happen on phones and your layout breaks on all of them.");
+  } else { L.push("  Could not check"); }
+
+  // Broken links
+  L.push("", "🔗 BROKEN LINKS");
+  if (report.brokenLinks != null) {
+    L.push(`  ${report.brokenLinks} broken / ${report.totalLinks ?? 0} checked`);
+    if (report.brokenLinks > 0) {
+      const urls: string[] = JSON.parse(report.brokenUrls ?? "[]");
+      urls.slice(0, 3).forEach(u => L.push(`  ✗ ${u}`));
+      L.push(`  → ${report.brokenLinks} broken link(s) — visitors and Google bots hit dead ends, hurting your ranking.`);
+    }
+  } else { L.push("  Could not check"); }
+
+  // Social
+  L.push("", "📣 SOCIAL MEDIA");
+  const found = [report.hasFacebook && "Facebook", report.hasInstagram && "Instagram", report.hasLinkedIn && "LinkedIn", report.hasTiktok && "TikTok", report.hasYoutube && "YouTube", report.hasTwitter && "X/Twitter"].filter(Boolean);
+  const missing = [!report.hasFacebook && "Facebook", !report.hasInstagram && "Instagram", !report.hasLinkedIn && "LinkedIn", !report.hasTiktok && "TikTok", !report.hasYoutube && "YouTube", !report.hasTwitter && "X/Twitter"].filter(Boolean);
+  if (found.length)   L.push(`  Found  : ${found.join(", ")}`);
+  if (missing.length) L.push(`  Missing: ${missing.join(", ")}`);
+  if (found.length === 0) L.push("  → No social media found — competitors retarget your visitors while you have no presence to retarget from.");
+
+  // Email deliverability
+  L.push("", "📧 EMAIL DELIVERABILITY");
+  if (report.hasSPF != null) {
+    L.push(`  SPF: ${report.hasSPF ? "✓" : "✗ MISSING"}  ·  DKIM: ${report.hasDKIM ? "✓" : "✗ MISSING"}  ·  DMARC: ${report.hasDMARC ? `✓ (${report.dmarcPolicy})` : "✗ MISSING"}`);
+    if (!report.hasDMARC)
+      L.push("  → No DMARC — your business emails are statistically likely landing in spam.");
+  } else { L.push("  Could not check DNS"); }
+
+  return L.join("\n");
+}
+
 function buildLeadCopyText(lead: Lead, batchDate: string, scan: FullScan | null): string {
   const hr = "─────────────────────────────────";
   const lines: string[] = [];
@@ -1489,28 +1643,38 @@ function buildLeadCopyText(lead: Lead, batchDate: string, scan: FullScan | null)
   return lines.join("\n");
 }
 
-function CopyLeadDataButton({ lead, batchDate, lhScore }: {
-  lead: Lead; batchDate: string; lhScore?: LhScore | null;
+function CopyLeadDataButton({ lead, batchDate }: {
+  lead: Lead; batchDate: string;
 }) {
   const [state, setState] = useState<"idle" | "loading" | "copied">("idle");
 
   async function copyData() {
     setState("loading");
     let scan: FullScan | null = null;
+    let report: LeadReport | null = null;
 
-    if (lhScore && lead.website) {
+    if (lead.website) {
       try {
-        const res  = await fetch(`/api/lighthouse/lead/${lead.id}`);
-        const data = await res.json();
-        scan = data.scan ?? null;
-      } catch { /* proceed without scan */ }
+        const [lhRes, repRes] = await Promise.all([
+          fetch(`/api/lighthouse/lead/${lead.id}`).then(r => r.json()),
+          fetch(`/api/report/${lead.id}`).then(r => r.json()),
+        ]);
+        scan   = lhRes.scan   ?? null;
+        report = repRes.report ?? null;
+      } catch { /* proceed without */ }
     }
 
-    const text = buildLeadCopyText(lead, batchDate, scan);
+    let text = buildLeadCopyText(lead, batchDate, scan);
+    if (report) text += buildReportSection(report);
     await navigator.clipboard.writeText(text);
     setState("copied");
     setTimeout(() => setState("idle"), 1800);
   }
+
+  const label =
+    state === "copied"  ? "Copied!" :
+    state === "loading" ? "…" :
+    "Copy Report";
 
   return (
     <button
@@ -1518,7 +1682,7 @@ function CopyLeadDataButton({ lead, batchDate, lhScore }: {
       disabled={state === "loading"}
       className="bg-purple-100 text-purple-700 text-xs px-2.5 py-1 rounded hover:bg-purple-200 disabled:opacity-50 transition font-medium"
     >
-      {state === "copied" ? "Copied!" : state === "loading" ? "…" : lhScore ? "Copy Lead + Audit" : "Copy Lead"}
+      {label}
     </button>
   );
 }

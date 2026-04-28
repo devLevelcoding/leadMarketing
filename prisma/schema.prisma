@@ -33,6 +33,7 @@ model Lead {
   warmupLeads     WarmupBatchLead[]
   whatsappLeads   WhatsAppBatchLead[]
   lighthouseScans LighthouseScan[]
+  leadReport      LeadReport?
 
   @@map("leads")
 }
@@ -193,4 +194,48 @@ model LighthouseScan {
   lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
 
   @@map("lighthouse_scans")
+}
+
+model LeadReport {
+  id        Int      @id @default(autoincrement())
+  leadId    Int      @unique @map("lead_id")
+  scannedAt DateTime @default(now()) @map("scanned_at")
+
+  // Page Speed
+  loadTimeMs Int? @map("load_time_ms")
+
+  // SSL
+  sslValid      Boolean? @map("ssl_valid")
+  sslExpiryDays Int?     @map("ssl_expiry_days")
+  sslIssuer     String?  @map("ssl_issuer")
+
+  // Mobile
+  hasViewport   Boolean? @map("has_viewport")
+  hasTouchIcon  Boolean? @map("has_touch_icon")
+
+  // Broken links
+  totalLinks  Int?    @map("total_links")
+  brokenLinks Int?    @map("broken_links")
+  brokenUrls  String? @map("broken_urls") // JSON array
+
+  // Social presence
+  hasFacebook  Boolean? @map("has_facebook")
+  hasInstagram Boolean? @map("has_instagram")
+  hasLinkedIn  Boolean? @map("has_linkedin")
+  hasTiktok    Boolean? @map("has_tiktok")
+  hasYoutube   Boolean? @map("has_youtube")
+  hasTwitter   Boolean? @map("has_twitter")
+
+  // Email deliverability
+  hasSPF      Boolean? @map("has_spf")
+  hasDKIM     Boolean? @map("has_dkim")
+  hasDMARC    Boolean? @map("has_dmarc")
+  spfValue    String?  @map("spf_value")
+  dmarcPolicy String?  @map("dmarc_policy")
+
+  error String?
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@map("lead_reports")
 }
