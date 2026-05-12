@@ -177,6 +177,25 @@ async function main() {
     grand += await importFile(file, domain, 3);
   }
 
+  // Phase 4 — scraped via scrape-gmaps.ts, all CSVs in one flat folder
+  const phase4Dir = path.join(SCRAPER_DIR, "phase4");
+  if (fs.existsSync(phase4Dir)) {
+    console.log("\n📂 PHASE 4 — Benelux / DACH / Scandinavia (scraped)");
+    const csvFiles = fs.readdirSync(phase4Dir).filter(f => f.endsWith(".csv"));
+    for (const file of csvFiles) {
+      // Derive domain from filename: *_b2b* → b2b, *_health* → health, *_real_estate* → crm
+      const domain =
+        file.includes("professional_services") ? "b2b" :
+        file.includes("health")                ? "health" :
+        file.includes("real_estate")           ? "crm" :
+        file.includes("restaurants")           ? "crm" : "b2b";
+      console.log(`  ${file} → domain: ${domain}`);
+      grand += await importFile(`phase4/${file}`, domain, 4);
+    }
+  } else {
+    console.log("\n⏭  PHASE 4 — no scraped data yet (run scrape-gmaps.ts first)");
+  }
+
   console.log("\n📧 Seeding email templates...");
   await seedTemplates();
 

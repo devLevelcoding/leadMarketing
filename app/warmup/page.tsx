@@ -1058,6 +1058,15 @@ function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore }: {
       <td className="px-4 py-3"><WarmupStatusBadge status={bl.status} sentAt={bl.sentAt} /></td>
       <td className="px-4 py-3">
         <div className="flex gap-1.5 flex-wrap items-center">
+          <a
+            href={`https://www.google.com/search?q=site:linkedin.com/in+"${encodeURIComponent(lead.name)}"${lead.city ? `+"${encodeURIComponent(lead.city)}"` : ""}+owner+OR+founder+OR+manager+OR+director`}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs px-2 py-1 rounded bg-blue-700 text-white hover:bg-blue-800 transition font-medium"
+            title="Find decision maker on LinkedIn"
+          >
+            LinkedIn
+          </a>
           <LighthouseAuditButton leadId={lead.id} leadName={lead.name} website={lead.website ?? null} />
           {lead.website && (
             <button
