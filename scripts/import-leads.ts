@@ -47,13 +47,15 @@ async function importFolder(folder: string, domain: string, phase: number) {
       columns: true, skip_empty_lines: true,
     });
     for (const row of rows) {
+      const name = (row.name || "").trim();
+      if (!name || name === "Results" || name === "Sponsored") continue;
       const existing = await prisma.lead.findFirst({
-        where: { name: row.name, domain, city: row.city },
+        where: { name, domain, city: row.city },
       });
       if (existing) continue;
       await prisma.lead.create({
         data: {
-          name: row.name || "", category: row.category || null,
+          name, category: row.category || null,
           searchCategory: row.search_category || null, address: row.address || null,
           phone: row.phone || null, website: row.website || null,
           rating: row.rating || null, reviewCount: row.review_count || null,
@@ -80,13 +82,15 @@ async function importFile(file: string, domain: string, phase: number) {
   });
   let total = 0;
   for (const row of rows) {
+    const name = (row.name || "").trim();
+    if (!name || name === "Results" || name === "Sponsored") continue;
     const existing = await prisma.lead.findFirst({
-      where: { name: row.name, domain, city: row.city },
+      where: { name, domain, city: row.city },
     });
     if (existing) continue;
     await prisma.lead.create({
       data: {
-        name: row.name || "", category: row.category || null,
+        name, category: row.category || null,
         searchCategory: row.search_category || null, address: row.address || null,
         phone: row.phone || null, website: row.website || null,
         rating: row.rating || null, reviewCount: row.review_count || null,
@@ -177,23 +181,34 @@ async function main() {
     grand += await importFile(file, domain, 3);
   }
 
-  // Phase 4 — scraped via scrape-gmaps.ts, all CSVs in one flat folder
-  const phase4Dir = path.join(SCRAPER_DIR, "phase4");
-  if (fs.existsSync(phase4Dir)) {
-    console.log("\n📂 PHASE 4 — Benelux / DACH / Scandinavia (scraped)");
-    const csvFiles = fs.readdirSync(phase4Dir).filter(f => f.endsWith(".csv"));
-    for (const file of csvFiles) {
-      // Derive domain from filename: *_b2b* → b2b, *_health* → health, *_real_estate* → crm
-      const domain =
-        file.includes("professional_services") ? "b2b" :
-        file.includes("health")                ? "health" :
-        file.includes("real_estate")           ? "crm" :
-        file.includes("restaurants")           ? "crm" : "b2b";
-      console.log(`  ${file} → domain: ${domain}`);
-      grand += await importFile(`phase4/${file}`, domain, 4);
+  function domainFromFilename(file: string): string {
+    if (file.includes("law_firms"))             return "b2b";
+    if (file.includes("architects"))            return "b2b";
+    if (file.includes("professional_services")) return "b2b";
+    if (file.includes("veterinary"))            return "health";
+    if (file.includes("health"))               return "health";
+    if (file.includes("fitness"))              return "crm";
+    if (file.includes("beauty"))               return "crm";
+    if (file.includes("auto_workshops"))       return "crm";
+    if (file.includes("real_estate"))          return "crm";
+    if (file.includes("restaurants"))          return "crm";
+    return "b2b";
+  }
+
+  for (const phaseNum of [4, 5]) {
+    const phaseDir = path.join(SCRAPER_DIR, `phase${phaseNum}`);
+    const label = phaseNum === 4 ? "Benelux / DACH / Scandinavia" : "South & East Europe";
+    if (!fs.existsSync(phaseDir)) {
+      console.log(`\n⏭  PHASE ${phaseNum} — ${label} — no data yet`);
+      continue;
     }
-  } else {
-    console.log("\n⏭  PHASE 4 — no scraped data yet (run scrape-gmaps.ts first)");
+    console.log(`\n📂 PHASE ${phaseNum} — ${label} (scraped)`);
+    const csvFiles = fs.readdirSync(phaseDir).filter(f => f.endsWith(".csv"));
+    for (const file of csvFiles) {
+      const domain = domainFromFilename(file);
+      console.log(`  ${file} → domain: ${domain}`);
+      grand += await importFile(`phase${phaseNum}/${file}`, domain, phaseNum);
+    }
   }
 
   console.log("\n📧 Seeding email templates...");

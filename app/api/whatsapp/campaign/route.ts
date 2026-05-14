@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 function getQuota(day: number): number {
-  if (day <= 3)  return 10;
-  if (day <= 7)  return 15;
-  if (day <= 14) return 20;
-  return 25;
+  if (day <= 3)  return 15;
+  if (day <= 7)  return 20;
+  if (day <= 14) return 25;
+  if (day <= 21) return 35;
+  return 50;
 }
 
 function parsePhase(req: NextRequest): number {
@@ -85,10 +86,23 @@ export async function POST(req: NextRequest) {
     const startDate = body.startDate ? new Date(body.startDate) : new Date();
     startDate.setHours(0, 0, 0, 0);
 
-    const leads = await prisma.lead.findMany({
-      where: { domain: "no_website", phone: { not: null }, phase },
-      select: { id: true, country: true },
+    // Use no_website leads when available; fall back to all phone leads for phases
+    // where GMaps-scraped data has no no_website segment (e.g. Phase 4, 5)
+    const noWebsiteCount = await prisma.lead.count({ where: { domain: "no_website", phone: { not: null }, phase } });
+    const rawLeads = await prisma.lead.findMany({
+      where: noWebsiteCount > 0
+        ? { domain: "no_website", phone: { not: null }, phase }
+        : { phone: { not: null }, phase },
+      select: { id: true, country: true, phone: true },
       orderBy: { id: "asc" },
+    });
+
+    const seenPhones = new Set<string>();
+    const leads = rawLeads.filter(l => {
+      const key = l.phone!.replace(/[\s\-().]/g, "").toLowerCase();
+      if (seenPhones.has(key)) return false;
+      seenPhones.add(key);
+      return true;
     });
 
     const byCountry = new Map<string, number[]>();

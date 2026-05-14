@@ -26,17 +26,19 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const TABS = [
-  { id: "all",     label: "All Phases",        phase: "all",  flag: "🌍", color: "blue" },
-  { id: "phase1",  label: "Phase 1 — Europe",  phase: "1",    flag: "🇪🇺", color: "indigo" },
-  { id: "phase2",  label: "Phase 2 — Dubai",   phase: "2",    flag: "🇦🇪", color: "amber" },
-  { id: "phase3",  label: "Phase 3 — USA",     phase: "3",    flag: "🇺🇸", color: "red" },
+  { id: "all",     label: "All Phases",           phase: "all", flag: "🌍", color: "blue" },
+  { id: "phase1",  label: "Phase 1 — Europe",     phase: "1",   flag: "🇪🇺", color: "indigo" },
+  { id: "phase2",  label: "Phase 2 — Dubai",      phase: "2",   flag: "🇦🇪", color: "amber" },
+  { id: "phase3",  label: "Phase 3 — USA",        phase: "3",   flag: "🇺🇸", color: "red" },
+  { id: "phase4",  label: "Phase 4 — DACH / Benelux",      phase: "4", flag: "🇩🇪", color: "green" },
+  { id: "phase5",  label: "Phase 5 — South & East Europe", phase: "5", flag: "🇮🇹", color: "purple" },
 ];
 
 type Stats = {
   total: number;
   byDomain: { domain: string; _count: { id: number } }[];
   byStatus: { status: string; _count: { id: number } }[];
-  byCountry: { country: string; _count: { id: number }; contacted: number }[];
+  byCountry: { country: string; _count: { id: number }; contacted: number; skipped: number }[];
   byPhase:   { phase: number; _count: { id: number } }[];
 };
 
@@ -133,40 +135,12 @@ function PhaseTabContent({ phase, tabColor }: { phase: string; tabColor: string 
           </div>
         </div>
 
-        {/* Top Countries */}
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="font-semibold text-gray-700 mb-4">Top Countries / Regions</h2>
-          <div className="space-y-3">
-            {stats.byCountry.map(c => {
-              const total = c._count.id;
-              const contacted = c.contacted;
-              const remaining = total - contacted;
-              const pct = total > 0 ? Math.round((contacted / total) * 100) : 0;
-              return (
-                <div key={c.country}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-800 font-medium">{c.country || "—"}</span>
-                    <span className="tabular-nums flex items-center gap-1">
-                      <span className="text-blue-500 font-bold">{contacted}</span>
-                      <span className="text-gray-600">/</span>
-                      <span className="text-gray-600 font-bold">{total}</span>
-                      {remaining > 0 && (
-                        <span className="text-gray-600 font-bold ml-1">({remaining} left)</span>
-                      )}
-                    </span>
-                  </div>
-                  <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-blue-500 rounded-full transition-all"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* Top Countries / Regions */}
+        <CountryRegionPanel byCountry={stats.byCountry} />
       </div>
+
+      {/* World Clock */}
+      <WorldClockPanel />
 
       {/* Campaign Schedule */}
       <div className="bg-white rounded-xl shadow-sm border p-6">
@@ -341,6 +315,229 @@ export default function Dashboard() {
 
       {/* Tab content */}
       <PhaseTabContent key={activeTab} phase={currentTab.phase} tabColor={currentTab.color} />
+    </div>
+  );
+}
+
+// ─── Region map ───────────────────────────────────────────────────────────────
+
+const COUNTRY_REGION: Record<string, string> = {
+  // Nordic
+  Denmark: "Nordic", Sweden: "Nordic", Norway: "Nordic", Finland: "Nordic", Iceland: "Nordic",
+  // DACH
+  Germany: "DACH", Austria: "DACH", Switzerland: "DACH", Liechtenstein: "DACH",
+  // Western Europe
+  Netherlands: "Western Europe", Belgium: "Western Europe", Luxembourg: "Western Europe",
+  Ireland: "Western Europe", France: "Western Europe", "United Kingdom": "Western Europe",
+  // Southern Europe
+  Spain: "Southern Europe", Italy: "Southern Europe", Portugal: "Southern Europe",
+  Greece: "Southern Europe", Malta: "Southern Europe", Cyprus: "Southern Europe",
+  // Eastern Europe
+  Estonia: "Eastern Europe", Latvia: "Eastern Europe", Lithuania: "Eastern Europe",
+  Poland: "Eastern Europe", "Czech Republic": "Eastern Europe", Slovakia: "Eastern Europe",
+  Hungary: "Eastern Europe", Romania: "Eastern Europe", Bulgaria: "Eastern Europe",
+  Croatia: "Eastern Europe", Slovenia: "Eastern Europe", Serbia: "Eastern Europe",
+  // Middle East
+  UAE: "Middle East", "United Arab Emirates": "Middle East", Dubai: "Middle East",
+  "Saudi Arabia": "Middle East", Qatar: "Middle East",
+  // North America
+  USA: "North America", "United States": "North America", Canada: "North America",
+};
+
+const REGION_FLAG: Record<string, string> = {
+  "Nordic":         "🇸🇪",
+  "DACH":           "🇩🇪",
+  "Western Europe": "🇳🇱",
+  "Southern Europe":"🇮🇹",
+  "Eastern Europe": "🇵🇱",
+  "Middle East":    "🇦🇪",
+  "North America":  "🇺🇸",
+  "Other":          "🌍",
+};
+
+// ─── World Clock Panel ────────────────────────────────────────────────────────
+
+const COUNTRY_TZ: { country: string; tz: string; flag: string; phase: number }[] = [
+  { country: "Romania",     tz: "Europe/Bucharest",      flag: "🇷🇴", phase: 1 },
+  { country: "Germany",     tz: "Europe/Berlin",         flag: "🇩🇪", phase: 4 },
+  { country: "Austria",     tz: "Europe/Vienna",         flag: "🇦🇹", phase: 4 },
+  { country: "Switzerland", tz: "Europe/Zurich",         flag: "🇨🇭", phase: 4 },
+  { country: "Belgium",     tz: "Europe/Brussels",       flag: "🇧🇪", phase: 4 },
+  { country: "Netherlands", tz: "Europe/Amsterdam",      flag: "🇳🇱", phase: 4 },
+  { country: "Sweden",      tz: "Europe/Stockholm",      flag: "🇸🇪", phase: 4 },
+  { country: "Norway",      tz: "Europe/Oslo",           flag: "🇳🇴", phase: 4 },
+  { country: "Denmark",     tz: "Europe/Copenhagen",     flag: "🇩🇰", phase: 4 },
+  { country: "Italy",       tz: "Europe/Rome",           flag: "🇮🇹", phase: 5 },
+  { country: "Spain",       tz: "Europe/Madrid",         flag: "🇪🇸", phase: 5 },
+  { country: "Portugal",    tz: "Europe/Lisbon",         flag: "🇵🇹", phase: 5 },
+  { country: "Ireland",     tz: "Europe/Dublin",         flag: "🇮🇪", phase: 1 },
+  { country: "Iceland",     tz: "Atlantic/Reykjavik",    flag: "🇮🇸", phase: 1 },
+  { country: "Estonia",     tz: "Europe/Tallinn",        flag: "🇪🇪", phase: 1 },
+  { country: "Luxembourg",  tz: "Europe/Luxembourg",     flag: "🇱🇺", phase: 1 },
+  { country: "UAE",         tz: "Asia/Dubai",            flag: "🇦🇪", phase: 2 },
+  { country: "USA",         tz: "America/New_York",      flag: "🇺🇸", phase: 3 },
+];
+
+function sendStatus(hour: number, minute: number, isWeekend: boolean): { color: string; label: string } {
+  if (isWeekend)              return { color: "bg-red-100 text-red-600 border-red-200",       label: "Weekend" };
+  const t = hour + minute / 60;
+  if (t >= 9 && t < 18)       return { color: "bg-green-100 text-green-700 border-green-200", label: "Good" };
+  if ((t >= 7 && t < 9) || (t >= 18 && t < 20))
+                              return { color: "bg-yellow-100 text-yellow-700 border-yellow-200", label: "Early/Late" };
+  return                             { color: "bg-red-100 text-red-600 border-red-200",       label: "Sleeping" };
+}
+
+function WorldClockPanel() {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border p-5">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-semibold text-gray-700">Best Time to Send</h2>
+        <span className="text-xs text-gray-400">updates every 30s · 🟢 9–18h · 🟡 7–9 / 18–20h · 🔴 night/weekend</span>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+        {COUNTRY_TZ.map(({ country, tz, flag, phase }) => {
+          const local = new Date(now.toLocaleString("en-US", { timeZone: tz }));
+          const h = local.getHours();
+          const m = local.getMinutes();
+          const dow = local.getDay();
+          const weekend = dow === 0 || dow === 6;
+          const timeStr = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+          const { color, label } = sendStatus(h, m, weekend);
+          const actionable = label === "Good" || label === "Early/Late";
+          return (
+            <div key={country} className={`rounded-lg border px-3 py-2 ${color}`}>
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <span className="text-base leading-none">{flag}</span>
+                <span className="text-xs font-medium truncate flex-1">{country}</span>
+              </div>
+              <div className="text-xl font-bold tracking-tight">{timeStr}</div>
+              <div className="flex items-center justify-between gap-1 mt-0.5">
+                <span className="text-xs opacity-75">{label}</span>
+                {actionable && (
+                  <span className="flex gap-1">
+                    <a
+                      href={`/warmup?phase=${phase}`}
+                      title="Email warmup"
+                      className="text-xs opacity-80 hover:opacity-100 leading-none"
+                    >📧</a>
+                    <a
+                      href={`/whatsapp?phase=${phase}`}
+                      title="WhatsApp campaign"
+                      className="text-xs opacity-80 hover:opacity-100 leading-none"
+                    >💬</a>
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+type CountryStat = { country: string; _count: { id: number }; contacted: number; skipped: number };
+
+function CountryRegionPanel({ byCountry }: { byCountry: CountryStat[] }) {
+  const [view, setView] = useState<"region" | "country">("region");
+  const [expandedRegion, setExpandedRegion] = useState<string | null>(null);
+
+  // Aggregate by region
+  const regionMap = new Map<string, { total: number; contacted: number; skipped: number; countries: CountryStat[] }>();
+  for (const c of byCountry) {
+    const region = COUNTRY_REGION[c.country] ?? "Other";
+    if (!regionMap.has(region)) regionMap.set(region, { total: 0, contacted: 0, skipped: 0, countries: [] });
+    const r = regionMap.get(region)!;
+    r.total     += c._count.id;
+    r.contacted += c.contacted;
+    r.skipped   += c.skipped ?? 0;
+    r.countries.push(c);
+  }
+  const regions = Array.from(regionMap.entries()).sort((a, b) => b[1].total - a[1].total);
+
+  function BarRow({ label, total, contacted, skipped, flag, onClick, isHeader, isExpanded }: {
+    label: string; total: number; contacted: number; skipped: number;
+    flag?: string; onClick?: () => void; isHeader?: boolean; isExpanded?: boolean;
+  }) {
+    const remaining = total - contacted - skipped;
+    return (
+      <div className={onClick ? "cursor-pointer hover:bg-gray-50 rounded-lg px-2 py-1 -mx-2 transition" : ""} onClick={onClick}>
+        <div className="flex justify-between text-sm mb-1">
+          <span className={`flex items-center gap-1.5 ${isHeader ? "font-semibold text-gray-800" : "text-gray-700"}`}>
+            {flag && <span>{flag}</span>}
+            {label || "—"}
+            {onClick && <span className="text-gray-300 text-xs">{isExpanded ? "▲" : "▼"}</span>}
+          </span>
+          <span className="tabular-nums flex items-center gap-1 text-xs">
+            <span className="text-blue-500 font-bold">{contacted}</span>
+            {skipped > 0 && <span className="text-red-400 font-bold">+{skipped}s</span>}
+            <span className="text-gray-400">/</span>
+            <span className="text-gray-600 font-bold">{total}</span>
+            {remaining > 0 && <span className="text-gray-400 ml-1">({remaining} left)</span>}
+          </span>
+        </div>
+        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden flex">
+          <div className="h-full bg-blue-500 transition-all" style={{ width: `${total > 0 ? (contacted / total) * 100 : 0}%` }} />
+          <div className="h-full bg-red-300 transition-all"  style={{ width: `${total > 0 ? (skipped  / total) * 100 : 0}%` }} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-semibold text-gray-700">Countries / Regions</h2>
+        <div className="flex gap-1 text-xs">
+          <button
+            onClick={() => setView("region")}
+            className={`px-3 py-1 rounded-full font-medium transition ${view === "region" ? "bg-blue-100 text-blue-700" : "text-gray-500 hover:bg-gray-100"}`}
+          >By Region</button>
+          <button
+            onClick={() => setView("country")}
+            className={`px-3 py-1 rounded-full font-medium transition ${view === "country" ? "bg-blue-100 text-blue-700" : "text-gray-500 hover:bg-gray-100"}`}
+          >By Country</button>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        {view === "region" ? (
+          regions.map(([region, r]) => (
+            <div key={region}>
+              <BarRow
+                label={region} flag={REGION_FLAG[region]} total={r.total}
+                contacted={r.contacted} skipped={r.skipped} isHeader
+                isExpanded={expandedRegion === region}
+                onClick={() => setExpandedRegion(expandedRegion === region ? null : region)}
+              />
+              {expandedRegion === region && (
+                <div className="ml-4 mt-2 space-y-2 border-l-2 border-gray-100 pl-3">
+                  {r.countries.sort((a: CountryStat, b: CountryStat) => b._count.id - a._count.id).map((c: CountryStat) => (
+                    <BarRow
+                      key={c.country} label={c.country} total={c._count.id}
+                      contacted={c.contacted} skipped={c.skipped ?? 0}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          byCountry.slice(0, 15).map(c => (
+            <BarRow
+              key={c.country} label={c.country} total={c._count.id}
+              contacted={c.contacted} skipped={c.skipped ?? 0}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }

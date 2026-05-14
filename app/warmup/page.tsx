@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import LighthouseAuditButton from "@/app/components/LighthouseAuditButton";
 import FullReportModal from "@/app/components/FullReportModal";
@@ -44,18 +45,22 @@ const DOMAIN_COLOR: Record<string, string> = {
 };
 
 const PHASE_TABS = [
-  { phase: 0, label: "All Phases",       flag: "🌍", color: "blue"   },
-  { phase: 1, label: "Phase 1 — Europe", flag: "🇪🇺", color: "indigo" },
-  { phase: 2, label: "Phase 2 — Dubai",  flag: "🇦🇪", color: "amber"  },
-  { phase: 3, label: "Phase 3 — USA",    flag: "🇺🇸", color: "red"    },
+  { phase: 0, label: "All Phases",                    flag: "🌍", color: "blue"   },
+  { phase: 1, label: "Phase 1 — Europe",              flag: "🇪🇺", color: "indigo" },
+  { phase: 2, label: "Phase 2 — Dubai",               flag: "🇦🇪", color: "amber"  },
+  { phase: 3, label: "Phase 3 — USA",                 flag: "🇺🇸", color: "red"    },
+  { phase: 4, label: "Phase 4 — DACH / Benelux",      flag: "🇩🇪", color: "green"  },
+  { phase: 5, label: "Phase 5 — South & East Europe", flag: "🇮🇹", color: "purple" },
 ];
 
 const WARMUP_SCHEDULE = [
-  { range: "Days 1–3",   quota: 5,  perDomain: 1 },
-  { range: "Days 4–7",   quota: 10, perDomain: 2 },
-  { range: "Days 8–14",  quota: 15, perDomain: 3 },
-  { range: "Days 15–21", quota: 20, perDomain: 4 },
-  { range: "Days 22–30", quota: 25, perDomain: 5 },
+  { range: "Days 1–3",   quota: 15,  perDomain: 3  },
+  { range: "Days 4–7",   quota: 20,  perDomain: 4  },
+  { range: "Days 8–14",  quota: 25,  perDomain: 5  },
+  { range: "Days 15–21", quota: 35,  perDomain: 7  },
+  { range: "Days 22–30", quota: 50,  perDomain: 10 },
+  { range: "Days 31–65", quota: 75,  perDomain: 15 },
+  { range: "Days 66+",   quota: 100, perDomain: 20 },
 ];
 
 const COUNTRY_CODE: Record<string, string> = {
@@ -99,7 +104,11 @@ function interpolate(text: string, lead: Lead): string {
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
 export default function WarmupPage() {
-  const [activePhase, setActivePhase] = useState(1);
+  const searchParams = useSearchParams();
+  const [activePhase, setActivePhase] = useState(() => {
+    const p = searchParams.get("phase");
+    return p ? parseInt(p) : 1;
+  });
   const [templates, setTemplates] = useState<Template[]>([]);
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -29,9 +30,11 @@ type WaHistoryBatch = WaTodayBatch;
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PHASE_TABS = [
-  { phase: 1, label: "Phase 1 — Europe", flag: "🇪🇺" },
-  { phase: 2, label: "Phase 2 — Dubai",  flag: "🇦🇪" },
-  { phase: 3, label: "Phase 3 — USA",    flag: "🇺🇸" },
+  { phase: 1, label: "Phase 1 — Europe",              flag: "🇪🇺" },
+  { phase: 2, label: "Phase 2 — Dubai",               flag: "🇦🇪" },
+  { phase: 3, label: "Phase 3 — USA",                 flag: "🇺🇸" },
+  { phase: 4, label: "Phase 4 — DACH / Benelux",      flag: "🇩🇪" },
+  { phase: 5, label: "Phase 5 — South & East Europe", flag: "🇮🇹" },
 ];
 
 const WA_SCHEDULE = [
@@ -74,7 +77,11 @@ function cleanPhone(phone: string): string {
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
 export default function WhatsAppPage() {
-  const [activePhase, setActivePhase] = useState(1);
+  const searchParams = useSearchParams();
+  const [activePhase, setActivePhase] = useState(() => {
+    const p = searchParams.get("phase");
+    return p ? parseInt(p) : 1;
+  });
 
   return (
     <div className="space-y-5">

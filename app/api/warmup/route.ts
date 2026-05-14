@@ -4,12 +4,13 @@ import { prisma } from "@/lib/prisma";
 const DOMAINS = ["crm", "no_website", "health", "b2b", "tourism"];
 
 function getQuota(workingDay: number): number {
-  if (workingDay <= 3)  return 5;
-  if (workingDay <= 14) return 15;
-  if (workingDay <= 21) return 20;
-  if (workingDay <= 30) return 25;
-  if (workingDay <= 65) return 40;
-  return 60;
+  if (workingDay <= 3)  return 15;
+  if (workingDay <= 7)  return 20;
+  if (workingDay <= 14) return 25;
+  if (workingDay <= 21) return 35;
+  if (workingDay <= 30) return 50;
+  if (workingDay <= 65) return 75;
+  return 100;
 }
 
 function isWeekend(d: Date): boolean {
@@ -118,6 +119,12 @@ export async function POST(req: NextRequest) {
     leadsByDomain[domain] = interleaved;
   }
 
+  // Only distribute across domains that actually have leads for this phase
+  const activeDomains = DOMAINS.filter(d => leadsByDomain[d].length > 0);
+  if (activeDomains.length === 0) {
+    return NextResponse.json({ error: "No leads found for this phase." }, { status: 400 });
+  }
+
   const plan = await prisma.warmupPlan.create({
     data: { phase, startDate, totalDays: 30 },
   });
@@ -127,16 +134,16 @@ export async function POST(req: NextRequest) {
 
   for (let day = 1; day <= 30; day++) {
     const quota = getQuota(day);
-    const perDomain = quota / DOMAINS.length;
+    const perDomain = Math.floor(quota / activeDomains.length);
 
     const batchDate = new Date(startDate);
     batchDate.setDate(batchDate.getDate() + day - 1);
 
     const batch = await prisma.warmupBatch.create({
-      data: { planId: plan.id, dayNumber: day, date: batchDate, quota },
+      data: { planId: plan.id, dayNumber: day, date: batchDate, quota: perDomain * activeDomains.length },
     });
 
-    for (const domain of DOMAINS) {
+    for (const domain of activeDomains) {
       const pool = leadsByDomain[domain];
       const selected = pool.slice(usedPerDomain[domain], usedPerDomain[domain] + perDomain);
       usedPerDomain[domain] += perDomain;

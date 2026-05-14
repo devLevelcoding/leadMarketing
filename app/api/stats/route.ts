@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     ? { phase: parseInt(phaseParam) }
     : {};
 
-  const [total, byDomain, byStatus, byCountry, byPhase, byCountryContacted] = await Promise.all([
+  const [total, byDomain, byStatus, byCountry, byPhase, byCountryContacted, byCountrySkipped] = await Promise.all([
     prisma.lead.count({ where }),
     prisma.lead.groupBy({ by: ["domain"], where, _count: { id: true } }),
     prisma.lead.groupBy({ by: ["status"], where, _count: { id: true } }),
@@ -16,7 +16,6 @@ export async function GET(req: Request) {
       by: ["country"], where,
       _count: { id: true },
       orderBy: { _count: { id: "desc" } },
-      take: 10,
     }),
     prisma.lead.groupBy({
       by: ["phase"],
@@ -28,6 +27,11 @@ export async function GET(req: Request) {
       where: { ...where, status: { not: "NEW" } },
       _count: { id: true },
     }),
+    prisma.lead.groupBy({
+      by: ["country"],
+      where: { ...where, whatsappLeads: { some: { status: "SKIPPED" } } },
+      _count: { id: true },
+    }),
   ]);
 
   const contactedByCountry: Record<string, number> = {};
@@ -35,9 +39,15 @@ export async function GET(req: Request) {
     contactedByCountry[row.country ?? ""] = row._count.id;
   }
 
+  const skippedByCountry: Record<string, number> = {};
+  for (const row of byCountrySkipped) {
+    skippedByCountry[row.country ?? ""] = row._count.id;
+  }
+
   const byCountryWithProgress = byCountry.map(c => ({
     ...c,
     contacted: contactedByCountry[c.country ?? ""] ?? 0,
+    skipped: skippedByCountry[c.country ?? ""] ?? 0,
   }));
 
   return NextResponse.json({ total, byDomain, byStatus, byCountry: byCountryWithProgress, byPhase });
