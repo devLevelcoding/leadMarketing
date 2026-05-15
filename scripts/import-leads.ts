@@ -182,22 +182,36 @@ async function main() {
   }
 
   function domainFromFilename(file: string): string {
-    if (file.includes("law_firms"))             return "b2b";
-    if (file.includes("architects"))            return "b2b";
-    if (file.includes("professional_services")) return "b2b";
-    if (file.includes("veterinary"))            return "health";
-    if (file.includes("health"))               return "health";
-    if (file.includes("fitness"))              return "crm";
-    if (file.includes("beauty"))               return "crm";
-    if (file.includes("auto_workshops"))       return "crm";
-    if (file.includes("real_estate"))          return "crm";
-    if (file.includes("restaurants"))          return "crm";
+    if (file.includes("government_universities")) return "b2b";
+    if (file.includes("private_universities"))    return "b2b";
+    if (file.includes("learning_centers"))        return "crm";
+    if (file.includes("law_firms"))               return "b2b";
+    if (file.includes("architects"))              return "b2b";
+    if (file.includes("professional_services"))   return "b2b";
+    if (file.includes("notaries"))                return "b2b";
+    if (file.includes("veterinary"))              return "health";
+    if (file.includes("health"))                  return "health";
+    if (file.includes("opticians"))               return "health";
+    if (file.includes("psychologists"))           return "health";
+    if (file.includes("plumbers"))                return "no_website";
+    if (file.includes("electricians"))            return "no_website";
+    if (file.includes("fitness"))                 return "crm";
+    if (file.includes("beauty"))                  return "crm";
+    if (file.includes("auto_workshops"))          return "crm";
+    if (file.includes("real_estate"))             return "crm";
+    if (file.includes("restaurants"))             return "crm";
     return "b2b";
   }
 
-  for (const phaseNum of [4, 5]) {
+  const phaseLabels: Record<number, string> = {
+    4: "Benelux / DACH / Scandinavia",
+    5: "South & East Europe",
+    6: "Education — Universities & Learning Centers",
+  };
+
+  for (const phaseNum of [4, 5, 6]) {
     const phaseDir = path.join(SCRAPER_DIR, `phase${phaseNum}`);
-    const label = phaseNum === 4 ? "Benelux / DACH / Scandinavia" : "South & East Europe";
+    const label = phaseLabels[phaseNum];
     if (!fs.existsSync(phaseDir)) {
       console.log(`\n⏭  PHASE ${phaseNum} — ${label} — no data yet`);
       continue;

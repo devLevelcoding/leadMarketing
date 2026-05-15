@@ -13,6 +13,7 @@ const NAV = [
   { href: "/templates",   label: "Email Templates" },
   { href: "/warmup",      label: "Warmup" },
   { href: "/whatsapp",    label: "WhatsApp" },
+  { href: "/country",     label: "🌍 Country" },
   { href: "/lighthouse",  label: "Lighthouse" },
   { href: "/settings",    label: "Settings" },
 ];

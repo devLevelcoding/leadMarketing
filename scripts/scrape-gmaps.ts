@@ -981,6 +981,391 @@ const TARGETS: Target[] = [
   { country: "Bulgaria", city: "Plovdiv",      query: "beauty salon Plovdiv",       searchCategory: "Beauty Salon",      niche: "beauty",                domain: "crm",    phase: 5 },
   { country: "Bulgaria", city: "Varna",        query: "beauty salon Varna",         searchCategory: "Beauty Salon",      niche: "beauty",                domain: "crm",    phase: 5 },
   { country: "Bulgaria", city: "Burgas",       query: "beauty salon Burgas",        searchCategory: "Beauty Salon",      niche: "beauty",                domain: "crm",    phase: 5 },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PHASE 6 — EDUCATION
+  // 3 niches × all 25 countries ≈ 200 leads/country
+  //   government_universities : public/state universities  (domain: b2b)
+  //   private_universities    : private unis + high schools (domain: b2b)
+  //   learning_centers        : courses, formation, certification (domain: crm)
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ── AUSTRIA ────────────────────────────────────────────────────────────
+  { country: "Austria", city: "Vienna",  query: "Universität Wien",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "Hochschule Wien",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Graz",    query: "Universität Graz",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "private Universität Wien",      searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "private Hochschule Wien",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "Weiterbildungszentrum Wien",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "Sprachschule Wien",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── GERMANY ────────────────────────────────────────────────────────────
+  { country: "Germany", city: "Berlin",    query: "Universität Berlin",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Munich",    query: "Universität München",           searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Hamburg",   query: "Universität Hamburg",           searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Frankfurt", query: "Hochschule Frankfurt",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Berlin",    query: "private Hochschule Berlin",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Munich",    query: "private Universität München",   searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Berlin",    query: "Weiterbildung Kurs Berlin",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Germany", city: "Munich",    query: "Sprachschule München",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Germany", city: "Hamburg",   query: "Sprachschule Hamburg",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── BELGIUM ────────────────────────────────────────────────────────────
+  { country: "Belgium", city: "Brussels",  query: "université Bruxelles",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Brussels",  query: "universiteit Brussel",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Ghent",     query: "universiteit Gent",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Brussels",  query: "private university Brussels",   searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Brussels",  query: "centre de formation Bruxelles", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Belgium", city: "Brussels",  query: "language school Brussels",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── NETHERLANDS ────────────────────────────────────────────────────────
+  { country: "Netherlands", city: "Amsterdam", query: "universiteit Amsterdam",        searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Rotterdam", query: "universiteit Rotterdam",        searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Utrecht",   query: "universiteit Utrecht",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Amsterdam", query: "private university Amsterdam",  searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Amsterdam", query: "language school Amsterdam",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Netherlands", city: "Rotterdam", query: "training center Rotterdam",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SWITZERLAND ────────────────────────────────────────────────────────
+  { country: "Switzerland", city: "Zurich",  query: "Universität Zürich",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Geneva",  query: "université Genève",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Basel",   query: "Universität Basel",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Zurich",  query: "private Hochschule Zürich",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Zurich",  query: "Sprachschule Zürich",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Switzerland", city: "Geneva",  query: "centre de formation Genève",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SWEDEN ─────────────────────────────────────────────────────────────
+  { country: "Sweden", city: "Stockholm",  query: "universitet Stockholm",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Sweden", city: "Gothenburg", query: "universitet Göteborg",           searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Sweden", city: "Stockholm",  query: "private university Stockholm",   searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Sweden", city: "Stockholm",  query: "language school Stockholm",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Sweden", city: "Stockholm",  query: "professional training Stockholm",searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── NORWAY ─────────────────────────────────────────────────────────────
+  { country: "Norway", city: "Oslo",    query: "universitet Oslo",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Norway", city: "Bergen",  query: "universitet Bergen",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Norway", city: "Oslo",    query: "private university Oslo",         searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Norway", city: "Oslo",    query: "language school Oslo",            searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Norway", city: "Oslo",    query: "kurs senter Oslo",                searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── DENMARK ────────────────────────────────────────────────────────────
+  { country: "Denmark", city: "Copenhagen", query: "universitet København",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Denmark", city: "Aarhus",     query: "universitet Aarhus",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Denmark", city: "Copenhagen", query: "private university Copenhagen", searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Denmark", city: "Copenhagen", query: "language school Copenhagen",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Denmark", city: "Copenhagen", query: "kursuscenter Copenhagen",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── UAE ────────────────────────────────────────────────────────────────
+  { country: "UAE", city: "Dubai",     query: "university Dubai",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Abu Dhabi", query: "university Abu Dhabi",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Dubai",     query: "private university Dubai",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Abu Dhabi", query: "private college Abu Dhabi",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Dubai",     query: "training center Dubai",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "UAE", city: "Dubai",     query: "language school Dubai",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "UAE", city: "Abu Dhabi", query: "professional courses Abu Dhabi",  searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── USA ────────────────────────────────────────────────────────────────
+  { country: "USA", city: "New York",    query: "university New York",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "USA", city: "Los Angeles", query: "university Los Angeles",          searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "USA", city: "Chicago",     query: "university Chicago",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "USA", city: "New York",    query: "private college New York",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "USA", city: "Los Angeles", query: "private college Los Angeles",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "USA", city: "New York",    query: "professional training New York",  searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "USA", city: "Los Angeles", query: "language school Los Angeles",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "USA", city: "Chicago",     query: "certification courses Chicago",   searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── IRELAND ────────────────────────────────────────────────────────────
+  { country: "Ireland", city: "Dublin", query: "university Dublin",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Ireland", city: "Cork",   query: "university Cork",                 searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Ireland", city: "Dublin", query: "private college Dublin",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Ireland", city: "Dublin", query: "language school Dublin",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Ireland", city: "Dublin", query: "professional training Dublin",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ESTONIA ────────────────────────────────────────────────────────────
+  { country: "Estonia", city: "Tallinn", query: "ülikool Tallinn",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Estonia", city: "Tartu",   query: "ülikool Tartu",                  searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "private university Tallinn",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "language school Tallinn",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "koolituskeskus Tallinn",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ICELAND ────────────────────────────────────────────────────────────
+  { country: "Iceland", city: "Reykjavik", query: "háskóli Reykjavík",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "university Reykjavik",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "private university Reykjavik", searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "language school Reykjavik",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── LUXEMBOURG ─────────────────────────────────────────────────────────
+  { country: "Luxembourg", city: "Luxembourg City", query: "université Luxembourg",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "university Luxembourg",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "private college Luxembourg",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "centre de formation Luxembourg",searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "language school Luxembourg",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── LIECHTENSTEIN ──────────────────────────────────────────────────────
+  { country: "Liechtenstein", city: "Vaduz", query: "Universität Liechtenstein",   searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Liechtenstein", city: "Vaduz", query: "private Hochschule Vaduz",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Liechtenstein", city: "Vaduz", query: "Sprachschule Vaduz",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ITALY ──────────────────────────────────────────────────────────────
+  { country: "Italy", city: "Rome",    query: "università Roma",                  searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Milan",   query: "università Milano",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Naples",  query: "università Napoli",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Rome",    query: "università privata Roma",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Milan",   query: "università privata Milano",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Rome",    query: "centro formazione Roma",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Italy", city: "Milan",   query: "scuola di lingua Milano",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Italy", city: "Naples",  query: "corso professionale Napoli",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SPAIN ──────────────────────────────────────────────────────────────
+  { country: "Spain", city: "Madrid",    query: "universidad Madrid",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Barcelona", query: "universidad Barcelona",           searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Valencia",  query: "universidad Valencia",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Madrid",    query: "universidad privada Madrid",      searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Barcelona", query: "universidad privada Barcelona",   searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Madrid",    query: "centro de formación Madrid",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Spain", city: "Barcelona", query: "academia idiomas Barcelona",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Spain", city: "Valencia",  query: "academia formación Valencia",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── PORTUGAL ───────────────────────────────────────────────────────────
+  { country: "Portugal", city: "Lisbon", query: "universidade Lisboa",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Portugal", city: "Porto",  query: "universidade Porto",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Portugal", city: "Lisbon", query: "universidade privada Lisboa",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Portugal", city: "Lisbon", query: "centro de formação Lisboa",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Portugal", city: "Porto",  query: "escola de línguas Porto",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── POLAND ─────────────────────────────────────────────────────────────
+  { country: "Poland", city: "Warsaw",  query: "uniwersytet Warszawa",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Krakow",  query: "uniwersytet Kraków",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Wroclaw", query: "uniwersytet Wrocław",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Warsaw",  query: "uczelnia prywatna Warszawa",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Warsaw",  query: "centrum szkoleniowe Warszawa",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Poland", city: "Krakow",  query: "szkoła językowa Kraków",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ROMANIA ────────────────────────────────────────────────────────────
+  { country: "Romania", city: "Bucharest", query: "universitate Bucuresti",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Romania", city: "Cluj",      query: "universitate Cluj",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Romania", city: "Bucharest", query: "universitate privata Bucuresti", searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Romania", city: "Bucharest", query: "centru de formare Bucuresti",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Romania", city: "Cluj",      query: "scoala de limbi Cluj",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── CROATIA ────────────────────────────────────────────────────────────
+  { country: "Croatia", city: "Zagreb", query: "sveučilište Zagreb",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Croatia", city: "Split",  query: "sveučilište Split",                searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Croatia", city: "Zagreb", query: "privatno sveučilište Zagreb",      searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Croatia", city: "Zagreb", query: "centar za obrazovanje Zagreb",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Croatia", city: "Zagreb", query: "jezična škola Zagreb",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── GREECE ─────────────────────────────────────────────────────────────
+  { country: "Greece", city: "Athens",       query: "university Athens",            searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Greece", city: "Thessaloniki", query: "university Thessaloniki",      searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Greece", city: "Athens",       query: "private university Athens",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Greece", city: "Athens",       query: "language school Athens",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Greece", city: "Athens",       query: "professional training Athens", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── BULGARIA ───────────────────────────────────────────────────────────
+  { country: "Bulgaria", city: "Sofia",   query: "university Sofia",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Bulgaria", city: "Plovdiv", query: "university Plovdiv",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Bulgaria", city: "Sofia",   query: "private university Sofia",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Bulgaria", city: "Sofia",   query: "language school Sofia",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Bulgaria", city: "Sofia",   query: "training center Sofia",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── CZECH REPUBLIC ─────────────────────────────────────────────────────
+  { country: "Czech Republic", city: "Prague", query: "univerzita Praha",                  searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Czech Republic", city: "Brno",   query: "univerzita Brno",                   searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Czech Republic", city: "Prague", query: "soukromá vysoká škola Praha",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Czech Republic", city: "Prague", query: "jazyková škola Praha",              searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Czech Republic", city: "Prague", query: "vzdělávací centrum Praha",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── HUNGARY ────────────────────────────────────────────────────────────
+  { country: "Hungary", city: "Budapest", query: "egyetem Budapest",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Hungary", city: "Debrecen", query: "egyetem Debrecen",               searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Hungary", city: "Budapest", query: "magánegyetem Budapest",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Hungary", city: "Budapest", query: "nyelviskolák Budapest",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Hungary", city: "Budapest", query: "képzési központ Budapest",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PHASE 6 — TOP-UP: extra private_universities + learning_centers per country
+  // Goal: reach ~200 total per country despite sparse gov_university listings
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ── AUSTRIA top-up ─────────────────────────────────────────────────────
+  { country: "Austria", city: "Graz",    query: "Fachhochschule Graz",            searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Linz",    query: "Privatuniversität Linz",         searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Austria", city: "Vienna",  query: "Volkshochschule Wien",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Austria", city: "Graz",    query: "Sprachschule Graz",              searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Austria", city: "Linz",    query: "Weiterbildung Linz",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── GERMANY top-up ─────────────────────────────────────────────────────
+  { country: "Germany", city: "Cologne",  query: "private Hochschule Köln",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Dusseldorf", query: "private Hochschule Düsseldorf",searchCategory: "Private University",   niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Germany", city: "Berlin",   query: "Volkshochschule Berlin",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Germany", city: "Cologne",  query: "Sprachschule Köln",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Germany", city: "Frankfurt",query: "Weiterbildungszentrum Frankfurt",searchCategory: "Learning Center",      niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── BELGIUM top-up ─────────────────────────────────────────────────────
+  { country: "Belgium", city: "Antwerp",  query: "universiteit Antwerpen",        searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Liege",    query: "université Liège",              searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Antwerp",  query: "private university Antwerp",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Ghent",    query: "private university Ghent",      searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Liege",    query: "haute école Liège",             searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Belgium", city: "Brussels", query: "taalschool Brussel",            searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Belgium", city: "Antwerp",  query: "language school Antwerp",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Belgium", city: "Ghent",    query: "taalschool Gent",               searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Belgium", city: "Liege",    query: "centre de formation Liège",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── NETHERLANDS top-up ─────────────────────────────────────────────────
+  { country: "Netherlands", city: "Amsterdam", query: "hogeschool Amsterdam",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Rotterdam", query: "hogeschool Rotterdam",         searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Utrecht",   query: "hogeschool Utrecht",           searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Den Haag",  query: "private university Den Haag",  searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Amsterdam", query: "private college Amsterdam",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Netherlands", city: "Rotterdam", query: "taalschool Rotterdam",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Netherlands", city: "Amsterdam", query: "taalschool Amsterdam",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Netherlands", city: "Utrecht",   query: "language school Utrecht",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Netherlands", city: "Den Haag",  query: "professional training Den Haag",searchCategory: "Learning Center",     niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SWITZERLAND top-up ─────────────────────────────────────────────────
+  { country: "Switzerland", city: "Bern",    query: "Fachhochschule Bern",           searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Geneva",  query: "private university Geneva",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Switzerland", city: "Zurich",  query: "Volkshochschule Zürich",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Switzerland", city: "Bern",    query: "Sprachschule Bern",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Switzerland", city: "Lausanne",query: "formation professionnelle Lausanne",searchCategory: "Learning Center",   niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SWEDEN top-up ──────────────────────────────────────────────────────
+  { country: "Sweden", city: "Gothenburg", query: "private university Gothenburg",  searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Sweden", city: "Malmo",      query: "private college Malmö",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Sweden", city: "Stockholm",  query: "utbildningscenter Stockholm",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Sweden", city: "Gothenburg", query: "language school Gothenburg",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Sweden", city: "Malmo",      query: "sprachschule Malmö",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── NORWAY top-up ──────────────────────────────────────────────────────
+  { country: "Norway", city: "Trondheim", query: "private university Trondheim",   searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Norway", city: "Bergen",    query: "private college Bergen",         searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Norway", city: "Bergen",    query: "language school Bergen",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Norway", city: "Oslo",      query: "opplæringssenter Oslo",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Norway", city: "Trondheim", query: "professional training Trondheim",searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── DENMARK top-up ─────────────────────────────────────────────────────
+  { country: "Denmark", city: "Aarhus",     query: "private college Aarhus",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Denmark", city: "Odense",     query: "private university Odense",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Denmark", city: "Copenhagen", query: "sprogskole København",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Denmark", city: "Aarhus",     query: "language school Aarhus",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Denmark", city: "Odense",     query: "professional training Odense",  searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── UAE top-up ─────────────────────────────────────────────────────────
+  { country: "UAE", city: "Dubai",     query: "private college Dubai",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Sharjah",   query: "university Sharjah",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "UAE", city: "Dubai",     query: "IT training center Dubai",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "UAE", city: "Dubai",     query: "certification courses Dubai",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "UAE", city: "Abu Dhabi", query: "language school Abu Dhabi",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── USA top-up ─────────────────────────────────────────────────────────
+  { country: "USA", city: "Chicago",     query: "private college Chicago",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "USA", city: "Houston",     query: "university Houston",             searchCategory: "Government University", niche: "government_universities", domain: "b2b", phase: 6 },
+  { country: "USA", city: "New York",    query: "language school New York",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "USA", city: "Los Angeles", query: "professional training Los Angeles",searchCategory: "Learning Center",     niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "USA", city: "Chicago",     query: "IT training center Chicago",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── IRELAND top-up ─────────────────────────────────────────────────────
+  { country: "Ireland", city: "Dublin", query: "IT college Dublin",              searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Ireland", city: "Cork",   query: "private college Cork",           searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Ireland", city: "Dublin", query: "language school Dublin",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Ireland", city: "Cork",   query: "professional training Cork",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Ireland", city: "Galway", query: "language school Galway",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ESTONIA top-up ─────────────────────────────────────────────────────
+  { country: "Estonia", city: "Tartu",   query: "private university Tartu",      searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "college Tallinn",               searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Estonia", city: "Tartu",   query: "language school Tartu",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "IT koolitus Tallinn",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Estonia", city: "Tallinn", query: "professional training Tallinn", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ICELAND top-up ─────────────────────────────────────────────────────
+  { country: "Iceland", city: "Reykjavik", query: "college Reykjavik",           searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "professional training Reykjavik",searchCategory: "Learning Center",   niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "IT courses Reykjavik",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Iceland", city: "Reykjavik", query: "language school Iceland",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── LUXEMBOURG top-up ──────────────────────────────────────────────────
+  { country: "Luxembourg", city: "Luxembourg City", query: "private college Luxembourg City",  searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "Sprachschule Luxembourg",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "IT training Luxembourg",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Luxembourg", city: "Luxembourg City", query: "professional courses Luxembourg", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── LIECHTENSTEIN top-up ───────────────────────────────────────────────
+  { country: "Liechtenstein", city: "Vaduz", query: "language school Liechtenstein",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Liechtenstein", city: "Vaduz", query: "Weiterbildung Liechtenstein",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Liechtenstein", city: "Vaduz", query: "professional training Vaduz",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ITALY top-up ───────────────────────────────────────────────────────
+  { country: "Italy", city: "Rome",     query: "college privato Roma",            searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Milan",    query: "istituto privato Milano",         searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Italy", city: "Rome",     query: "centro lingue Roma",              searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Italy", city: "Milan",    query: "formazione professionale Milano", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Italy", city: "Florence", query: "scuola di lingua Firenze",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── SPAIN top-up ───────────────────────────────────────────────────────
+  { country: "Spain", city: "Seville",   query: "universidad privada Sevilla",    searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Bilbao",    query: "universidad privada Bilbao",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Spain", city: "Madrid",    query: "escuela de idiomas Madrid",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Spain", city: "Barcelona", query: "formación profesional Barcelona",searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Spain", city: "Seville",   query: "academia formación Sevilla",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── PORTUGAL top-up ────────────────────────────────────────────────────
+  { country: "Portugal", city: "Porto",  query: "college privado Porto",          searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Portugal", city: "Lisbon", query: "escola superior Lisboa",         searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Portugal", city: "Porto",  query: "centro formação Porto",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Portugal", city: "Lisbon", query: "escola idiomas Lisboa",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Portugal", city: "Braga",  query: "language school Braga",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── POLAND top-up ──────────────────────────────────────────────────────
+  { country: "Poland", city: "Gdansk",  query: "prywatna uczelnia Gdańsk",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Poznan",  query: "uczelnia prywatna Poznań",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Poland", city: "Krakow",  query: "centrum szkoleniowe Kraków",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Poland", city: "Warsaw",  query: "szkoła językowa Warszawa",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Poland", city: "Wroclaw", query: "language school Wrocław",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── ROMANIA top-up ─────────────────────────────────────────────────────
+  { country: "Romania", city: "Cluj",       query: "universitate privata Cluj",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Romania", city: "Timisoara",  query: "college Timișoara",             searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Romania", city: "Bucharest",  query: "centru formare Bucuresti",      searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Romania", city: "Cluj",       query: "scoala de limbi Cluj",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Romania", city: "Timisoara",  query: "language school Timișoara",     searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── CROATIA top-up ─────────────────────────────────────────────────────
+  { country: "Croatia", city: "Rijeka",  query: "visoka škola Rijeka",             searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Croatia", city: "Osijek",  query: "privatno sveučilište Osijek",     searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Croatia", city: "Split",   query: "jezična škola Split",             searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Croatia", city: "Zagreb",  query: "centar za učenje Zagreb",         searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Croatia", city: "Rijeka",  query: "language school Rijeka",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── GREECE top-up ──────────────────────────────────────────────────────
+  { country: "Greece", city: "Thessaloniki", query: "private college Thessaloniki", searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Greece", city: "Athens",       query: "private school Athens",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Greece", city: "Thessaloniki", query: "language school Thessaloniki", searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Greece", city: "Athens",       query: "training center Athens",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Greece", city: "Patras",       query: "language school Patras",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── BULGARIA top-up ────────────────────────────────────────────────────
+  { country: "Bulgaria", city: "Varna",   query: "private university Varna",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Bulgaria", city: "Plovdiv", query: "college Plovdiv",                searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Bulgaria", city: "Plovdiv", query: "language school Plovdiv",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Bulgaria", city: "Sofia",   query: "IT training center Sofia",       searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Bulgaria", city: "Varna",   query: "professional training Varna",    searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── CZECH REPUBLIC top-up ──────────────────────────────────────────────
+  { country: "Czech Republic", city: "Ostrava", query: "soukromá škola Ostrava",       searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Czech Republic", city: "Plzen",   query: "private college Plzeň",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Czech Republic", city: "Brno",    query: "jazyková škola Brno",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Czech Republic", city: "Ostrava", query: "vzdělávací centrum Ostrava",   searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Czech Republic", city: "Prague",  query: "IT kurzy Praha",               searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ── HUNGARY top-up ─────────────────────────────────────────────────────
+  { country: "Hungary", city: "Miskolc",  query: "magániskola Miskolc",            searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Hungary", city: "Pecs",     query: "private university Pécs",        searchCategory: "Private University",    niche: "private_universities",    domain: "b2b", phase: 6 },
+  { country: "Hungary", city: "Debrecen", query: "nyelviskolák Debrecen",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Hungary", city: "Miskolc",  query: "képzési központ Miskolc",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+  { country: "Hungary", city: "Gyor",     query: "language school Győr",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
 ];
 
 // ─── CSV helpers ──────────────────────────────────────────────────────────────
@@ -1018,6 +1403,7 @@ async function main() {
   // Parse CLI args
   const args = process.argv.slice(2);
   const filterCountry = args.includes("--country") ? args[args.indexOf("--country") + 1] : null;
+  const filterNiche   = args.includes("--niche")   ? args[args.indexOf("--niche") + 1]   : null;
   const limitArg      = args.includes("--limit")   ? parseInt(args[args.indexOf("--limit") + 1]) : RESULTS_PER_SEARCH;
   const phaseArg      = args.includes("--phase")   ? parseInt(args[args.indexOf("--phase") + 1]) : null;
 
@@ -1026,7 +1412,8 @@ async function main() {
   let targets = filterCountry
     ? TARGETS.filter(t => t.country.toLowerCase() === filterCountry.toLowerCase())
     : TARGETS;
-  if (phaseArg) targets = targets.filter(t => (t.phase ?? 4) === phaseArg);
+  if (phaseArg)       targets = targets.filter(t => (t.phase ?? 4) === phaseArg);
+  if (filterNiche)    targets = targets.filter(t => t.niche.toLowerCase() === filterNiche.toLowerCase());
 
   console.log(`\n🗺  Google Maps Scraper — LevelCoding`);
   console.log(`   Targets : ${targets.length} searches`);
@@ -1105,12 +1492,20 @@ async function main() {
           await article.click();
           await delay(DETAIL_DELAY_MS);
 
-          // Extract name from URL (more reliable than h1 which can return the search heading)
+          // Wait for URL to navigate to the place page (navigation may lag behind the click)
+          if (!page.url().includes('/place/')) {
+            await page.waitForURL('**/place/**', { timeout: 3000 }).catch(() => {});
+          }
+
+          // Extract name from URL (more reliable than h1 which returns the search results heading)
           const currentUrl = page.url();
           let name: string | null = null;
           if (currentUrl.includes('/place/')) {
             const raw = currentUrl.split('/place/')[1]?.split('/@')[0];
-            if (raw) name = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
+            if (raw) {
+              try { name = decodeURIComponent(raw.replace(/\+/g, ' ')).trim(); }
+              catch { name = null; }
+            }
           }
           if (!name) name = await page.locator('h1').first().textContent().catch(() => null);
           if (!name?.trim()) continue;

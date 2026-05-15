@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 const DOMAIN_LABELS: Record<string, string> = {
   crm:        "Retail / CRM",
@@ -26,12 +26,13 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const TABS = [
-  { id: "all",     label: "All Phases",           phase: "all", flag: "🌍", color: "blue" },
-  { id: "phase1",  label: "Phase 1 — Europe",     phase: "1",   flag: "🇪🇺", color: "indigo" },
-  { id: "phase2",  label: "Phase 2 — Dubai",      phase: "2",   flag: "🇦🇪", color: "amber" },
-  { id: "phase3",  label: "Phase 3 — USA",        phase: "3",   flag: "🇺🇸", color: "red" },
-  { id: "phase4",  label: "Phase 4 — DACH / Benelux",      phase: "4", flag: "🇩🇪", color: "green" },
-  { id: "phase5",  label: "Phase 5 — South & East Europe", phase: "5", flag: "🇮🇹", color: "purple" },
+  { id: "all",     label: "All",              phase: "all", flag: "🌍", color: "blue" },
+  { id: "phase1",  label: "Europe",           phase: "1",   flag: "🇪🇺", color: "indigo" },
+  { id: "phase2",  label: "Dubai",            phase: "2",   flag: "🇦🇪", color: "amber" },
+  { id: "phase3",  label: "USA",              phase: "3",   flag: "🇺🇸", color: "red" },
+  { id: "phase4",  label: "DACH / Benelux",   phase: "4",   flag: "🇩🇪", color: "green" },
+  { id: "phase5",  label: "South & East EU",  phase: "5",   flag: "🇮🇹", color: "purple" },
+  { id: "phase6",  label: "Education",        phase: "6",   flag: "🎓", color: "teal"   },
 ];
 
 type Stats = {
@@ -63,6 +64,7 @@ function StatCard({ label, value, color }: { label: string; value: number; color
     amber:  "bg-amber-50 text-amber-700 border-amber-200",
     red:    "bg-red-50 text-red-700 border-red-200",
     green:  "bg-green-50 text-green-700 border-green-200",
+    teal:   "bg-teal-50 text-teal-700 border-teal-200",
     yellow: "bg-yellow-50 text-yellow-700 border-yellow-200",
     gray:   "bg-gray-50 text-gray-700 border-gray-200",
   };
@@ -273,22 +275,34 @@ export default function Dashboard() {
 
       {/* Phase summary strip */}
       {globalStats && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center">
             <div className="text-lg font-bold text-blue-700">{globalStats.total.toLocaleString()}</div>
-            <div className="text-xs text-blue-500 font-medium">Total All Phases</div>
+            <div className="text-xs text-blue-500 font-medium">🌍 All Phases</div>
           </div>
           <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-center">
             <div className="text-lg font-bold text-indigo-700">{phaseLeads(1).toLocaleString()}</div>
-            <div className="text-xs text-indigo-500 font-medium">🇪🇺 Phase 1 Europe</div>
+            <div className="text-xs text-indigo-500 font-medium">🇪🇺 Phase 1</div>
           </div>
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">
             <div className="text-lg font-bold text-amber-700">{phaseLeads(2).toLocaleString()}</div>
-            <div className="text-xs text-amber-500 font-medium">🇦🇪 Phase 2 Dubai</div>
+            <div className="text-xs text-amber-500 font-medium">🇦🇪 Phase 2</div>
           </div>
           <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-center">
             <div className="text-lg font-bold text-red-700">{phaseLeads(3).toLocaleString()}</div>
-            <div className="text-xs text-red-500 font-medium">🇺🇸 Phase 3 USA</div>
+            <div className="text-xs text-red-500 font-medium">🇺🇸 Phase 3</div>
+          </div>
+          <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-center">
+            <div className="text-lg font-bold text-green-700">{phaseLeads(4).toLocaleString()}</div>
+            <div className="text-xs text-green-500 font-medium">🇩🇪 Phase 4</div>
+          </div>
+          <div className="bg-purple-50 border border-purple-200 rounded-xl p-3 text-center">
+            <div className="text-lg font-bold text-purple-700">{phaseLeads(5).toLocaleString()}</div>
+            <div className="text-xs text-purple-500 font-medium">🇮🇹 Phase 5</div>
+          </div>
+          <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 text-center">
+            <div className="text-lg font-bold text-teal-700">{phaseLeads(6).toLocaleString()}</div>
+            <div className="text-xs text-teal-500 font-medium">🎓 Phase 6</div>
           </div>
         </div>
       )}
@@ -420,20 +434,27 @@ function WorldClockPanel() {
               <div className="text-xl font-bold tracking-tight">{timeStr}</div>
               <div className="flex items-center justify-between gap-1 mt-0.5">
                 <span className="text-xs opacity-75">{label}</span>
-                {actionable && (
-                  <span className="flex gap-1">
-                    <a
-                      href={`/warmup?phase=${phase}`}
-                      title="Email warmup"
-                      className="text-xs opacity-80 hover:opacity-100 leading-none"
-                    >📧</a>
-                    <a
-                      href={`/whatsapp?phase=${phase}`}
-                      title="WhatsApp campaign"
-                      className="text-xs opacity-80 hover:opacity-100 leading-none"
-                    >💬</a>
-                  </span>
-                )}
+                <span className="flex gap-1">
+                  <a
+                    href={`/country?country=${encodeURIComponent(country)}`}
+                    title="View country leads"
+                    className="text-xs opacity-60 hover:opacity-100 leading-none"
+                  >🗂️</a>
+                  {actionable && (
+                    <>
+                      <a
+                        href={`/warmup?phase=${phase}`}
+                        title="Email warmup"
+                        className="text-xs opacity-80 hover:opacity-100 leading-none"
+                      >📧</a>
+                      <a
+                        href={`/whatsapp?phase=${phase}`}
+                        title="WhatsApp campaign"
+                        className="text-xs opacity-80 hover:opacity-100 leading-none"
+                      >💬</a>
+                    </>
+                  )}
+                </span>
               </div>
             </div>
           );
