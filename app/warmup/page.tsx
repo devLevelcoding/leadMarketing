@@ -11,6 +11,8 @@ import { HistoryTab } from "./tabs/HistoryTab";
 import { UpcomingTab } from "./tabs/UpcomingTab";
 import { MonthPlanTab } from "./tabs/MonthPlanTab";
 import { LongTermPlanTab } from "./tabs/LongTermPlanTab";
+import { CountryGridTab } from "./tabs/CountryGridTab";
+import { InstagramTab } from "./tabs/InstagramTab";
 
 // ─── Root Page ────────────────────────────────────────────────────────────────
 
@@ -61,7 +63,7 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
   const [loading, setLoading]       = useState(true);
   const [initiating, setInitiating] = useState(false);
   const [startDate, setStartDate]   = useState(new Date().toISOString().slice(0, 10));
-  const [activeTab, setActiveTab]   = useState<"today" | "plan" | "plan90" | "history" | "next5" | "next10">("today");
+  const [activeTab, setActiveTab]   = useState<"today" | "plan" | "plan90" | "history" | "next5" | "next10" | "countries" | "instagram">("today");
 
   const [todayBatch, setTodayBatch]     = useState<TodayBatch | null>(null);
   const [todayLoading, setTodayLoading] = useState(false);
@@ -303,16 +305,20 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
 
       <div className="flex gap-1 border-b overflow-x-auto">
         {([
-          { key: "today",   label: "Today's Leads" },
-          { key: "next5",   label: "Next 5 Days" },
-          { key: "next10",  label: "Next 10 Days" },
-          { key: "plan",    label: "Month Plan" },
-          { key: "plan90",  label: "90-Day Projection" },
-          { key: "history", label: "History" },
+          { key: "today",     label: "Today's Leads" },
+          { key: "next5",     label: "Next 5 Days" },
+          { key: "next10",    label: "Next 10 Days" },
+          { key: "plan",      label: "Month Plan" },
+          { key: "plan90",    label: "90-Day Projection" },
+          { key: "history",   label: "History" },
+          ...(phase === 6 ? [{ key: "countries" as const, label: "🌍 Countries" }] : []),
+          ...(phase === 6 ? [{ key: "instagram" as const, label: "📸 Instagram" }] : []),
         ] as const).map(({ key, label }) => (
           <button key={key} onClick={() => setActiveTab(key)}
             className={`px-5 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition ${
-              activeTab === key ? "border-blue-600 text-blue-700" : "border-transparent text-gray-500 hover:text-gray-800"
+              activeTab === key
+                ? key === "countries" ? "border-teal-600 text-teal-700" : key === "instagram" ? "border-pink-500 text-pink-600" : "border-blue-600 text-blue-700"
+                : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
             {label}
@@ -320,12 +326,14 @@ function PhaseWarmup({ phase, templates }: { phase: number; templates: Template[
         ))}
       </div>
 
-      {activeTab === "today"   && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} lhScores={lhScores} lhScanning={lhScanning} lhProgress={lhProgress} onRunLhScan={runLhScan} repScanning={repScanning} repProgress={repProgress} onRunReportScan={runReportScan} />}
-      {activeTab === "next5"   && <UpcomingTab batches={upcoming5}  loading={upcoming5Loading}  days={5}  />}
-      {activeTab === "next10"  && <UpcomingTab batches={upcoming10} loading={upcoming10Loading} days={10} />}
-      {activeTab === "plan"    && <MonthPlanTab batches={plan.batches.slice(0, 30)} />}
-      {activeTab === "plan90"  && <LongTermPlanTab batches={plan.batches} />}
-      {activeTab === "history" && <HistoryTab batches={historyBatches} loading={historyLoading} />}
+      {activeTab === "today"     && <TodayTab batch={todayBatch} loading={todayLoading} updating={updating} onStatus={setStatus} templates={templates} showAdvanceModal={showAdvanceModal} advancing={advancing} onOpenModal={() => setShowAdvanceModal(true)} onAdvance={advanceDay} onCloseModal={() => setShowAdvanceModal(false)} page={todayPage} setPage={setTodayPage} lhScores={lhScores} lhScanning={lhScanning} lhProgress={lhProgress} onRunLhScan={runLhScan} repScanning={repScanning} repProgress={repProgress} onRunReportScan={runReportScan} expectedPhase={phase} />}
+      {activeTab === "next5"     && <UpcomingTab batches={upcoming5}  loading={upcoming5Loading}  days={5}  />}
+      {activeTab === "next10"    && <UpcomingTab batches={upcoming10} loading={upcoming10Loading} days={10} />}
+      {activeTab === "plan"      && <MonthPlanTab batches={plan.batches.slice(0, 30)} />}
+      {activeTab === "plan90"    && <LongTermPlanTab batches={plan.batches} />}
+      {activeTab === "history"   && <HistoryTab batches={historyBatches} loading={historyLoading} />}
+      {activeTab === "countries" && <CountryGridTab />}
+      {activeTab === "instagram" && <InstagramTab />}
     </div>
   );
 }

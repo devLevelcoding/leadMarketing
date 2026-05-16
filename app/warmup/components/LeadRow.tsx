@@ -177,15 +177,47 @@ export function CopyLeadDataButton({ lead, batchDate }: { lead: Lead; batchDate:
   );
 }
 
-export default function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore, showPhone, showAudit, showEmailHistory }: {
+const EDUCATION_NICHES: { match: string; label: string; icon: string; cls: string }[] = [
+  { match: "government",  label: "Gov. University",   icon: "🏛️", cls: "bg-blue-100 text-blue-800"   },
+  { match: "private",     label: "Private Univ.",     icon: "🎓", cls: "bg-purple-100 text-purple-800" },
+  { match: "learning",    label: "Learning Center",   icon: "📚", cls: "bg-teal-100 text-teal-800"    },
+  { match: "language",    label: "Language School",   icon: "🌐", cls: "bg-cyan-100 text-cyan-800"    },
+];
+
+function SegmentBadge({ domain, searchCategory }: { domain: string; searchCategory: string | null }) {
+  const sc = (searchCategory ?? "").toLowerCase();
+  const niche = EDUCATION_NICHES.find(n => sc.includes(n.match));
+  if (niche) {
+    return (
+      <div className="flex flex-col gap-1">
+        <span className={`text-xs px-2 py-0.5 rounded font-medium w-fit ${niche.cls}`}>
+          {niche.icon} {niche.label}
+        </span>
+        <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium w-fit ${DOMAIN_COLOR[domain] ?? "bg-gray-100 text-gray-500"}`}>
+          {DOMAIN_LABEL[domain] ?? domain}
+        </span>
+      </div>
+    );
+  }
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded font-medium ${DOMAIN_COLOR[domain] ?? "bg-gray-100 text-gray-600"}`}>
+      {DOMAIN_LABEL[domain] ?? domain}
+    </span>
+  );
+}
+
+export default function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore, showPhone, showAudit, showEmailHistory, expectedPhase }: {
   index: number; bl: BatchLead; batchDate: string;
   busy: boolean; onStatus: (id: number, s: string) => void; templates: Template[];
   lhScore?: LhScore | null; showPhone?: boolean; showAudit?: boolean; showEmailHistory?: boolean;
+  expectedPhase?: number;
 }) {
   const lead = bl.lead;
   const lastLog = lead.emailLogs[0];
   const [showReport, setShowReport] = useState(false);
+  const isWrongPhase = expectedPhase !== undefined && lead.phase !== expectedPhase;
   const rowBg =
+    isWrongPhase            ? "bg-red-50 hover:bg-red-100 border-l-4 border-l-red-400" :
     bl.status === "SENT"    ? "bg-green-50 hover:bg-green-100" :
     bl.status === "SKIPPED" ? "bg-yellow-50 hover:bg-yellow-100" :
                               "hover:bg-blue-50";
@@ -195,12 +227,11 @@ export default function LeadRow({ index, bl, batchDate, busy, onStatus, template
       <td className="px-4 py-3 text-gray-400 text-xs">{index}</td>
       <td className="px-4 py-3">
         <Link href={`/leads/${lead.id}`} className="font-medium text-blue-700 hover:underline">{lead.name}</Link>
+        {isWrongPhase && <span className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-bold ml-1">⚠️ Phase {lead.phase}</span>}
         {lead.category && <p className="text-xs text-gray-400 truncate max-w-[160px]">{lead.category}</p>}
       </td>
       <td className="px-4 py-3">
-        <span className={`text-xs px-2 py-0.5 rounded font-medium ${DOMAIN_COLOR[lead.domain] ?? "bg-gray-100 text-gray-600"}`}>
-          {DOMAIN_LABEL[lead.domain] ?? lead.domain}
-        </span>
+        <SegmentBadge domain={lead.domain} searchCategory={lead.searchCategory} />
       </td>
       <td className="px-4 py-3 text-gray-600 text-xs">
         <span className="flex items-center gap-1">
@@ -271,6 +302,27 @@ export default function LeadRow({ index, bl, batchDate, busy, onStatus, template
           >
             LinkedIn
           </a>
+          {lead.instagramUrl ? (
+            <a
+              href={lead.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs px-2 py-1 rounded bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition font-medium"
+              title={lead.instagramUrl}
+            >
+              Instagram
+            </a>
+          ) : (
+            <a
+              href={`https://www.google.com/search?q=site:instagram.com+"${encodeURIComponent(lead.name)}"`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-400 hover:bg-gray-200 transition font-medium"
+              title="Search Instagram"
+            >
+              Instagram?
+            </a>
+          )}
         </div>
         {showReport && (
           <FullReportModal

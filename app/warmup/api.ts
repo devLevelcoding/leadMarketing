@@ -94,6 +94,10 @@ export async function streamLighthouseScan(
   return streamSse(res, onEvent);
 }
 
+export async function getEducationGrid() {
+  return fetch("/api/warmup/education-grid").then(r => r.json());
+}
+
 export async function streamReportScan(
   leadIds: number[],
   onEvent: (msg: { type: string; done?: number; total?: number }) => void

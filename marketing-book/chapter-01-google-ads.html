@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 1 — Google Ads Fundamentals | Marketing Book</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:      #1a73e8;
+      --blue-dk:   #0d47a1;
+      --blue-lt:   #e8f0fe;
+      --green:     #137333;
+      --green-lt:  #e6f4ea;
+      --red:       #c5221f;
+      --red-lt:    #fce8e6;
+      --yellow:    #f9ab00;
+      --yellow-lt: #fef7e0;
+      --purple:    #7b1fa2;
+      --purple-lt: #f3e5f5;
+      --gray:      #5f6368;
+      --gray-lt:   #f8f9fa;
+      --ink:       #202124;
+      --ink-soft:  #3c4043;
+      --border:    #dadce0;
+      --page:      #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--ink);
+      background: #f1f3f4;
+    }
+
+    /* ── Layout ── */
+    .book-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+    }
+
+    /* ── Chapter cover ── */
+    .cover {
+      background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 56px 56px 48px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      width: 380px; height: 380px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      right: -80px; top: -80px;
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+      right: 120px; bottom: -60px;
+    }
+    .cover-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 12px;
+    }
+    .cover h1 {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .cover-desc {
+      font-size: 16px;
+      opacity: 0.82;
+      max-width: 520px;
+      line-height: 1.65;
+      position: relative;
+    }
+    .cover-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 32px;
+      position: relative;
+    }
+    .cover-meta-item { font-size: 13px; opacity: 0.7; }
+    .cover-meta-item strong { display: block; font-size: 18px; opacity: 1; font-weight: 800; }
+
+    /* ── TOC ── */
+    .toc-box {
+      background: var(--page);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+    }
+    .toc-box h3 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 32px;
+    }
+    @media (max-width: 600px) { .toc-grid { grid-template-columns: 1fr; } }
+    .toc-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--border);
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+    .toc-item:hover { color: var(--blue); }
+    .toc-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      min-width: 28px;
+    }
+
+    /* ── Section ── */
+    .section {
+      background: var(--page);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 44px;
+      margin-bottom: 28px;
+      scroll-margin-top: 24px;
+    }
+    @media (max-width: 640px) { .section { padding: 24px 20px; } }
+
+    .section-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .section > h2 {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .section-intro {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.7;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 32px 0 10px;
+      color: var(--ink);
+    }
+    .section h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 22px 0 8px;
+      color: var(--ink-soft);
+    }
+    .section p {
+      margin-bottom: 16px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    /* ── Callouts ── */
+    .callout {
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+      display: flex;
+      gap: 14px;
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+    .callout .ico { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .callout-body p { margin-bottom: 6px; color: inherit; }
+    .callout-body p:last-child { margin-bottom: 0; }
+    .callout.tip    { background: var(--green-lt);  border-left: 4px solid var(--green);  color: #0d3321; }
+    .callout.warn   { background: var(--yellow-lt); border-left: 4px solid var(--yellow); color: #4a3400; }
+    .callout.key    { background: var(--blue-lt);   border-left: 4px solid var(--blue);   color: #0d2d6e; }
+    .callout.risk   { background: var(--red-lt);    border-left: 4px solid var(--red);    color: #5c1010; }
+    .callout.pro    { background: var(--purple-lt); border-left: 4px solid var(--purple); color: #3b0063; }
+
+    /* ── Formula ── */
+    .formula {
+      font-family: "Courier New", monospace;
+      background: #f8f9fa;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      font-size: 14px;
+      margin: 20px 0;
+      color: var(--ink);
+    }
+    .formula .var { color: var(--blue); font-weight: 700; }
+    .formula .comment { color: var(--gray); font-style: italic; margin-top: 6px; display: block; font-size: 12px; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 24px 0; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead tr { background: var(--ink); color: #fff; }
+    thead th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; letter-spacing: 0.3px; }
+    tbody tr:nth-child(even) { background: #fafafa; }
+    tbody tr:hover { background: var(--blue-lt); }
+    tbody td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Card grids ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .card.featured { border-color: var(--blue); border-width: 2px; background: var(--blue-lt); }
+    .card.featured-green { border-color: var(--green); border-width: 2px; background: var(--green-lt); }
+    .card h4 {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .card ul { padding-left: 18px; font-size: 13.5px; }
+    .card li { margin-bottom: 5px; line-height: 1.5; }
+    .card .verdict {
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      display: inline-block;
+    }
+    .verdict-good { background: var(--green-lt); color: var(--green); }
+    .verdict-warn { background: var(--yellow-lt); color: #7a5900; }
+    .verdict-bad  { background: var(--red-lt);   color: var(--red); }
+
+    /* ── Lists ── */
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+      color: var(--ink-soft);
+    }
+    .section li { margin-bottom: 7px; line-height: 1.7; }
+    .section ol li { padding-left: 4px; }
+
+    /* ── Step list ── */
+    .steps { list-style: none; padding: 0; counter-reset: step; margin: 20px 0; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      background: var(--blue);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .steps li .step-body { flex: 1; }
+    .steps li .step-body strong { display: block; font-size: 15px; margin-bottom: 3px; }
+    .steps li .step-body p { margin: 0; font-size: 14px; color: var(--gray); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+    .tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 99px;
+    }
+    .tag-blue   { background: var(--blue-lt);   color: var(--blue-dk); }
+    .tag-green  { background: var(--green-lt);  color: var(--green); }
+    .tag-yellow { background: var(--yellow-lt); color: #7a5900; }
+    .tag-red    { background: var(--red-lt);    color: var(--red); }
+    .tag-gray   { background: #f1f3f4;          color: var(--gray); }
+
+    /* ── Benchmark block ── */
+    .benchmarks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .benchmark {
+      background: var(--gray-lt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .benchmark .bm-value { font-size: 26px; font-weight: 900; color: var(--blue); }
+    .benchmark .bm-label { font-size: 12px; color: var(--gray); margin-top: 4px; line-height: 1.4; }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 2px dashed var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── Highlight box ── */
+    .highlight-box {
+      background: var(--ink);
+      color: #fff;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 24px 0;
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+    .highlight-box strong { color: var(--yellow); }
+    .highlight-box .hl-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    /* ── Example box ── */
+    .example {
+      background: #fffde7;
+      border: 1px solid #f9ab00;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-size: 14.5px;
+    }
+    .example-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #7a5900;
+      margin-bottom: 8px;
+    }
+
+    /* ── Side-by-side ── */
+    .side-by-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) { .side-by-side { grid-template-columns: 1fr; } }
+    .sbs-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .sbs-card h4 { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+    .sbs-card ul { padding-left: 18px; font-size: 13.5px; }
+    .sbs-card li { margin-bottom: 6px; }
+    .sbs-card.good { border-color: var(--green); border-top: 3px solid var(--green); }
+    .sbs-card.bad  { border-color: var(--red);   border-top: 3px solid var(--red);   }
+
+    /* ── Progress bar ── */
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13.5px;
+    }
+    .progress-label { min-width: 160px; }
+    .progress-bar-wrap { flex: 1; background: #f1f3f4; border-radius: 99px; height: 10px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 99px; background: var(--blue); }
+    .progress-pct { min-width: 36px; text-align: right; font-weight: 700; color: var(--blue); }
+
+    /* ── Chapter nav ── */
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--page);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: var(--blue-lt); }
+
+    code {
+      font-family: "Courier New", monospace;
+      background: #f1f3f4;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 13.5px;
+      color: var(--red);
+    }
+
+    blockquote {
+      border-left: 4px solid var(--blue);
+      padding: 12px 20px;
+      background: var(--blue-lt);
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      margin: 20px 0;
+      color: var(--blue-dk);
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+<div class="book-wrap">
+
+<!-- ═══════════════════════════════════════════════════════════ COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">Marketing Book · Chapter 1 of 14</div>
+  <h1>Google Ads Fundamentals</h1>
+  <div class="cover-desc">
+    A complete operational guide to running profitable Google Ads campaigns.
+    From auction mechanics and bidding strategies to conversion tracking, RLSA,
+    and the hidden settings that separate profitable accounts from money pits.
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>10</strong>Sections</div>
+    <div class="cover-meta-item"><strong>~25</strong>Pages</div>
+    <div class="cover-meta-item"><strong>B2B</strong>Focus</div>
+    <div class="cover-meta-item"><strong>EU / DACH</strong>Context</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-box">
+  <h3>Table of Contents</h3>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s1"><span class="toc-num">1.1</span> How the Auction Works</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">1.6</span> Ad Extensions & Assets</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">1.2</span> Campaign Types</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">1.7</span> Negative Keywords</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">1.3</span> Match Types</a>
+    <a class="toc-item" href="#s8"><span class="toc-num">1.8</span> Conversion Tracking</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">1.4</span> Quality Score & Ad Rank</a>
+    <a class="toc-item" href="#s9"><span class="toc-num">1.9</span> Remarketing (RLSA)</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">1.5</span> Bidding Strategies</a>
+    <a class="toc-item" href="#s10"><span class="toc-num">1.10</span> Smart vs Expert Mode</a>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.1 -->
+<div class="section" id="s1">
+  <div class="section-num">Section 1.1</div>
+  <h2>How the Google Ads Auction Works</h2>
+  <div class="section-intro">
+    Every time someone types a query into Google, a real-time auction runs invisibly in milliseconds.
+    Understanding this auction at a mechanical level is the single most important thing you can do
+    to lower costs and improve position — because Google rewards relevance just as much as budget.
+  </div>
+
+  <h3>The Real-Time Bidding Process</h3>
+  <p>
+    Google does not simply give the top ad spot to whoever pays the most. Each auction evaluates every
+    eligible advertiser simultaneously and computes an <strong>Ad Rank</strong> score. The advertiser
+    with the highest Ad Rank wins the top position. This happens in roughly 100 milliseconds —
+    every single search, every single time.
+  </p>
+  <p>
+    What makes this system powerful (and occasionally maddening) is that a smaller advertiser with a
+    tightly-written ad and a fast landing page can outrank a large advertiser spending ten times more,
+    simply because their relevance score is higher. This is the foundational asymmetry that makes Google
+    Ads a skill game, not just a budget game.
+  </p>
+
+  <h3>The Ad Rank Formula</h3>
+
+  <div class="formula">
+    <span class="var">Ad Rank</span> = Max CPC Bid × Quality Score × Expected Impact of Extensions & Formats
+    <span class="comment">// Google does not publish the exact weights, but these three factors are confirmed</span>
+  </div>
+
+  <p>
+    Each factor matters independently and they multiply — not add — which means weakness in any single
+    area compounds. A QS of 3 with a $5 bid produces a lower Ad Rank than a QS of 9 with a $2 bid.
+  </p>
+
+  <h3>The Second-Price Auction</h3>
+  <p>
+    Google runs what economists call a <strong>Vickrey-style (second-price) auction</strong>. You do
+    not pay your maximum bid — you pay just enough to beat the advertiser directly below you.
+    The actual cost per click is calculated as:
+  </p>
+
+  <div class="formula">
+    <span class="var">Actual CPC</span> = (Ad Rank of the next advertiser ÷ Your Quality Score) + $0.01
+    <span class="comment">// You always pay less than your maximum bid</span>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Worked Example — Auction with 3 Bidders</div>
+    <div class="table-wrap" style="margin:12px 0 0;">
+      <table>
+        <thead><tr><th>Advertiser</th><th>Max Bid</th><th>Quality Score</th><th>Ad Rank</th><th>Position</th><th>Actual CPC</th></tr></thead>
+        <tbody>
+          <tr><td><strong>You</strong></td><td>€2.00</td><td>9</td><td>18.0</td><td>1st 🥇</td><td>€1.24</td></tr>
+          <tr><td>Competitor A</td><td>€3.50</td><td>4</td><td>14.0</td><td>2nd</td><td>€1.90</td></tr>
+          <tr><td>Competitor B</td><td>€1.50</td><td>7</td><td>10.5</td><td>3rd</td><td>€0.89</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px; font-size:13.5px; color:#7a5900;">
+      You win position 1 with a €2.00 bid but only pay €1.24 — because that's what it costs to beat Competitor A's Ad Rank of 14.0
+      divided by your QS of 9, plus €0.01. Competitor A spends more per click AND gets a worse position.
+    </p>
+  </div>
+
+  <h3>Ad Position and the SERP Layout</h3>
+  <p>
+    Google can show up to <strong>4 ads at the top</strong> of the search results page and <strong>3 ads at the bottom</strong>.
+    Top-of-page ads consistently receive 2–4× higher click-through rates than bottom ads. However, top position
+    is not always the most profitable — the auction dynamics mean positions 2 and 3 often deliver better ROAS
+    because you're still prominent but paying significantly less per click.
+  </p>
+  <p>
+    The ad positions are labeled in the Google Ads interface as <strong>Top impression share</strong>
+    (percentage of auctions where your ad appeared at the very top) and <strong>Absolute top impression share</strong>
+    (position 1 specifically). Chasing 100% absolute top impression share is almost always a budget-wasting vanity
+    metric — aim for top 3 with efficient CPC instead.
+  </p>
+
+  <h3>Auction Eligibility — Thresholds and Reserves</h3>
+  <p>
+    Not every bid enters every auction. Google applies a dynamic <strong>minimum bid threshold</strong> per keyword
+    that fluctuates based on historical auction competitiveness, the expected quality of the landing page,
+    and the search query's context. If your combination of bid and QS doesn't clear the floor, your ad simply
+    won't show — even if you theoretically bid €10.
+  </p>
+  <p>
+    This is why new campaigns sometimes show very low impression volume in the first 24–48 hours despite high bids.
+    The algorithm is learning your QS baselines and calibrating your threshold. Give campaigns at least 72 hours
+    before drawing any conclusions about delivery.
+  </p>
+
+  <h3>Contextual Signals in the Auction</h3>
+  <p>
+    Beyond your keyword bid and QS, Google factors in real-time contextual signals for each individual auction:
+  </p>
+  <ul>
+    <li><strong>Device</strong> — mobile vs. desktop vs. tablet (you can set bid modifiers per device)</li>
+    <li><strong>Location</strong> — physical location of the searcher, and location mentioned in the query</li>
+    <li><strong>Time of day / day of week</strong> — you can apply bid adjustments by hour and weekday</li>
+    <li><strong>Audience membership</strong> — whether the user is in a remarketing list, Customer Match list, or in-market segment</li>
+    <li><strong>Browser and operating system</strong> — minor signal, not directly adjustable</li>
+    <li><strong>Search partner network</strong> — some auctions occur on Google partner sites, not Google.com directly</li>
+  </ul>
+  <p>
+    Smart Bidding strategies (Target CPA, Target ROAS) incorporate all of these signals automatically into
+    real-time bid adjustments. Manual CPC bidding ignores most of them unless you explicitly set modifiers.
+  </p>
+
+  <div class="callout key">
+    <div class="ico">💡</div>
+    <div class="callout-body">
+      <strong>The compounding effect of Quality Score</strong>
+      <p>A Quality Score improvement from 5 to 8 effectively makes every €1 you bid worth €1.60 in auction power.
+      This means investing time in ad copy, keyword grouping, and landing page relevance often yields better
+      returns than simply raising bids — and it's sustainable because your competitors can't see or copy your QS.</p>
+    </div>
+  </div>
+
+  <h3>Industry Benchmarks — Average CPC by Sector</h3>
+  <div class="benchmarks">
+    <div class="benchmark"><div class="bm-value">€2–4</div><div class="bm-label">General B2B Services</div></div>
+    <div class="benchmark"><div class="bm-value">€4–8</div><div class="bm-label">Legal / Law Firms</div></div>
+    <div class="benchmark"><div class="bm-value">€3–6</div><div class="bm-label">Architecture / Design</div></div>
+    <div class="benchmark"><div class="bm-value">€1–3</div><div class="bm-label">Education / Courses</div></div>
+    <div class="benchmark"><div class="bm-value">€1–2</div><div class="bm-label">Retail / E-commerce</div></div>
+    <div class="benchmark"><div class="bm-value">€5–12</div><div class="bm-label">Financial Services</div></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray);">Benchmarks based on EU markets (DACH, Benelux, Western EU). Actual CPCs vary by match type, QS, and competition level.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.2 -->
+<div class="section" id="s2">
+  <div class="section-num">Section 1.2</div>
+  <h2>Campaign Types</h2>
+  <div class="section-intro">
+    Google offers six main campaign types, each serving a different audience stage and intent level.
+    Choosing the wrong type doesn't just underperform — it actively wastes budget by targeting
+    people who were never going to convert.
+  </div>
+
+  <div class="card-grid">
+    <div class="card featured">
+      <h4>🔍 Search</h4>
+      <ul>
+        <li>Text ads on Google search results</li>
+        <li>Triggered by specific keyword queries</li>
+        <li>Highest purchase intent of all types</li>
+        <li>Full negative keyword control</li>
+        <li>Best for: lead generation, direct sales</li>
+      </ul>
+      <div class="verdict verdict-good">✓ Recommended first campaign</div>
+    </div>
+    <div class="card">
+      <h4>🖼️ Display</h4>
+      <ul>
+        <li>Banner/image ads across 2M+ websites and apps</li>
+        <li>Audience and contextual targeting</li>
+        <li>Very low intent — users are not actively searching</li>
+        <li>Best for: awareness, remarketing</li>
+        <li>CPCs much lower but conversion rates are too</li>
+      </ul>
+      <div class="verdict verdict-warn">~ Use for remarketing, not prospecting</div>
+    </div>
+    <div class="card">
+      <h4>🛒 Shopping</h4>
+      <ul>
+        <li>Product listing ads with image, price, store name</li>
+        <li>Requires Google Merchant Center feed</li>
+        <li>No direct keyword targeting — Google reads your product data</li>
+        <li>Best for: e-commerce with physical products</li>
+        <li>Not applicable to service businesses</li>
+      </ul>
+      <div class="verdict verdict-bad">✗ Not relevant for service B2B</div>
+    </div>
+    <div class="card">
+      <h4>📹 Video (YouTube)</h4>
+      <ul>
+        <li>In-stream and discovery ads on YouTube</li>
+        <li>Skippable (TrueView) and non-skippable formats</li>
+        <li>You only pay when video is watched 30s+</li>
+        <li>Best for: brand storytelling, product demos</li>
+        <li>Hard to measure direct ROI without strong funnel</li>
+      </ul>
+      <div class="verdict verdict-warn">~ Phase 2+ after Search is profitable</div>
+    </div>
+    <div class="card">
+      <h4>⚡ Performance Max</h4>
+      <ul>
+        <li>Runs across Search, Display, YouTube, Gmail, Maps simultaneously</li>
+        <li>Google AI optimizes asset serving</li>
+        <li>Requires 50+ conversions/month to work well</li>
+        <li>Very limited visibility into what's working</li>
+        <li>Can cannibalize your own Search campaigns</li>
+      </ul>
+      <div class="verdict verdict-warn">~ Advanced — requires conversion volume</div>
+    </div>
+    <div class="card">
+      <h4>📍 Local / Demand Gen</h4>
+      <ul>
+        <li>Drives foot traffic to physical locations</li>
+        <li>Demand Gen: Discovery, Gmail, YouTube combined</li>
+        <li>Relatively new format (replaced Discovery campaigns)</li>
+        <li>Good for local service businesses</li>
+        <li>Less control than standard Search</li>
+      </ul>
+      <div class="verdict verdict-warn">~ Situational — test after Search</div>
+    </div>
+  </div>
+
+  <h3>Deep Dive — Search Campaigns</h3>
+  <p>
+    Search campaigns are the backbone of almost every profitable Google Ads account. They put your ad
+    directly in front of someone who is actively typing a query that signals buying intent. No other
+    ad format matches this level of intent alignment.
+  </p>
+  <p>
+    A Search campaign is organized as: <strong>Account → Campaign → Ad Group → Keywords + Ads</strong>.
+    The tighter this hierarchy is organized around a single theme, the better the Quality Score, the lower
+    the CPC, and the higher the conversion rate. Dumping 200 keywords into a single ad group is one of the
+    most common and costly mistakes new advertisers make.
+  </p>
+
+  <h3>Deep Dive — Performance Max (PMax)</h3>
+  <p>
+    Performance Max is Google's most automated campaign type, designed to serve ads across every Google
+    channel simultaneously. It uses machine learning to decide where, when, and to whom to show your ads
+    based on your conversion data and the creative assets you provide.
+  </p>
+  <p>
+    The catch: PMax requires substantial conversion data (Google recommends 50+ conversions/month, ideally
+    100+) to make the algorithm meaningful. Before that threshold, the AI essentially guesses, often wasting
+    budget on Display and YouTube impressions that never convert. It also has a known tendency to serve
+    brand search terms that would have converted organically anyway, making its reported ROAS misleading.
+  </p>
+
+  <div class="callout risk">
+    <div class="ico">🚫</div>
+    <div class="callout-body">
+      <strong>PMax brand cannibalization</strong>
+      <p>If you run PMax alongside Search campaigns, PMax will often bid on your brand keywords — traffic you
+      would have gotten for free or at very low CPC. Always add your brand as a negative keyword list to
+      PMax campaigns, or create a separate brand Search campaign with higher priority settings.</p>
+    </div>
+  </div>
+
+  <h3>Campaign Structure Best Practices</h3>
+  <p>
+    Organize campaigns by <strong>intent theme</strong>, not by budget. Each campaign should have
+    a single, coherent goal with a dedicated landing page. Do not mix branding and lead generation
+    into the same campaign — their bidding strategies and KPIs are fundamentally different.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Campaign</th><th>Type</th><th>Keywords Theme</th><th>Bid Strategy</th><th>Goal</th></tr></thead>
+      <tbody>
+        <tr><td>Brand — Core</td><td>Search</td><td>Your brand name, URL</td><td>Target IS</td><td>Protect brand terms</td></tr>
+        <tr><td>Service — Architects</td><td>Search</td><td>website for architect, architecture firm website</td><td>Target CPA</td><td>Lead gen</td></tr>
+        <tr><td>Service — Law Firms</td><td>Search</td><td>law firm website, solicitor web design</td><td>Target CPA</td><td>Lead gen</td></tr>
+        <tr><td>Competitor conquest</td><td>Search</td><td>[CompetitorName] alternative</td><td>Manual CPC</td><td>Steal competitor intent</td></tr>
+        <tr><td>Remarketing</td><td>Display</td><td>N/A — audience-based</td><td>Target CPA</td><td>Re-engage site visitors</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <div class="ico">✅</div>
+    <div class="callout-body">
+      <strong>Start with 1 campaign, 2–3 ad groups</strong>
+      <p>New accounts are tempted to launch 10 campaigns immediately. Instead, launch one tightly themed
+      Search campaign, accumulate 30+ conversions, then expand. This lets Smart Bidding optimize properly
+      before you split the learning across multiple campaigns.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.3 -->
+<div class="section" id="s3">
+  <div class="section-num">Section 1.3</div>
+  <h2>Match Types — Broad, Phrase, Exact</h2>
+  <div class="section-intro">
+    Match types are the gatekeepers of your budget. They determine which real-world search queries are
+    eligible to trigger your ads. Getting match types wrong is the fastest way to burn a Google Ads
+    budget on traffic that will never convert.
+  </div>
+
+  <h3>The Three Active Match Types</h3>
+  <p>
+    Google deprecated Broad Match Modifier (BMM) in 2021 and merged its behavior into Phrase Match.
+    As of 2024, there are three active match types: Broad, Phrase, and Exact.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Match Type</th><th>Syntax</th><th>Google triggers your ad for…</th><th>Risk level</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Broad Match</strong></td>
+          <td><code>website design</code></td>
+          <td>Synonyms, related concepts, paraphrases — Google decides. "web page creation", "build a site", even "logo design" are all possible.</td>
+          <td style="color:var(--red); font-weight:700;">High</td>
+        </tr>
+        <tr>
+          <td><strong>Phrase Match</strong></td>
+          <td><code>"website design"</code></td>
+          <td>Queries that contain your phrase in meaning, in order. Extra words before or after are OK. "affordable website design UK" would trigger. "design a website yourself" might not.</td>
+          <td style="color:var(--yellow); font-weight:700;">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Exact Match</strong></td>
+          <td><code>[website design agency]</code></td>
+          <td>Only that query, or queries Google considers "same meaning" (close variants). Function words can be reordered. Plurals and misspellings match.</td>
+          <td style="color:var(--green); font-weight:700;">Low</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Close Variants — The Hidden Expansion</h3>
+  <p>
+    Since 2019, Google has progressively expanded what qualifies as a "close variant" for Phrase and Exact
+    match types. This includes:
+  </p>
+  <ul>
+    <li>Misspellings and abbreviations (<code>wbsite design</code> matches <code>[website design]</code>)</li>
+    <li>Singular/plural forms (<code>websites</code> matches <code>[website]</code>)</li>
+    <li>Function word reordering (<code>design for website</code> matches <code>[website design]</code>)</li>
+    <li>Implied words (<code>shoes store London</code> might match <code>[shoe store London]</code>)</li>
+    <li><strong>Same-meaning queries</strong> — the most controversial expansion. Google can decide "web developer" has the "same meaning" as "website design agency" and serve your ad.</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="ico">⚠️</div>
+    <div class="callout-body">
+      <strong>Exact Match is no longer truly exact</strong>
+      <p>This is the most common source of budget surprises for experienced advertisers who haven't run Google Ads
+      recently. You must actively mine the Search Terms report weekly and add irrelevant variants as negatives —
+      even for "Exact Match" campaigns. Treat Exact Match as "high-precision Phrase Match," not as a locked filter.</p>
+    </div>
+  </div>
+
+  <h3>Broad Match — The Right Conditions</h3>
+  <p>
+    Broad Match has gotten a bad reputation because it was historically run with Manual CPC bidding, which
+    meant Google distributed your budget across hundreds of irrelevant queries with no optimization signal.
+    In 2023–2024, Google redesigned Broad Match to work specifically in tandem with Smart Bidding.
+  </p>
+  <p>
+    When you combine Broad Match with Target CPA or Target ROAS, Smart Bidding uses your conversion history
+    to automatically suppress bids on irrelevant queries and increase bids on patterns that resemble past
+    conversions. In this configuration, Broad Match becomes a legitimate discovery tool — one that can surface
+    profitable query variations you'd never think to add as Exact Match keywords.
+  </p>
+
+  <div class="highlight-box">
+    <div class="hl-title">The Modern Match Type Strategy</div>
+    Use <strong>Exact Match</strong> for your 10–20 highest-intent, proven keywords (protect your budget).
+    Use <strong>Phrase Match</strong> as the workhorse — broad enough to catch variations, specific enough to
+    filter obvious junk. Add <strong>Broad Match</strong> only after the campaign has 30+ conversions and
+    you've switched to Smart Bidding — use it as a discovery layer with tight negative keyword coverage.
+    Check the Search Terms report weekly to mine new Exact Match additions and negatives.
+  </div>
+
+  <h3>Campaign Structure — SKAGs vs STAGs vs Themed Ad Groups</h3>
+  <p>
+    There are three main philosophies for organizing keywords into ad groups:
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Structure</th><th>Approach</th><th>Pros</th><th>Cons</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>SKAG</strong><br><small>Single Keyword Ad Group</small></td>
+          <td>One keyword per ad group, with tightly matched ad copy</td>
+          <td>Maximum relevance, highest possible QS</td>
+          <td>Maintenance-heavy, fragmented data, poor with Smart Bidding</td>
+          <td>Manual CPC, specific high-value terms</td>
+        </tr>
+        <tr>
+          <td><strong>STAG</strong><br><small>Single Theme Ad Group</small></td>
+          <td>3–15 tightly related keywords per ad group</td>
+          <td>Balance of relevance and data volume</td>
+          <td>Requires disciplined grouping</td>
+          <td>Most accounts — recommended default</td>
+        </tr>
+        <tr>
+          <td><strong>Broad + Smart</strong></td>
+          <td>1–3 broad match keywords per ad group, Smart Bidding handles the rest</td>
+          <td>Low maintenance, algorithm finds good queries</td>
+          <td>Low transparency, requires conversion data</td>
+          <td>Mature accounts with 50+ conversions/month</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Search Terms Report — Weekly Workflow</h3>
+  <p>
+    The Search Terms Report (found under Keywords → Search Terms in the Google Ads UI) shows the actual
+    queries that triggered your ads. This is your most important ongoing optimization tool.
+  </p>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <strong>Open Search Terms report weekly</strong>
+        <p>Filter by date: last 7 days. Sort by cost descending.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Identify irrelevant high-spend queries</strong>
+        <p>Any query spending budget with 0 conversions and no obvious intent match is a candidate for negative.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Add irrelevant queries as negative keywords</strong>
+        <p>Use Phrase Match negatives for intent clusters (e.g. <code>-"free"</code>), Exact negatives for specific bad queries.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Mine for new Exact Match additions</strong>
+        <p>Any query converting well that isn't already an Exact Match keyword should be promoted — this locks in that traffic and lets you control its bid.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Document changes</strong>
+        <p>Log every negative and new keyword addition with the date and reason. This prevents accidentally removing negatives later and provides audit trail for clients.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="tags">
+    <span class="tag tag-blue">Exact → protect proven keywords</span>
+    <span class="tag tag-blue">Phrase → workhorse</span>
+    <span class="tag tag-gray">Broad → discovery only with Smart Bidding</span>
+    <span class="tag tag-yellow">Search Terms → weekly review required</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.4 -->
+<div class="section" id="s4">
+  <div class="section-num">Section 1.4</div>
+  <h2>Quality Score & Ad Rank</h2>
+  <div class="section-intro">
+    Quality Score is Google's 1–10 rating of the relevance and quality of your keyword, ad copy, and
+    landing page combination. It directly controls what you pay per click and whether your ad appears
+    at all. It is arguably the most under-optimized lever in most Google Ads accounts.
+  </div>
+
+  <h3>The Three Components</h3>
+
+  <div class="progress-row">
+    <span class="progress-label"><strong>Expected CTR</strong></span>
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:40%; background:#1a73e8;"></div></div>
+    <span class="progress-pct">~40%</span>
+  </div>
+  <div class="progress-row">
+    <span class="progress-label"><strong>Landing Page Experience</strong></span>
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:39%; background:#137333;"></div></div>
+    <span class="progress-pct">~39%</span>
+  </div>
+  <div class="progress-row">
+    <span class="progress-label"><strong>Ad Relevance</strong></span>
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:21%; background:#f9ab00;"></div></div>
+    <span class="progress-pct">~21%</span>
+  </div>
+  <p style="font-size:12.5px; color:var(--gray); margin-top:4px;">Weight estimates based on industry analysis — Google does not publish official weights.</p>
+
+  <h3>Expected CTR — The Most Impactful Component</h3>
+  <p>
+    Expected CTR measures how likely Google thinks users are to click your ad when it appears for
+    a given keyword. It is benchmarked against competitors showing for the same keyword — not an
+    absolute score. An "Above Average" CTR means you're outperforming other advertisers for that keyword.
+  </p>
+  <p>
+    The most reliable ways to improve Expected CTR:
+  </p>
+  <ul>
+    <li>Include the keyword in Headline 1 — Google bolds matching words, improving visual salience</li>
+    <li>Use numbers in headlines: "7 Websites We Built for Law Firms" outperforms "Websites for Law Firms"</li>
+    <li>Add urgency or specificity: "Get a Proposal in 24h" vs. "Contact Us Today"</li>
+    <li>Use all available headline and description slots in Responsive Search Ads</li>
+    <li>Pin your strongest proven headline to position 1 to prevent Google serving weaker combinations</li>
+    <li>Include emotional triggers relevant to the industry (trust, speed, ROI, risk reduction)</li>
+  </ul>
+
+  <h3>Landing Page Experience</h3>
+  <p>
+    Google evaluates your landing page on several dimensions: content relevance to the keyword,
+    page load speed, mobile friendliness, ease of navigation, and how much the page buries users
+    in popups, redirects, or autoplay video. A slow or confusing landing page destroys QS regardless
+    of how good your ads are.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Factor</th><th>Target</th><th>Tool to measure</th></tr></thead>
+      <tbody>
+        <tr><td>Largest Contentful Paint (LCP)</td><td>&lt; 2.5 seconds</td><td>Google PageSpeed Insights, Lighthouse</td></tr>
+        <tr><td>Interaction to Next Paint (INP)</td><td>&lt; 200ms</td><td>Chrome DevTools, CrUX report</td></tr>
+        <tr><td>Cumulative Layout Shift (CLS)</td><td>&lt; 0.1</td><td>PageSpeed Insights</td></tr>
+        <tr><td>Mobile usability</td><td>Pass all checks</td><td>Google Search Console → Mobile Usability</td></tr>
+        <tr><td>Keyword relevance</td><td>Keyword appears in H1 and first paragraph</td><td>Manual review</td></tr>
+        <tr><td>Single clear CTA</td><td>Above the fold, no competing distractions</td><td>Heatmaps (Hotjar), visual review</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <div class="ico">✅</div>
+    <div class="callout-body">
+      <strong>Use dedicated landing pages, not your homepage</strong>
+      <p>Sending Search traffic to your homepage is one of the most common QS mistakes. Your homepage serves
+      many purposes — it cannot be optimized for a specific keyword. Create a dedicated page for each ad
+      group theme (e.g. /architects, /law-firms) with the keyword in the H1, a matching headline, and
+      a single conversion-focused CTA. QS improvements of 2–4 points are common from this change alone.</p>
+    </div>
+  </div>
+
+  <h3>Ad Relevance</h3>
+  <p>
+    Ad Relevance measures how closely your ad copy matches the intent of the keyword being bid on.
+    Google rates it as Above Average, Average, or Below Average. The most common reason for Below Average
+    ad relevance is placing too many unrelated keywords into the same ad group — making it impossible
+    to write a single ad that's relevant to all of them.
+  </p>
+  <p>
+    Fix: restructure ad groups around a single intent theme and write ad copy that directly mirrors
+    the keyword language. If your keyword is "law firm website design," your Headline 1 should contain
+    those exact words or a very close variation.
+  </p>
+
+  <h3>Financial Impact of Quality Score</h3>
+
+  <div class="example">
+    <div class="example-label">Cost savings from QS improvement — same keyword, same auction</div>
+    <div class="table-wrap" style="margin:12px 0 0;">
+      <table>
+        <thead><tr><th>Quality Score</th><th>Your Bid</th><th>Effective Ad Rank</th><th>Estimated CPC Savings vs QS 5</th></tr></thead>
+        <tbody>
+          <tr><td>3</td><td>€2.00</td><td>6.0</td><td style="color:var(--red);">−€0.67 efficiency (you pay more)</td></tr>
+          <tr><td>5</td><td>€2.00</td><td>10.0</td><td>Baseline</td></tr>
+          <tr><td>7</td><td>€2.00</td><td>14.0</td><td style="color:var(--green);">Save ~€0.35/click</td></tr>
+          <tr><td>9</td><td>€2.00</td><td>18.0</td><td style="color:var(--green);">Save ~€0.55/click</td></tr>
+          <tr><td>10</td><td>€2.00</td><td>20.0</td><td style="color:var(--green);">Save ~€0.65/click</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px; font-size:13px; color:#7a5900;">At 1,000 clicks/month, moving from QS 5 to QS 9 saves approximately €550/month — without changing bids.</p>
+  </div>
+
+  <h3>Tracking Quality Score Over Time</h3>
+  <p>
+    QS is calculated live at auction time but the number displayed in the UI is a historical snapshot.
+    The UI only shows QS for keywords with sufficient impression volume — low-traffic keywords show N/A.
+    To track QS trends, use the "Segment by keyword" view and download weekly reports, or use Google Ads
+    scripts to log QS to a Google Sheet automatically.
+  </p>
+  <p>
+    Important: QS can go up or down without you changing anything. Competitor ads, seasonal search
+    behavior, and Google's own algorithm updates all affect it. A 1-point drop over a month is
+    usually noise; a sustained 2+ point drop warrants investigation.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.5 -->
+<div class="section" id="s5">
+  <div class="section-num">Section 1.5</div>
+  <h2>Bidding Strategies</h2>
+  <div class="section-intro">
+    Bidding strategy determines how Google spends your budget and optimizes for your goal.
+    Choosing the right strategy for your account's maturity level is critical — a strategy
+    perfect for a 200-conversion/month account will actively harm a new campaign with 5 conversions.
+  </div>
+
+  <h3>The Strategy Maturity Ladder</h3>
+  <p>Think of bidding strategies as a progression matched to your conversion data volume:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Strategy</th><th>Data Requirement</th><th>Google optimizes for</th><th>You control</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Manual CPC</strong></td>
+          <td>None — works day 1</td>
+          <td>Nothing — you set every bid manually</td>
+          <td>Max CPC per keyword, bid adjustments</td>
+        </tr>
+        <tr>
+          <td><strong>Enhanced CPC (eCPC)</strong></td>
+          <td>5+ conversions/month</td>
+          <td>Clicks statistically more likely to convert</td>
+          <td>Base CPC — Google adjusts ±30%</td>
+        </tr>
+        <tr>
+          <td><strong>Maximize Clicks</strong></td>
+          <td>None</td>
+          <td>Volume of clicks within daily budget</td>
+          <td>Daily budget, optional max CPC cap</td>
+        </tr>
+        <tr>
+          <td><strong>Target Impression Share</strong></td>
+          <td>None</td>
+          <td>Appearing for a target % of auctions</td>
+          <td>Impression share goal, max CPC cap</td>
+        </tr>
+        <tr>
+          <td><strong>Maximize Conversions</strong></td>
+          <td>10+ conversions/month recommended</td>
+          <td>Most conversions within budget</td>
+          <td>Daily budget — no CPA control</td>
+        </tr>
+        <tr>
+          <td><strong>Target CPA</strong></td>
+          <td>30–50 conversions/month minimum</td>
+          <td>Conversions at or below your CPA target</td>
+          <td>Target cost-per-conversion</td>
+        </tr>
+        <tr>
+          <td><strong>Target ROAS</strong></td>
+          <td>50+ conversions/month, known revenue values</td>
+          <td>Revenue relative to ad spend</td>
+          <td>Target return on ad spend (e.g., 400%)</td>
+        </tr>
+        <tr>
+          <td><strong>Maximize Conv. Value</strong></td>
+          <td>10+ conversions with values assigned</td>
+          <td>Highest-value conversions first</td>
+          <td>Daily budget, optional ROAS floor</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Manual CPC — When and How</h3>
+  <p>
+    Manual CPC gives you complete control: you set a maximum bid per keyword, and Google will not
+    exceed it. This is the right choice when you're starting with zero conversion data, when you're
+    running a very small test campaign, or when you're doing competitor conquesting where Smart Bidding
+    would over-bid on brand terms.
+  </p>
+  <p>
+    The downside of Manual CPC is that it ignores all real-time contextual signals — device, time,
+    location, audience membership. A €2.00 bid is €2.00 whether someone's searching on a mobile phone
+    at 11pm (unlikely to convert) or on a desktop at 2pm (much more likely). You have to manually
+    set bid adjustments for each dimension, which requires constant monitoring.
+  </p>
+
+  <h3>Smart Bidding — The Learning Period</h3>
+  <p>
+    When you switch to any Smart Bidding strategy (Maximize Conversions, Target CPA, Target ROAS),
+    the campaign enters a <strong>learning period</strong> that typically lasts 1–2 weeks. During this
+    time, Google is testing different bid levels across the contextual signal space to understand what
+    drives conversions for your specific account.
+  </p>
+  <p>
+    During the learning period you will typically see:
+  </p>
+  <ul>
+    <li>Erratic CPA — much higher or lower than your target</li>
+    <li>Fluctuating impression volume and spend</li>
+    <li>"Limited — Learning" status in the campaign view</li>
+    <li>Conversion volume sometimes drops before recovering</li>
+  </ul>
+  <p>
+    <strong>Do not panic-change settings during the learning period.</strong> Every time you change
+    a Smart Bidding target, budget, or add/remove significant keywords, the learning period resets.
+    The most common mistake is making rapid changes and preventing the algorithm from ever converging.
+    Lock in settings for at least 2 weeks before evaluating performance.
+  </p>
+
+  <div class="callout key">
+    <div class="ico">💡</div>
+    <div class="callout-body">
+      <strong>The "Maximize Conversions → Target CPA" bridge</strong>
+      <p>For new campaigns, start with Maximize Conversions (no CPA target). Let it run for 30 days and
+      accumulate 30–50 conversions. Look at your actual average CPA, then set a Target CPA at 110–120%
+      of that number. Tighten it by 10% every 2 weeks as the algorithm stabilizes. This prevents the
+      campaign from going dark because the CPA target is too aggressive on day one.</p>
+    </div>
+  </div>
+
+  <h3>Target CPA — Setting It Correctly</h3>
+  <p>
+    Target CPA tells Google: "I want to acquire leads at this cost. Spend as much as possible within
+    this constraint." The algorithm will raise bids aggressively when a user matches high-conversion
+    signals and suppress bids when signals look unfavorable.
+  </p>
+
+  <div class="example">
+    <div class="example-label">Target CPA Worked Example — Web Design Agency</div>
+    <p style="margin-bottom:10px;">
+      Your product generates €3,000 average contract value. Close rate from lead to client: 20%.
+      Therefore each qualified lead is worth €600 in expected revenue.
+      At a 5:1 ROAS target (spend €1, earn €5), your maximum Target CPA = €600 ÷ 5 = <strong>€120/lead</strong>.
+    </p>
+    <p>
+      If your current blended CPA is €85 across all channels, a Target CPA of €95–100 is a reasonable
+      starting point that gives Google room to operate without overpaying.
+    </p>
+  </div>
+
+  <h3>Budget Constraints and Their Effect on Smart Bidding</h3>
+  <p>
+    Smart Bidding strategies perform best when campaigns are <em>not</em> budget-limited. A "Limited by budget"
+    status means Google is throttling impression delivery to stay within your daily cap — but this also prevents
+    the algorithm from exploring high-conversion opportunities that appear outside its constrained window.
+  </p>
+  <p>
+    Rule of thumb: your daily budget should be at least <strong>10–20× your Target CPA</strong>.
+    If your Target CPA is €80 and your daily budget is €50, the algorithm cannot function — it can only
+    generate 0–1 conversions per day, which isn't enough signal to optimize. Increase budget or raise
+    Target CPA until the "Limited" flag disappears.
+  </p>
+
+  <h3>Portfolio Bid Strategies</h3>
+  <p>
+    When you run multiple campaigns targeting the same audience or goal, you can group them under a
+    <strong>Portfolio Bid Strategy</strong> — a shared strategy that optimizes bids across all member
+    campaigns simultaneously. This pools conversion data, helping Smart Bidding learn faster when
+    individual campaigns have low conversion volume.
+  </p>
+  <p>
+    Portfolio strategies are managed in the Shared Library → Bid Strategies section of Google Ads.
+    They are especially useful when you have several campaigns targeting different countries or niches
+    that all feed into the same lead pipeline.
+  </p>
+
+  <div class="callout risk">
+    <div class="ico">🚫</div>
+    <div class="callout-body">
+      <strong>Never set Target CPA below your current average CPA on a new campaign</strong>
+      <p>If your average CPA is €120 and you set a Target CPA of €60, Google will severely restrict
+      impressions (it can't find enough conversions at that price) and the campaign will go dark.
+      This is the single most common cause of "my Google Ads stopped spending" complaints.
+      Always set Target CPA at 120–150% of your observed average, then optimize down over weeks.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.6 -->
+<div class="section" id="s6">
+  <div class="section-num">Section 1.6</div>
+  <h2>Ad Extensions & Assets</h2>
+  <div class="section-intro">
+    Extensions (rebranded as "Assets" by Google in 2023) append extra information to your text ads
+    at no additional cost. They increase the visual footprint of your ad, improve CTR, and contribute
+    to Quality Score through their expected impact component. Google only serves extensions when it
+    predicts they'll help — so adding more options is always beneficial.
+  </div>
+
+  <h3>Responsive Search Ads (RSAs) — The Foundation</h3>
+  <p>
+    Since 2022, Expanded Text Ads (ETAs) are no longer creatable, and Responsive Search Ads are the
+    only standard Search ad format. An RSA works as follows:
+  </p>
+  <ul>
+    <li>You provide up to <strong>15 headlines</strong> (30 chars each) and <strong>4 descriptions</strong> (90 chars each)</li>
+    <li>Google automatically combines and tests different headline/description combinations</li>
+    <li>Each ad impression shows 2–3 headlines and 2 descriptions</li>
+    <li>Google labels each asset as "Learning," "Low," "Good," or "Best" based on performance</li>
+    <li>You can <strong>pin</strong> specific headlines to specific positions to ensure critical messages always appear</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="ico">⚠️</div>
+    <div class="callout-body">
+      <strong>Pinning reduces Google's optimization ability</strong>
+      <p>Pinning a headline to position 1 prevents Google from testing whether other headlines perform better there.
+      Only pin when a headline is legally required (disclaimers), brand-mandatory, or you have strong A/B test
+      evidence it's your best performer. Over-pinning turns an RSA back into an ETA — defeating the purpose.</p>
+    </div>
+  </div>
+
+  <h3>The Full Extensions Toolkit</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Extension</th><th>What it adds</th><th>Character limit</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sitelinks</strong></td><td>Up to 4 additional links below the ad, each with 2-line description</td><td>25 chars headline, 35 chars desc</td><td style="color:var(--green);font-weight:700;">Critical</td></tr>
+        <tr><td><strong>Callouts</strong></td><td>Short, non-clickable value propositions appended to description</td><td>25 chars each</td><td style="color:var(--green);font-weight:700;">Critical</td></tr>
+        <tr><td><strong>Structured Snippets</strong></td><td>Categorized list (Services, Types, Brands, etc.)</td><td>25 chars each value</td><td style="color:var(--green);font-weight:700;">Critical</td></tr>
+        <tr><td><strong>Call Extension</strong></td><td>Phone number with click-to-call (mobile), displayed on desktop</td><td>N/A — your phone number</td><td style="color:var(--blue);font-weight:700;">High</td></tr>
+        <tr><td><strong>Lead Form Extension</strong></td><td>Form embedded in the ad — Google pre-fills from user's account</td><td>30 chars headline, 200 desc</td><td style="color:var(--blue);font-weight:700;">High for B2B</td></tr>
+        <tr><td><strong>Image Extension</strong></td><td>Visual asset alongside text (landscape 1.91:1 or square 1:1)</td><td>Min 300×157px</td><td style="color:var(--blue);font-weight:700;">High</td></tr>
+        <tr><td><strong>Price Extension</strong></td><td>Services/products with prices listed below the ad</td><td>25 chars item, 25 chars desc</td><td style="color:var(--yellow);font-weight:700;">Medium</td></tr>
+        <tr><td><strong>Promotion Extension</strong></td><td>Special offer highlight with optional occasion</td><td>20 chars promo desc</td><td style="color:var(--yellow);font-weight:700;">Seasonal</td></tr>
+        <tr><td><strong>Location Extension</strong></td><td>Your business address with map pin (requires Google Business Profile)</td><td>N/A</td><td style="color:var(--gray);font-weight:700;">Local only</td></tr>
+        <tr><td><strong>Seller Ratings</strong></td><td>Star rating from Google reviews (auto-generated, can't add manually)</td><td>N/A</td><td style="color:var(--gray);font-weight:700;">Auto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Writing Effective Callouts</h3>
+  <p>
+    Callouts are 25-character phrases that appear after your ad description. They're the most overlooked
+    extension — most advertisers write generic filler. Callouts should be <em>specific differentiators</em>
+    that address purchase objections.
+  </p>
+
+  <div class="side-by-side">
+    <div class="sbs-card bad">
+      <h4>❌ Weak callouts</h4>
+      <ul>
+        <li>Professional team</li>
+        <li>High quality work</li>
+        <li>Customer focused</li>
+        <li>Many years experience</li>
+      </ul>
+    </div>
+    <div class="sbs-card good">
+      <h4>✅ Strong callouts</h4>
+      <ul>
+        <li>Proposal in 24 hours</li>
+        <li>EU GDPR compliant sites</li>
+        <li>No long-term contracts</li>
+        <li>Multilingual support (DE/EN/NL)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Lead Form Extensions for B2B</h3>
+  <p>
+    Lead Form Extensions (also called Lead Form Assets) allow prospects to submit their contact details
+    directly from the ad, without ever visiting your website. Google pre-populates fields from the user's
+    Google account, reducing friction dramatically.
+  </p>
+  <p>
+    For B2B outreach in the EU/DACH market, Lead Forms work particularly well for:
+  </p>
+  <ul>
+    <li>Free website audit offers ("Get a free SEO audit of your site")</li>
+    <li>Consultation booking ("Book a 30-min strategy call")</li>
+    <li>Case study or portfolio download gates</li>
+  </ul>
+  <p>
+    The tradeoff: lead quality from form extensions is typically lower than from website visits, because
+    there's less friction and less qualification. Budget a 20–40% lower close rate versus website-generated
+    leads when calculating your Target CPA for campaigns using Lead Forms.
+  </p>
+
+  <div class="callout pro">
+    <div class="ico">🔬</div>
+    <div class="callout-body">
+      <strong>A/B testing RSA assets</strong>
+      <p>Once your RSA has accumulated 2,000+ impressions, check the "Asset details" view to see which
+      headlines are rated "Best" by Google. Pause "Low" rated headlines and replace them with new
+      variations. Wait 4 weeks between changes to get statistically meaningful results. Over 6 months,
+      this systematic rotation typically improves CTR by 15–30%.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.7 -->
+<div class="section" id="s7">
+  <div class="section-num">Section 1.7</div>
+  <h2>Negative Keywords — Protecting Your Budget</h2>
+  <div class="section-intro">
+    Negative keywords are instructions telling Google which searches should <em>never</em> trigger your ads.
+    A well-maintained negative keyword list is the single highest-ROI activity in ongoing campaign
+    management — it protects budget, improves CTR (by removing irrelevant impressions), and therefore
+    lifts Quality Score.
+  </div>
+
+  <h3>Match Types for Negatives</h3>
+  <p>
+    Negative keywords follow the same match type logic as positive keywords, but work in reverse:
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Negative type</th><th>Syntax</th><th>Blocks…</th><th>When to use</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Negative Broad</strong></td>
+          <td><code>free</code></td>
+          <td>Any query containing this word or close variants</td>
+          <td>Broad intent block — use sparingly, can block wanted traffic</td>
+        </tr>
+        <tr>
+          <td><strong>Negative Phrase</strong></td>
+          <td><code>-"free website"</code></td>
+          <td>Queries containing this phrase in order</td>
+          <td>Block a specific intent cluster without collateral damage</td>
+        </tr>
+        <tr>
+          <td><strong>Negative Exact</strong></td>
+          <td><code>-[free website builder]</code></td>
+          <td>Only that exact query (with close variants)</td>
+          <td>Surgical block of a specific high-spend bad query</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Master Negative Keyword List</h3>
+  <p>
+    Before launching any campaign, create a Shared Negative Keyword List (found in Tools → Shared Library
+    → Negative Keyword Lists) and apply it to every campaign. This master list should cover universally
+    irrelevant traffic that will never convert for any service business:
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>Example negatives</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Job seekers</strong></td><td>job, jobs, career, hiring, salary, internship, vacancy, glassdoor, indeed</td><td>Searching for employment, not services</td></tr>
+        <tr><td><strong>DIY intent</strong></td><td>free, DIY, how to, tutorial, learn, course, template, "do it yourself", builder</td><td>Want to build it themselves, not hire you</td></tr>
+        <tr><td><strong>Research / comparison</strong></td><td>reddit, forum, review, reviews, complaints, vs, compare, comparison, alternative</td><td>Not in buying mode</td></tr>
+        <tr><td><strong>Wikipedia / info</strong></td><td>wikipedia, definition, what is, history of, meaning</td><td>Informational, no purchase intent</td></tr>
+        <tr><td><strong>Student queries</strong></td><td>student, university assignment, thesis, homework, project, essay</td><td>Academic use, not commercial</td></tr>
+        <tr><td><strong>Specific tool names</strong></td><td>Wix, Squarespace, WordPress plugin, Webflow free</td><td>Looking for DIY tools</td></tr>
+        <tr><td><strong>Wrong geography</strong></td><td>Country/city names outside your target market</td><td>Irrelevant location intent in query</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Campaign-Level Negatives vs. Account-Level Negatives</h3>
+  <p>
+    Beyond the master list, each campaign needs its own negative keyword list tuned to its specific
+    competitive landscape. If you run separate campaigns for "architects" and "law firms," the architects
+    campaign should have legal terms as negatives and vice versa — preventing cross-contamination.
+  </p>
+
+  <h3>Cross-Campaign Negative Keyword Conflicts</h3>
+  <p>
+    When you run multiple campaigns targeting overlapping keyword themes, Google decides internally
+    which campaign "wins" each auction. If you don't use negatives strategically, your campaigns
+    compete against each other — driving up your own cost.
+  </p>
+  <p>
+    The fix: use <strong>campaign-level negative keywords</strong> to carve out clean territories.
+    If Campaign A targets "architects" and Campaign B targets "law firms," add <code>-"law firm"</code>
+    to Campaign A and <code>-"architect"</code> to Campaign B. Now each campaign owns its niche.
+  </p>
+
+  <h3>The Weekly Mining Workflow</h3>
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <strong>Pull Search Terms report (last 7 days)</strong>
+        <p>Filter: Campaigns → Keywords → Search Terms. Download to CSV for easier sorting.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Sort by cost descending, identify 0-conversion spend</strong>
+        <p>Any query spending &gt;1× your Target CPA with 0 conversions is a prime negative candidate.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Check intent manually — don't auto-add</strong>
+        <p>Some 0-conversion queries are in the normal assist path (early funnel research). Block only clear mismatches.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Add negatives at appropriate level</strong>
+        <p>Single bad query → Negative Exact at campaign level. Cluster of bad intent → Negative Phrase in shared list.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Track cumulative budget recovered</strong>
+        <p>Log the spend of each blocked term. After 3 months this figure typically reaches 15–25% of total spend — money redirected to converting queries.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="callout pro">
+    <div class="ico">🔬</div>
+    <div class="callout-body">
+      <strong>N-gram analysis for negatives at scale</strong>
+      <p>Download 90 days of Search Terms data. Extract all individual words and bigrams (word pairs)
+      from query strings. Sort by total cost and zero conversions. This surfaces systemic waste patterns
+      (e.g. the word "template" appearing in 40 different queries, all wasting budget) that single-query
+      review misses. A simple Excel pivot table handles this for accounts spending under €10k/month.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.8 -->
+<div class="section" id="s8">
+  <div class="section-num">Section 1.8</div>
+  <h2>Conversion Tracking Setup — GA4 + Google Ads</h2>
+  <div class="section-intro">
+    Conversion tracking is the nervous system of your Google Ads account. Without it, Smart Bidding
+    is blind, your ROI reporting is guesswork, and you have no way to know which keywords, ads, or
+    audiences are actually generating revenue. Setting it up correctly is non-negotiable.
+  </div>
+
+  <h3>Two Implementation Paths</h3>
+
+  <div class="side-by-side">
+    <div class="sbs-card" style="border-color:var(--blue);">
+      <h4>Method A — Google Ads Tag (gTag)</h4>
+      <ul>
+        <li>Install <code>gtag.js</code> snippet on every page</li>
+        <li>Fire conversion event on thank-you page</li>
+        <li>Fast setup — 1–2 hours</li>
+        <li>Single-account scope (only that Ads account)</li>
+        <li>30-day attribution window by default</li>
+        <li>No cross-device tracking</li>
+      </ul>
+    </div>
+    <div class="sbs-card" style="border-color:var(--green);">
+      <h4>Method B — GA4 → Import (Recommended)</h4>
+      <ul>
+        <li>Track conversions in GA4 first</li>
+        <li>Import conversion events into Google Ads</li>
+        <li>Full cross-device, cross-session tracking</li>
+        <li>540-day look-back vs 90 days with gTag</li>
+        <li>Enables data-driven attribution models</li>
+        <li>One source of truth across all channels</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Setting Up GA4 Conversion Events</h3>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <strong>Install GA4 via Google Tag Manager (GTM)</strong>
+        <p>Create a GTM container, install the GTM snippet on all pages. Add a GA4 Configuration tag with your Measurement ID (G-XXXXXXXXXX).</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Create a conversion trigger</strong>
+        <p>In GTM: New Tag → GA4 Event → Event name: <code>generate_lead</code>. Trigger: Page View → Page URL contains "/thank-you".</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Mark the event as a conversion in GA4</strong>
+        <p>GA4 Admin → Events → Find <code>generate_lead</code> → toggle "Mark as conversion" to ON.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Link GA4 to Google Ads</strong>
+        <p>Google Ads → Tools → Linked Accounts → Google Analytics 4 → Link your property.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Import the conversion into Google Ads</strong>
+        <p>Google Ads → Goals → Conversions → New conversion action → Import → Google Analytics 4 → Select <code>generate_lead</code> → Set as Primary conversion.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Verify with Tag Assistant</strong>
+        <p>Submit a real test form, check Tag Assistant (Chrome extension), confirm the event fires in GA4 DebugView, and verify it appears in Google Ads Conversion columns within 24 hours.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h3>Conversion Action Configuration</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Conversion Action</th><th>Category</th><th>Count</th><th>Value</th><th>Use for bidding?</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Contact form submission</td>
+          <td>Lead</td>
+          <td>One (first click)</td>
+          <td>Assign estimated value (e.g. €150)</td>
+          <td style="color:var(--green);font-weight:700;">✓ Primary</td>
+        </tr>
+        <tr>
+          <td>Phone call (>60 seconds)</td>
+          <td>Lead</td>
+          <td>One</td>
+          <td>Same as form</td>
+          <td style="color:var(--green);font-weight:700;">✓ Primary</td>
+        </tr>
+        <tr>
+          <td>Live chat initiated (>3 messages)</td>
+          <td>Lead</td>
+          <td>One</td>
+          <td>50% of form value</td>
+          <td style="color:var(--green);font-weight:700;">✓ Primary</td>
+        </tr>
+        <tr>
+          <td>WhatsApp click</td>
+          <td>Engagement</td>
+          <td>Every</td>
+          <td>€0</td>
+          <td style="color:var(--red);font-weight:700;">✗ Secondary only</td>
+        </tr>
+        <tr>
+          <td>Pricing page visit</td>
+          <td>Engagement</td>
+          <td>Every</td>
+          <td>€0</td>
+          <td style="color:var(--red);font-weight:700;">✗ Secondary only</td>
+        </tr>
+        <tr>
+          <td>Portfolio view (>3 pages)</td>
+          <td>Engagement</td>
+          <td>Every</td>
+          <td>€0</td>
+          <td style="color:var(--red);font-weight:700;">✗ Secondary only</td>
+        </tr>
+        <tr>
+          <td>Signed contract (offline)</td>
+          <td>Purchase</td>
+          <td>One</td>
+          <td>Actual contract value</td>
+          <td style="color:var(--green);font-weight:700;">✓ Primary (if importing offline)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Enhanced Conversions</h3>
+  <p>
+    Enhanced Conversions is a feature that supplements your existing conversion tags with hashed
+    first-party customer data (email address, phone number). When a user submits your contact form,
+    Google matches the hashed data against its own user graph to attribute conversions that would
+    otherwise be lost due to cookie blocking, ad blockers, or cross-device journeys.
+  </p>
+  <p>
+    Google estimates Enhanced Conversions can recover 5–15% of previously unmeasured conversions.
+    In markets with high privacy-browser adoption (Germany, Netherlands, Nordic countries), this
+    figure can be significantly higher. Setup takes 30–60 minutes via GTM variables.
+  </p>
+
+  <h3>Offline Conversion Import — Closing the Loop</h3>
+  <p>
+    Online leads → offline sales is the biggest attribution gap for service businesses. You might
+    generate 50 leads/month from Google Ads, but only 10 become clients — and unless you import
+    the closed deals back into Google Ads, Smart Bidding is optimizing for leads that may never convert.
+  </p>
+  <p>
+    The technical flow:
+  </p>
+  <ol>
+    <li>Capture the <strong>Google Click ID (GCLID)</strong> when a lead submits the contact form — store it in your CRM alongside the lead record</li>
+    <li>When the lead converts to a client, export a CSV with GCLID, conversion time, and deal value</li>
+    <li>Import the CSV into Google Ads → Goals → Conversions → Upload</li>
+    <li>Google retroactively attributes the offline conversion to the original click and keyword</li>
+  </ol>
+  <p>
+    With offline import active, switch your Target CPA bidding from "lead" value to "closed deal" value.
+    Smart Bidding will start prioritizing the keywords and audiences that produce clients, not just form fills.
+  </p>
+
+  <h3>Attribution Models</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Model</th><th>Credits conversion to…</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Last Click</strong></td><td>The final ad clicked before conversion</td><td>Simple accounts, direct response</td></tr>
+        <tr><td><strong>First Click</strong></td><td>The first ad that started the journey</td><td>Awareness campaigns, top-of-funnel</td></tr>
+        <tr><td><strong>Linear</strong></td><td>Equal credit across all touchpoints</td><td>Multi-touch research</td></tr>
+        <tr><td><strong>Time Decay</strong></td><td>More credit to recent touchpoints</td><td>Short sales cycles</td></tr>
+        <tr><td><strong>Position-Based</strong></td><td>40% first + 40% last + 20% middle</td><td>Valuing both discovery and close</td></tr>
+        <tr><td><strong>Data-Driven (DDA)</strong></td><td>ML model based on your actual conversion paths</td><td>Accounts with 300+ conversions/month — most accurate</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout key">
+    <div class="ico">💡</div>
+    <div class="callout-body">
+      <strong>Use Data-Driven Attribution when eligible</strong>
+      <p>DDA requires 300+ conversions and 3,000+ ad interactions per month. Until you reach that threshold,
+      use Position-Based for lead gen (it values the discovery keyword and the closing keyword equally).
+      Avoid Last Click for campaigns that run alongside remarketing — it systematically under-credits
+      the prospecting campaigns that filled the funnel.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.9 -->
+<div class="section" id="s9">
+  <div class="section-num">Section 1.9</div>
+  <h2>Remarketing Lists for Search Ads (RLSA)</h2>
+  <div class="section-intro">
+    RLSA lets you modify your search ad behavior based on whether the user has previously visited your
+    website. It's the most cost-effective way to re-engage warm prospects — users who already know
+    you — without switching to expensive Display or YouTube remarketing.
+  </div>
+
+  <h3>How RLSA Works</h3>
+  <p>
+    Remarketing for Search operates differently from Display remarketing. On Display, you chase users
+    across the web with banner ads. With RLSA, nothing changes visually — you simply adjust your bids
+    upward (or downward, or target exclusively) when a known site visitor triggers a Search auction.
+  </p>
+  <p>
+    The result: a user who visited your pricing page and is now searching "web design agency DACH region"
+    receives a higher bid from you than a cold visitor, increasing your probability of winning that
+    impression and converting that high-intent return visitor.
+  </p>
+
+  <h3>The Two RLSA Operating Modes</h3>
+
+  <div class="card-grid">
+    <div class="card featured">
+      <h4>📊 Observation Mode</h4>
+      <ul>
+        <li>Your ads show to ALL searchers</li>
+        <li>But you apply a bid adjustment for list members</li>
+        <li>Example: all searchers see your ad, but pricing-page visitors get +40% bid</li>
+        <li>Good for collecting data without limiting reach</li>
+        <li>Set bid adjustments from −90% to +900%</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>🎯 Target & Bid Mode</h4>
+      <ul>
+        <li>Your ads ONLY show to users in your lists</li>
+        <li>Dramatically reduces reach — only warm audiences</li>
+        <li>Allows completely different ad copy for returners</li>
+        <li>Best for: form abandoners, high-intent page visitors</li>
+        <li>Requires large enough list size (1,000+ users)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Building Effective RLSA Audiences</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Audience</th><th>How to build</th><th>Bid adjustment</th><th>Strategy</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>All website visitors (30 days)</strong></td>
+          <td>GA4: All Users, last 30 days</td>
+          <td>+20–30%</td>
+          <td>Observation — raise bid on all campaigns</td>
+        </tr>
+        <tr>
+          <td><strong>Pricing/Services page visitors</strong></td>
+          <td>GA4: page_view event, page contains "/pricing"</td>
+          <td>+50–70%</td>
+          <td>Observation — these users are evaluating, close to converting</td>
+        </tr>
+        <tr>
+          <td><strong>Portfolio/Case Study viewers</strong></td>
+          <td>GA4: page_view, page contains "/portfolio"</td>
+          <td>+30–40%</td>
+          <td>Observation — credibility-seekers, mid-funnel</td>
+        </tr>
+        <tr>
+          <td><strong>Form page visitors who didn't convert</strong></td>
+          <td>GA4: page_view /contact, exclude generate_lead event</td>
+          <td>+60–80% OR Target & Bid</td>
+          <td>These users reached the form but left. Address objections in ad copy.</td>
+        </tr>
+        <tr>
+          <td><strong>Converters (90 days)</strong></td>
+          <td>GA4: generate_lead event</td>
+          <td>−100% (exclude)</td>
+          <td>Exclude from acquisition campaigns — they've already converted</td>
+        </tr>
+        <tr>
+          <td><strong>Converters — upsell window</strong></td>
+          <td>GA4: generate_lead event, 60–180 days ago</td>
+          <td>Target & Bid, custom ad copy</td>
+          <td>Re-engage past leads for additional services (SEO, hosting, etc.)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Customer Match — First-Party Data Targeting</h3>
+  <p>
+    Customer Match allows you to upload a list of email addresses (from your CRM, lead database, or
+    email list) directly into Google Ads. Google matches these emails against Google account sign-ins
+    and creates a targetable audience — usable for RLSA, Display, YouTube, and Gmail campaigns.
+  </p>
+  <p>
+    For the LevelCoding lead pipeline, Customer Match is particularly powerful:
+  </p>
+  <ul>
+    <li>Upload all leads from your database as a Customer Match audience</li>
+    <li>Apply this audience to Search campaigns with +50% bid adjustment</li>
+    <li>When a lead you already have in the pipeline searches for your services, you'll win that impression almost every time — reinforcing your outreach with a Google touchpoint</li>
+    <li>Create a "lookalike" (Similar Segments) audience from your converted clients list to find new prospects who resemble your best customers</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="ico">⚠️</div>
+    <div class="callout-body">
+      <strong>GDPR and Customer Match in the EU</strong>
+      <p>Uploading customer emails to Google for Customer Match requires explicit consent under GDPR.
+      You must have a clear lawful basis (typically consent at time of collection) and a Privacy Policy
+      that discloses data sharing with advertising platforms. In Germany and Austria, enforcement of
+      this requirement is particularly active. Never upload scraped or purchased email lists.</p>
+    </div>
+  </div>
+
+  <h3>In-Market and Affinity Audiences</h3>
+  <p>
+    Beyond your own website visitors, Google provides pre-built audiences based on observed search and
+    browsing behavior. For B2B service campaigns, the most relevant Google audiences are:
+  </p>
+  <ul>
+    <li><strong>In-market: Business Services</strong> — users actively searching for business services</li>
+    <li><strong>In-market: Web Design</strong> — users researching website design and development</li>
+    <li><strong>In-market: Small Business</strong> — users demonstrating small business ownership signals</li>
+    <li><strong>Life Event: Starting a Business</strong> — users in the process of forming a business</li>
+  </ul>
+  <p>
+    Apply these as Observation audiences to your Search campaigns. After 30 days, check the Audience
+    segment report to see if any Google-defined audience converts at significantly higher or lower rates
+    than average. Adjust bids accordingly.
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ 1.10 -->
+<div class="section" id="s10">
+  <div class="section-num">Section 1.10</div>
+  <h2>Smart Campaigns vs Expert Mode</h2>
+  <div class="section-intro">
+    Google offers two interfaces for campaign management: Smart Campaigns (simplified, fully automated)
+    and Expert Mode (full professional control). The choice between them determines what data you can
+    access, what optimizations you can make, and ultimately how much control you have over your ad spend.
+  </div>
+
+  <h3>What Google Doesn't Tell You About Smart Campaigns</h3>
+  <p>
+    When you create a new Google Ads account, Google defaults to Smart Campaigns mode. The interface
+    is clean, setup takes 15 minutes, and the promise is appealing: "Set it and forget it." But Smart
+    Campaigns come with hidden costs that aren't disclosed upfront:
+  </p>
+  <ul>
+    <li><strong>No Search Terms Report</strong> — you cannot see what actual queries triggered your ads. Ever. Even after switching to Expert Mode, this historical data is gone.</li>
+    <li><strong>No negative keywords</strong> — you cannot block irrelevant queries</li>
+    <li><strong>No ad group structure</strong> — all your keywords are lumped together</li>
+    <li><strong>No bidding strategy control</strong> — Google decides how to bid entirely</li>
+    <li><strong>No audience layering</strong> — no RLSA, no Customer Match, no observation segments</li>
+    <li><strong>Very limited ad copy control</strong> — you provide assets; Google does what it wants</li>
+    <li><strong>Location targeting is approximate</strong> — limited precision compared to Expert Mode</li>
+  </ul>
+
+  <div class="callout risk">
+    <div class="ico">🚫</div>
+    <div class="callout-body">
+      <strong>Never start a client account in Smart Campaigns mode</strong>
+      <p>The moment you create a campaign in Smart mode, you permanently lose access to the Search Terms
+      data from that period. This data is critical for building your negative keyword list and understanding
+      what's driving costs. Switch to Expert Mode before creating any campaign — the "Switch to Expert Mode"
+      link is at the bottom of the campaign creation flow, and Google deliberately makes it small.</p>
+    </div>
+  </div>
+
+  <h3>Expert Mode — Full Feature Comparison</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Smart Campaigns</th><th>Expert Mode</th></tr></thead>
+      <tbody>
+        <tr><td>Search Terms Report</td><td>❌ Not available</td><td>✅ Full access</td></tr>
+        <tr><td>Negative keywords</td><td>❌ Not available</td><td>✅ Full control, shared lists</td></tr>
+        <tr><td>Bidding strategy choice</td><td>❌ Google-only</td><td>✅ All 8 strategies</td></tr>
+        <tr><td>Ad group structure</td><td>❌ Flat structure</td><td>✅ Campaign → Ad Group → Keyword hierarchy</td></tr>
+        <tr><td>RLSA / remarketing</td><td>❌ Not available</td><td>✅ Full audience management</td></tr>
+        <tr><td>Customer Match</td><td>❌ Not available</td><td>✅ Email list upload</td></tr>
+        <tr><td>Ad schedule (dayparting)</td><td>Limited</td><td>✅ Hour-by-hour control</td></tr>
+        <tr><td>Device bid adjustments</td><td>❌</td><td>✅ Mobile, desktop, tablet separately</td></tr>
+        <tr><td>Location bid adjustments</td><td>Limited</td><td>✅ Country, region, city, radius</td></tr>
+        <tr><td>Draft & Experiments</td><td>❌</td><td>✅ A/B test landing pages, bids</td></tr>
+        <tr><td>Scripts</td><td>❌</td><td>✅ Automated rules and custom scripts</td></tr>
+        <tr><td>Shared budgets</td><td>❌</td><td>✅ Pool budget across campaigns</td></tr>
+        <tr><td>Portfolio bid strategies</td><td>❌</td><td>✅ Shared bidding across campaigns</td></tr>
+        <tr><td>Conversion import</td><td>Limited</td><td>✅ Full offline conversion import</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>How to Switch From Smart to Expert Mode</h3>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <strong>Go to your Google Ads account overview</strong>
+        <p>Sign in at ads.google.com. Look at the left navigation — if you see "Overview" and "Campaigns" with a simplified layout, you're in Smart mode.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Click the Tools icon (wrench) or look for "Switch to Expert Mode"</strong>
+        <p>In some accounts this appears as a link at the bottom of the left navigation. In others it's in Settings → Account Settings → Switch to Expert Mode.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Confirm the switch</strong>
+        <p>Google will warn that Smart campaign management features will be removed. Confirm. Your existing campaigns are not deleted — they're just now editable in full detail.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Immediately pause Smart Campaigns</strong>
+        <p>Do not run Smart and Expert campaigns simultaneously — they compete against each other in the same auctions. Rebuild your campaigns from scratch as Expert mode Search campaigns with proper ad group structure.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h3>Google Recommendations — What to Accept and What to Reject</h3>
+  <p>
+    In Expert Mode, Google regularly pushes "Recommendations" with claimed optimization improvements
+    and an "Optimization Score" percentage. This score is gameable and serves Google's revenue interests
+    as much as yours. Treat every recommendation critically:
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Recommendation</th><th>Usually safe to accept?</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Add new keywords (from suggestions)</td><td style="color:var(--red);">❌ Review manually</td><td>Google suggests broad terms that inflate spend without improving conversion</td></tr>
+        <tr><td>Expand to search partners</td><td style="color:var(--yellow);">⚠️ Test with budget cap</td><td>Partner network often delivers lower quality traffic — test separately</td></tr>
+        <tr><td>Switch to broad match</td><td style="color:var(--red);">❌ Only with Smart Bidding active</td><td>Will immediately inflate spend on irrelevant queries without conversion optimization</td></tr>
+        <tr><td>Upgrade to RSA (if you still have ETAs)</td><td style="color:var(--green);">✅ Yes</td><td>ETAs are deprecated — RSAs do perform better with proper asset diversity</td></tr>
+        <tr><td>Add sitelinks / callouts / extensions</td><td style="color:var(--green);">✅ Yes</td><td>Extensions are genuinely free and improve CTR</td></tr>
+        <tr><td>Raise your budget (below recommended)</td><td style="color:var(--red);">❌ Evaluate ROI first</td><td>Google recommends budget increases before the existing budget is proven profitable</td></tr>
+        <tr><td>Switch to Maximize Conversions / Target CPA</td><td style="color:var(--yellow);">⚠️ Only if you have enough data</td><td>Valid recommendation when you have 30+ conversions/month — dangerous before that</td></tr>
+        <tr><td>Use "Optimized ad rotation"</td><td style="color:var(--green);">✅ Yes</td><td>Lets Google serve better-performing RSA combinations more often</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout pro">
+    <div class="ico">🔬</div>
+    <div class="callout-body">
+      <strong>The Optimization Score is not neutral</strong>
+      <p>Google's Optimization Score is 0–100% and drops when you dismiss recommendations — even if dismissing
+      them is the right decision. The score is calibrated to push advertisers toward higher spend and more
+      automation. A 72% optimization score with tight negative keywords and correct bidding setup is better
+      than a 95% score achieved by accepting every recommendation. Judge your account by CPA, ROAS, and
+      lead quality — not by Google's internal metric.</p>
+    </div>
+  </div>
+
+  <h3>Google Ads Scripts — Automation Within Expert Mode</h3>
+  <p>
+    Expert Mode supports <strong>Google Ads Scripts</strong> — JavaScript code that runs automatically
+    against your account and performs tasks like:
+  </p>
+  <ul>
+    <li>Pausing ads when landing pages go offline (URL monitoring)</li>
+    <li>Sending weekly performance summaries via email</li>
+    <li>Logging Quality Score history to Google Sheets</li>
+    <li>Automatically pausing keywords when CPA exceeds a threshold</li>
+    <li>Budget pacing alerts when daily spend is ahead or behind target</li>
+  </ul>
+  <p>
+    Google provides a library of free scripts at developers.google.com/google-ads/scripts.
+    For most accounts, the QS tracker and the broken URL checker are the highest-value scripts
+    to deploy immediately. Both require zero coding knowledge — copy, paste, authorize, schedule.
+  </p>
+
+  <div class="tags">
+    <span class="tag tag-blue">Expert Mode always for client work</span>
+    <span class="tag tag-red">Smart Campaigns = no Search Terms</span>
+    <span class="tag tag-yellow">Optimization Score ≠ account health</span>
+    <span class="tag tag-green">Scripts save hours of manual monitoring</span>
+  </div>
+</div>
+
+
+<!-- Chapter nav -->
+<div class="chapter-nav">
+  <a class="nav-btn" href="../MarketingBook.md">← Index</a>
+  <span style="font-size:13px; color:var(--gray);">Chapter 1 of 14 · Google Ads Fundamentals</span>
+  <a class="nav-btn" href="chapter-02-google-ads-b2b.html">Chapter 2 — Google Ads for B2B →</a>
+</div>
+
+</div>
+</body>
+</html>

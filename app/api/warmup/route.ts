@@ -91,7 +91,53 @@ export async function POST(req: NextRequest) {
   const startDate = body.startDate ? new Date(body.startDate) : new Date();
   startDate.setHours(0, 0, 0, 0);
 
-  // Load leads per domain, interleaved round-robin by country for diversity
+  const plan = await prisma.warmupPlan.create({
+    data: { phase, startDate, totalDays: 30 },
+  });
+
+  // ── Phase 6 Education: 1 lead per country per day (25 leads/day) ──────────
+  if (phase === 6) {
+    const leads = await prisma.lead.findMany({
+      where: { phase: 6 },
+      select: { id: true, country: true },
+      orderBy: { id: "asc" },
+    });
+
+    if (leads.length === 0) {
+      await prisma.warmupPlan.delete({ where: { id: plan.id } });
+      return NextResponse.json({ error: "No leads found for phase 6." }, { status: 400 });
+    }
+
+    // Build per-country pools, sorted by country name for stable ordering
+    const byCountry = new Map<string, number[]>();
+    for (const l of leads) {
+      const key = l.country ?? "__unknown__";
+      if (!byCountry.has(key)) byCountry.set(key, []);
+      byCountry.get(key)!.push(l.id);
+    }
+    const countries = Array.from(byCountry.keys()).sort();
+    const quota = countries.length; // 1 per country → 25 for phase 6
+
+    for (let day = 1; day <= 30; day++) {
+      const batchDate = new Date(startDate);
+      batchDate.setDate(batchDate.getDate() + day - 1);
+
+      const batch = await prisma.warmupBatch.create({
+        data: { planId: plan.id, dayNumber: day, date: batchDate, quota },
+      });
+
+      for (const country of countries) {
+        const pool = byCountry.get(country)!;
+        // Cycle through leads for this country across days
+        const leadId = pool[(day - 1) % pool.length];
+        await prisma.warmupBatchLead.create({ data: { batchId: batch.id, leadId } });
+      }
+    }
+
+    return NextResponse.json({ success: true, planId: plan.id });
+  }
+
+  // ── Standard phases: domain-based round-robin by country ─────────────────
   const leadsByDomain: Record<string, number[]> = {};
   for (const domain of DOMAINS) {
     const where: { domain: string; phase?: number } = { domain };
@@ -101,14 +147,13 @@ export async function POST(req: NextRequest) {
       select: { id: true, country: true },
       orderBy: { id: "asc" },
     });
-    // Group by country, then interleave so each batch gets diverse countries
     const byCountry = new Map<string, number[]>();
     for (const l of leads) {
       const key = l.country ?? "__unknown__";
       if (!byCountry.has(key)) byCountry.set(key, []);
       byCountry.get(key)!.push(l.id);
     }
-    const queues = [...byCountry.values()];
+    const queues = Array.from(byCountry.values());
     const interleaved: number[] = [];
     let i = 0;
     while (interleaved.length < leads.length) {
@@ -119,15 +164,11 @@ export async function POST(req: NextRequest) {
     leadsByDomain[domain] = interleaved;
   }
 
-  // Only distribute across domains that actually have leads for this phase
   const activeDomains = DOMAINS.filter(d => leadsByDomain[d].length > 0);
   if (activeDomains.length === 0) {
+    await prisma.warmupPlan.delete({ where: { id: plan.id } });
     return NextResponse.json({ error: "No leads found for this phase." }, { status: 400 });
   }
-
-  const plan = await prisma.warmupPlan.create({
-    data: { phase, startDate, totalDays: 30 },
-  });
 
   const usedPerDomain: Record<string, number> = {};
   DOMAINS.forEach(d => { usedPerDomain[d] = 0; });

@@ -21,7 +21,10 @@ model Lead {
   country        String?
   mapsUrl        String?     @map("maps_url")
   scrapedAt      String?     @map("scraped_at")
-  domain         String      // crm | no_website | health | b2b | tourism
+  instagramUrl    String?   @map("instagram_url")
+  instagramStatus String?   @map("instagram_status") // PENDING | DM_SENT | SKIPPED | REPLIED
+  instagramDmAt   DateTime? @map("instagram_dm_at")
+  domain          String    // crm | no_website | health | b2b | tourism
   phase          Int         @default(1) // 1=Europe | 2=Dubai/UAE | 3=USA
   state          String?                 // US state (phase 3 only)
   status         String      @default("NEW")

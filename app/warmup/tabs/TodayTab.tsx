@@ -4,7 +4,7 @@ import Pagination from "@/components/ui/Pagination";
 import LeadRow from "../components/LeadRow";
 import type { TodayBatch, Template, LhScore } from "../types";
 
-export function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage, lhScores, lhScanning, lhProgress, onRunLhScan, repScanning, repProgress, onRunReportScan }: {
+export function TodayTab({ batch, loading, updating, onStatus, templates, showAdvanceModal, advancing, onOpenModal, onAdvance, onCloseModal, page, setPage, lhScores, lhScanning, lhProgress, onRunLhScan, repScanning, repProgress, onRunReportScan, expectedPhase }: {
   batch: TodayBatch | null; loading: boolean;
   updating: Record<number, boolean>; onStatus: (id: number, s: string) => void;
   templates: Template[]; showAdvanceModal: boolean; advancing: boolean;
@@ -15,8 +15,9 @@ export function TodayTab({ batch, loading, updating, onStatus, templates, showAd
   onRunLhScan: () => void;
   repScanning: boolean; repProgress: { done: number; total: number };
   onRunReportScan: () => void;
+  expectedPhase: number;
 }) {
-  const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s && parseInt(s) !== 10 ? parseInt(s) : 15; })();
+  const PAGE_SIZE = (() => { const s = typeof window !== "undefined" ? localStorage.getItem("warmup_pageSize") : null; return s ? parseInt(s) : 25; })();
   const [showPhone, setShowPhone] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
   const [showEmailHistory, setShowEmailHistory] = useState(false);
@@ -55,6 +56,7 @@ export function TodayTab({ batch, loading, updating, onStatus, templates, showAd
   const sent    = batch.leads.filter(l => l.status === "SENT").length;
   const skipped = batch.leads.filter(l => l.status === "SKIPPED").length;
   const pending = batch.leads.filter(l => l.status === "PENDING").length;
+  const wrongPhase = batch.leads.filter(l => l.lead.phase !== expectedPhase);
   const sortedLeads = [...batch.leads].sort((a, b) => {
     const order: Record<string, number> = { PENDING: 0, SKIPPED: 1, SENT: 2 };
     return (order[a.status] ?? 0) - (order[b.status] ?? 0);
@@ -116,6 +118,17 @@ export function TodayTab({ batch, loading, updating, onStatus, templates, showAd
         )}
       </div>
 
+      {wrongPhase.length > 0 ? (
+        <div className="flex items-center gap-2 bg-red-50 border border-red-300 rounded-lg px-4 py-2.5 text-sm text-red-700 font-medium">
+          ⚠️ {wrongPhase.length} lead{wrongPhase.length > 1 ? "s" : ""} in this batch are from a different phase (not Phase {expectedPhase}):&nbsp;
+          {wrongPhase.map(bl => <span key={bl.id} className="underline">{bl.lead.name}</span>).reduce<React.ReactNode[]>((a, el, i) => i === 0 ? [el] : [...a, ", ", el], [])}
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-4 py-2 text-xs text-green-700 font-medium">
+          ✓ All {batch.leads.length} leads are Phase {expectedPhase}
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div className="flex gap-3 text-sm">
           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">✓ {sent} sent</span>
@@ -174,6 +187,7 @@ export function TodayTab({ batch, loading, updating, onStatus, templates, showAd
                 showPhone={showPhone}
                 showAudit={showAudit}
                 showEmailHistory={showEmailHistory}
+                expectedPhase={expectedPhase}
               />
             ))}
           </tbody>

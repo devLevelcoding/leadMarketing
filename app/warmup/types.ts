@@ -12,8 +12,10 @@ export type EmailLog = { id: number; sentAt: string; subject: string; status: st
 
 export type Lead = {
   id: number; name: string; domain: string; category: string | null;
+  searchCategory: string | null; phase: number;
   phone: string | null; website: string | null; city: string | null;
   country: string | null; rating?: string | null; status: string;
+  instagramUrl: string | null;
   emailLogs: EmailLog[];
 };
 
