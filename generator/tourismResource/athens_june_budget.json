@@ -1,0 +1,706 @@
+{
+  "destination": "Athens, Greece",
+  "travel_date": "2025-06-05",
+  "currency": "EUR",
+  "note": "Prices updated April 2025. June is peak season — book flights and hotels 6+ weeks in advance.",
+
+  "restaurants": {
+    "note": "Budget meal = under €10. Mid-range = €10–20. Avoid Acropolis / Syntagma area — prices 30% higher.",
+    "list": [
+      {
+        "name": "Tis Theatrou",
+        "type": "Greek meze / workers canteen",
+        "area": "Monastiraki",
+        "avg_meal": 6,
+        "highlights": ["fava bean purée €3.50", "zucchini balls with tzatziki €4", "home-cooked daily specials €5–7"],
+        "tip": "Locals only spot, cash preferred"
+      },
+      {
+        "name": "O Thanasis",
+        "type": "Souvlaki / pita grill",
+        "area": "Monastiraki Square",
+        "avg_meal": 7,
+        "highlights": ["souvlaki pita €3", "mixed grill plate €8", "open since 1965"],
+        "tip": "Queue at lunch, worth it"
+      },
+      {
+        "name": "Koulouri street bakeries",
+        "type": "Street food / breakfast",
+        "area": "Citywide",
+        "avg_meal": 2,
+        "highlights": ["koulouri bread ring €0.50", "spanakopita €1.50", "tiropita €1.50"],
+        "tip": "Best breakfast option in Athens"
+      },
+      {
+        "name": "Atlantikos",
+        "type": "Taverna / local bar",
+        "area": "Psyri",
+        "avg_meal": 9,
+        "highlights": ["house wine €3/glass", "mezedes plates €4–6", "grilled sardines €7"],
+        "tip": "Authentic neighborhood feel, avoid weekends if budget-tight"
+      },
+      {
+        "name": "Feyrouz",
+        "type": "Lebanese / Middle Eastern",
+        "area": "Exarcheia",
+        "avg_meal": 8,
+        "highlights": ["falafel wrap €4", "hummus plate €5", "combo meal €8"],
+        "tip": "Great value, popular with students"
+      },
+      {
+        "name": "Kostas Souvlaki",
+        "type": "Souvlaki / street food",
+        "area": "Syntagma (Plateia Agia Irini)",
+        "avg_meal": 5,
+        "highlights": ["pork souvlaki pita €2.50", "chicken pita €3", "fries €2"],
+        "tip": "Tiny shop, huge lines — go early"
+      },
+      {
+        "name": "Central Market (Varvakios Agora)",
+        "type": "Market / self-service",
+        "area": "Omonia",
+        "avg_meal": 5,
+        "highlights": ["fresh fruit €1–2/kg", "olives €3/250g", "cooked tripe soup (patsas) €4"],
+        "tip": "Eat like a local, open from 6am"
+      },
+      {
+        "name": "Hoocut",
+        "type": "Modern souvlaki chain",
+        "area": "Multiple locations",
+        "avg_meal": 7,
+        "highlights": ["premium wrap €4.50", "bowl with fries €7", "vegetarian options"],
+        "tip": "Best quality-price for sit-down fast food"
+      },
+      {
+        "name": "Taverna Saita",
+        "type": "Traditional taverna",
+        "area": "Plaka",
+        "avg_meal": 14,
+        "highlights": ["moussaka €10", "Greek salad €7", "grilled octopus €12"],
+        "tip": "Slightly pricier but authentic, good for one sit-down dinner"
+      },
+      {
+        "name": "Mani Mani",
+        "type": "Regional Greek cuisine",
+        "area": "Koukaki",
+        "avg_meal": 16,
+        "highlights": ["slow-cooked lamb €14", "cheese pies €6", "local wine €5/glass"],
+        "tip": "Splurge dinner option — book ahead in June"
+      }
+    ]
+  },
+
+  "attractions": {
+    "note": "June 5 is not a free admission day. Combo ticket saves money. iVenture Pass covers 20+ sites.",
+    "free_admission_days_2025": ["March 6", "April 18", "May 18", "Last weekend of September", "October 28", "Every 1st & 3rd Sunday Nov–March"],
+    "list": [
+      {
+        "rank": 1,
+        "name": "Acropolis of Athens",
+        "type": "Archaeological site",
+        "area": "Acropolis Hill",
+        "price_adult": 30,
+        "price_reduced": 15,
+        "free": false,
+        "hours": "08:00–20:00 (summer)",
+        "tip": "Book online to skip queues — mandatory in June"
+      },
+      {
+        "rank": 2,
+        "name": "Acropolis Museum",
+        "type": "Museum",
+        "area": "Acropolis",
+        "price_adult": 15,
+        "price_reduced": 8,
+        "free": false,
+        "hours": "09:00–17:00 (Mon), 09:00–20:00 (Tue–Sun)",
+        "tip": "Glass floor showing excavations below is stunning"
+      },
+      {
+        "rank": 3,
+        "name": "National Archaeological Museum",
+        "type": "Museum",
+        "area": "Exarcheia",
+        "price_adult": 12,
+        "price_reduced": 6,
+        "free": false,
+        "hours": "09:00–16:00 (Mon), 08:00–20:00 (Tue–Sun)",
+        "tip": "Ticket includes Byzantine Museum, Epigraphic Museum, Numismatic Museum"
+      },
+      {
+        "rank": 4,
+        "name": "Parthenon (inside Acropolis ticket)",
+        "type": "Ancient temple",
+        "area": "Acropolis Hill",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "note": "Included in Acropolis €30 ticket",
+        "tip": "Go at opening (08:00) to avoid crowds"
+      },
+      {
+        "rank": 5,
+        "name": "Ancient Agora of Athens",
+        "type": "Archaeological site",
+        "area": "Monastiraki",
+        "price_adult": 10,
+        "price_reduced": 5,
+        "free": false,
+        "hours": "08:00–20:00",
+        "tip": "Less crowded than Acropolis, includes Stoa of Attalos museum"
+      },
+      {
+        "rank": 6,
+        "name": "Temple of Olympian Zeus",
+        "type": "Archaeological site",
+        "area": "City center",
+        "price_adult": 8,
+        "price_reduced": 4,
+        "free": false,
+        "hours": "08:00–20:00",
+        "tip": "Beautiful at sunset. Short visit (1h)"
+      },
+      {
+        "rank": 7,
+        "name": "Benaki Museum of Greek Culture",
+        "type": "Museum",
+        "area": "Kolonaki",
+        "price_adult": 12,
+        "price_reduced": 6,
+        "free": "Every Thursday",
+        "hours": "10:00–18:00 (Thu until 24:00)",
+        "tip": "Go on Thursday — free admission all day"
+      },
+      {
+        "rank": 8,
+        "name": "Museum of Cycladic Art",
+        "type": "Museum",
+        "area": "Kolonaki",
+        "price_adult": 14,
+        "price_reduced": 7,
+        "free": false,
+        "hours": "10:00–17:00 (Mon–Wed, Fri), 10:00–20:00 (Thu)",
+        "tip": "World-class collection, usually uncrowded"
+      },
+      {
+        "rank": 9,
+        "name": "Areopagus Hill (Mars Hill)",
+        "type": "Historic viewpoint",
+        "area": "Acropolis",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Best free view of the Acropolis. Slippery rocks — wear good shoes"
+      },
+      {
+        "rank": 10,
+        "name": "Filopappou Hill",
+        "type": "Nature / viewpoint",
+        "area": "Acropolis southwest",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Less crowded than Areopagus, equally stunning Acropolis views"
+      },
+      {
+        "rank": 11,
+        "name": "Pnyx Hill",
+        "type": "Historic site / viewpoint",
+        "area": "Near Acropolis",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Original site of Athenian democracy. Spectacular sunset spot"
+      },
+      {
+        "rank": 12,
+        "name": "Anafiotika Village",
+        "type": "Neighborhood / hidden gem",
+        "area": "Plaka (Acropolis slopes)",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Tiny Cycladic-style village hidden inside Athens. 10-min walk from Monastiraki"
+      },
+      {
+        "rank": 13,
+        "name": "National Garden",
+        "type": "Park",
+        "area": "Syntagma",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Peacocks, turtles, ancient columns. Perfect midday escape from heat"
+      },
+      {
+        "rank": 14,
+        "name": "Monastiraki Flea Market",
+        "type": "Market / culture",
+        "area": "Monastiraki",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "tip": "Best on Sunday mornings. Mix of antiques, vintage, street food"
+      },
+      {
+        "rank": 15,
+        "name": "Panathenaic Stadium (Kallimarmaro)",
+        "type": "Historic stadium",
+        "area": "Pangrati",
+        "price_adult": 10,
+        "price_reduced": 5,
+        "free": false,
+        "hours": "08:00–19:00",
+        "tip": "Original 1896 Olympics venue, all marble. Audio guide included"
+      },
+      {
+        "rank": 16,
+        "name": "Kerameikos Archaeological Site",
+        "type": "Archaeological site",
+        "area": "Near Monastiraki",
+        "price_adult": 8,
+        "price_reduced": 4,
+        "free": false,
+        "hours": "08:00–20:00",
+        "tip": "Ancient cemetery, very few tourists. Great photos"
+      },
+      {
+        "rank": 17,
+        "name": "Hadrian's Library",
+        "type": "Archaeological site",
+        "area": "Monastiraki",
+        "price_adult": 6,
+        "price_reduced": 3,
+        "free": false,
+        "hours": "08:00–20:00",
+        "tip": "Often skipped, surprisingly impressive ruins"
+      },
+      {
+        "rank": 18,
+        "name": "Lycabettus Hill",
+        "type": "Viewpoint / nature",
+        "area": "Kolonaki",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "note": "Funicular €7 round trip (optional)",
+        "tip": "Highest point in Athens. 360° views. Walk or take funicular"
+      },
+      {
+        "rank": 19,
+        "name": "Athens Free Walking Tour",
+        "type": "Tour",
+        "area": "Syntagma (meeting point)",
+        "price_adult": 0,
+        "price_reduced": 0,
+        "free": true,
+        "note": "Tip-based. Recommend €10–15 tip per person",
+        "tip": "Daily at 10:00 and 17:00 from Syntagma Square. 2.5 hours"
+      },
+      {
+        "rank": 20,
+        "name": "Roman Agora & Tower of the Winds",
+        "type": "Archaeological site",
+        "area": "Monastiraki",
+        "price_adult": 8,
+        "price_reduced": 4,
+        "free": false,
+        "hours": "08:00–20:00",
+        "tip": "Tower of the Winds is 2000 years old and still standing perfectly"
+      }
+    ]
+  },
+
+  "budget_1_week": {
+    "dates": "June 5–12, 2025",
+    "travel_style": "budget",
+    "daily_budget_eur": 63,
+    "weekly_total_eur": 441,
+    "breakdown": {
+      "accommodation": {
+        "type": "Hostel dorm / budget guesthouse",
+        "price_per_night": 22,
+        "7_nights": 154,
+        "recommended_areas": ["Monastiraki", "Koukaki", "Psyri"],
+        "tip": "Book 6+ weeks ahead for June. Koukaki is cheapest area near Acropolis"
+      },
+      "food": {
+        "daily_budget": 20,
+        "7_days": 140,
+        "breakdown": {
+          "breakfast": "Koulouri + coffee €3",
+          "lunch": "Souvlaki pita + water €5",
+          "dinner": "Taverna main + beer €12"
+        },
+        "tip": "Cook 2–3 meals in hostel kitchen to cut costs"
+      },
+      "transport": {
+        "airport_to_center": {
+          "metro_line_3": 9,
+          "bus_X95": 6,
+          "tip": "Bus X95 to Syntagma is cheapest. Runs 24h"
+        },
+        "city_transport": {
+          "single_ticket_90min": 1.40,
+          "3_day_pass": 22,
+          "weekly_estimate": 25,
+          "tip": "One ticket covers metro, bus, tram for 90 min"
+        }
+      },
+      "attractions": {
+        "must_pay": {
+          "acropolis": 30,
+          "acropolis_museum": 15,
+          "national_archaeological_museum": 12,
+          "ancient_agora": 10,
+          "panathenaic_stadium": 10,
+          "total": 77
+        },
+        "free": [
+          "Areopagus Hill",
+          "Filopappou Hill",
+          "Pnyx Hill",
+          "Anafiotika Village",
+          "National Garden",
+          "Monastiraki Market",
+          "Lycabettus Hill (walk)",
+          "Free Walking Tour (tip only)",
+          "Benaki Museum on Thursday"
+        ],
+        "tip": "Combo ticket (Acropolis + Acropolis Museum + National Museum) = €83 with audio tour included"
+      },
+      "misc": {
+        "sim_card": 10,
+        "water_bottle_reusable": 5,
+        "sunscreen": 8,
+        "tip": "Tap water in Athens is drinkable — refill bottle everywhere"
+      }
+    },
+    "total_estimated_eur": {
+      "accommodation": 154,
+      "food": 140,
+      "transport": 34,
+      "attractions": 77,
+      "misc": 23,
+      "grand_total": 428,
+      "with_buffer_10pct": 471
+    }
+  },
+
+  "supermarkets": {
+    "note": "Greece has some of the lowest supermarket prices in Europe (2025 survey). Cheaper than Germany, France, UK, Italy, Spain. Laiki Agora (street markets) even cheaper for fresh produce.",
+    "ranking_cheapest_to_expensive": [
+      {
+        "rank": 1,
+        "name": "Lidl",
+        "type": "Hard discount",
+        "locations_athens": "Multiple — Omonia, Peristeri, Kallithea, Piraeus",
+        "tip": "Cheapest overall. Limited Greek brands but great for basics and private label",
+        "sample_prices": {
+          "water_1.5L": 0.29,
+          "bread_loaf": 0.69,
+          "eggs_6pack": 1.49,
+          "milk_1L": 0.89,
+          "yogurt_500g": 0.99,
+          "olive_oil_1L": 3.99,
+          "beer_500ml": 0.89,
+          "banana_1kg": 0.99,
+          "pasta_500g": 0.59,
+          "feta_200g": 1.49
+        }
+      },
+      {
+        "rank": 2,
+        "name": "Bazaar",
+        "type": "Hard discount",
+        "locations_athens": "Omonia area, working-class neighborhoods",
+        "tip": "Least-known by tourists but absolute cheapest for pantry staples. Cash only in some locations",
+        "sample_prices": {
+          "water_1.5L": 0.25,
+          "bread_loaf": 0.59,
+          "eggs_6pack": 1.29,
+          "milk_1L": 0.85,
+          "pasta_500g": 0.49,
+          "canned_tomatoes": 0.49
+        }
+      },
+      {
+        "rank": 3,
+        "name": "Sklavenitis",
+        "type": "National chain — market leader",
+        "locations_athens": "Citywide — Monastiraki, Syntagma, Koukaki, Exarcheia",
+        "tip": "Best for Greek products (olive oil, honey, cheese, fresh fish). Cheapest basket of 234 products according to e-kalathi 2025",
+        "sample_prices": {
+          "water_1.5L": 0.35,
+          "bread_loaf": 0.89,
+          "eggs_6pack": 1.59,
+          "milk_1L": 0.99,
+          "greek_yogurt_500g": 1.29,
+          "olive_oil_1L": 4.49,
+          "feta_200g": 1.69,
+          "souvlaki_pack_4": 3.99,
+          "beer_500ml": 0.99,
+          "wine_bottle": 3.99
+        }
+      },
+      {
+        "rank": 4,
+        "name": "Galaxias",
+        "type": "Greek national chain",
+        "locations_athens": "Mainly suburban Athens and working-class areas",
+        "tip": "100% Greek capital, stocks mostly Greek-made products. Great prices on local brands",
+        "sample_prices": {
+          "water_1.5L": 0.30,
+          "bread_loaf": 0.79,
+          "milk_1L": 0.95,
+          "feta_200g": 1.59,
+          "olive_oil_1L": 4.29
+        }
+      },
+      {
+        "rank": 5,
+        "name": "My Market",
+        "type": "Mid-range chain",
+        "locations_athens": "City center, Plaka, Pangrati",
+        "tip": "More convenient locations for tourists. Slightly pricier but wider range of international products",
+        "sample_prices": {
+          "water_1.5L": 0.45,
+          "bread_loaf": 0.99,
+          "eggs_6pack": 1.79,
+          "milk_1L": 1.09,
+          "beer_500ml": 1.19,
+          "wine_bottle": 4.99
+        }
+      },
+      {
+        "rank": 6,
+        "name": "AB Vassilopoulos",
+        "type": "Premium supermarket",
+        "locations_athens": "Kolonaki, Kifisia, upscale areas",
+        "tip": "Most expensive but best quality and selection. Avoid for budget shopping",
+        "sample_prices": {
+          "water_1.5L": 0.59,
+          "bread_loaf": 1.29,
+          "eggs_6pack": 2.19,
+          "milk_1L": 1.39,
+          "olive_oil_1L": 6.99
+        }
+      }
+    ],
+    "street_markets": {
+      "name": "Laiki Agora (λαϊκή αγορά)",
+      "type": "Outdoor weekly street market",
+      "note": "Cheapest fresh produce in Athens — 30–50% cheaper than supermarkets",
+      "schedule": {
+        "monday": "Kypseli neighborhood",
+        "tuesday": "Exarcheia, Koukaki",
+        "wednesday": "Pagkrati, Petralona",
+        "friday": "Exarcheia, Kypseli",
+        "saturday": "Monastiraki flea market (antiques + food)"
+      },
+      "sample_prices": {
+        "tomatoes_1kg": 0.80,
+        "cucumbers_1kg": 0.60,
+        "peppers_1kg": 0.90,
+        "strawberries_500g": 1.00,
+        "cherries_1kg": 2.50,
+        "oranges_1kg": 0.70,
+        "olives_250g": 1.50
+      },
+      "tip": "Go 30 min before closing for even cheaper prices — vendors sell off remaining stock"
+    },
+    "varvakios_central_market": {
+      "name": "Varvakios Agora (Central Market)",
+      "area": "Omonia",
+      "hours": "06:00–15:00 Mon–Sat",
+      "type": "Wholesale / retail market",
+      "note": "Athens' main central market since 1886. Meat, fish, spices, olives, cheese",
+      "sample_prices": {
+        "pork_1kg": 5.50,
+        "chicken_1kg": 3.80,
+        "fresh_fish_1kg": 6.00,
+        "olives_1kg": 4.00,
+        "local_cheese_1kg": 8.00,
+        "fresh_herbs_bunch": 0.50
+      },
+      "tip": "Best place to buy fresh fish and meat at wholesale prices"
+    },
+    "budget_grocery_tips": [
+      "Lidl or Bazaar for packaged goods — save 20–30% vs tourist-area shops",
+      "Laiki Agora for fruit and vegetables — always fresher and cheaper",
+      "Buy 1.5L water bottles in supermarket (€0.29) not from kiosks (€1.50)",
+      "Greek yogurt, feta, and olives are cheapest and best quality here",
+      "Avoid mini-markets near Acropolis — prices are 2x supermarket",
+      "Varvakios market for fresh fish if cooking in hostel kitchen"
+    ]
+  },
+
+  "ground_transport_from_athens": {
+    "note": "KTEL buses cover 80% of Greece. Hellenic Train covers main routes. Both cheaper than flying for nearby cities.",
+    "bus_ktel": {
+      "operator": "KTEL (Intercity Bus Network)",
+      "booking": "https://ktel.org or counter at terminal",
+      "tip": "Book online for e-ticket discount (~€2 cheaper). June is busy — book 1 day ahead minimum.",
+      "terminals": {
+        "Terminal_A_Kifissos": {
+          "address": "100 Kifissou Ave, Athens",
+          "serves": "Peloponnese, western Greece, Patras, Corinth, Nafplio, Ionian islands",
+          "how_to_get_there": "Bus 051 from Omonia Square"
+        },
+        "Terminal_B_Liosion": {
+          "address": "260 Liossion St, Athens",
+          "serves": "Central Greece, Thessaly, Volos, Larissa, Meteora (Kalambaka), Thessaloniki",
+          "how_to_get_there": "Bus 024 from Syntagma"
+        }
+      },
+      "routes": [
+        {
+          "destination": "Thessaloniki",
+          "duration_hours": 5.5,
+          "price_eur": 43,
+          "frequency": "Multiple daily",
+          "tip": "Overnight bus available — saves hotel night"
+        },
+        {
+          "destination": "Patras",
+          "duration_hours": 2.5,
+          "price_eur": 20,
+          "frequency": "Every 1–2 hours",
+          "tip": "Gateway to ferries for Italy and Ionian islands"
+        },
+        {
+          "destination": "Delphi",
+          "duration_hours": 3.0,
+          "price_eur": 18,
+          "frequency": "2–3 daily",
+          "tip": "Famous oracle site — perfect day trip"
+        },
+        {
+          "destination": "Nafplio",
+          "duration_hours": 2.5,
+          "price_eur": 14,
+          "frequency": "4–5 daily",
+          "tip": "Most beautiful town in Peloponnese, very affordable"
+        },
+        {
+          "destination": "Corinth (Ancient Corinth)",
+          "duration_hours": 1.5,
+          "price_eur": 9,
+          "frequency": "Hourly",
+          "tip": "Cheapest day trip from Athens. Ancient ruins + canal"
+        },
+        {
+          "destination": "Meteora (Kalambaka)",
+          "duration_hours": 4.5,
+          "price_eur": 28,
+          "frequency": "3 daily",
+          "tip": "Monasteries on rocks — one of Greece's most stunning sights"
+        },
+        {
+          "destination": "Volos",
+          "duration_hours": 3.5,
+          "price_eur": 26,
+          "frequency": "5 daily",
+          "tip": "Coastal city, gateway to Sporades islands"
+        },
+        {
+          "destination": "Larissa",
+          "duration_hours": 3.5,
+          "price_eur": 24,
+          "frequency": "Multiple daily",
+          "tip": "Main central Greece hub, useful as transit stop"
+        }
+      ]
+    },
+    "train_hellenic": {
+      "operator": "Hellenic Train",
+      "booking": "https://www.hellenictrain.gr/en",
+      "station": "Athens Larissa Station (Stathmos Larissis)",
+      "metro": "Line 2 — Larissa Station stop",
+      "tip": "Book online — cheaper and no queue. June 2025: reduced schedule due to infrastructure works, only 2 trains/day Athens–Thessaloniki.",
+      "routes": [
+        {
+          "destination": "Thessaloniki",
+          "duration_hours": 4.0,
+          "price_eur_from": 35,
+          "price_eur_max": 45,
+          "frequency": "2 per day (reduced 2025)",
+          "tip": "Faster than bus. Book in advance — limited seats"
+        },
+        {
+          "destination": "Patras",
+          "duration_hours": 3.0,
+          "price_eur_from": 20,
+          "frequency": "4–5 daily",
+          "tip": "Scenic Corinthian Gulf route"
+        },
+        {
+          "destination": "Kalambaka (Meteora)",
+          "duration_hours": 5.0,
+          "price_eur_from": 22,
+          "frequency": "2 daily",
+          "tip": "Change at Palaiofarsalos. Book early for window seat"
+        },
+        {
+          "destination": "Corinth",
+          "duration_hours": 1.5,
+          "price_eur_from": 8,
+          "frequency": "Multiple daily",
+          "tip": "Cheapest train trip from Athens"
+        }
+      ]
+    },
+    "comparison": [
+      {"route": "Athens → Thessaloniki", "bus_eur": 43, "train_eur": 35, "flight_eur": 40, "winner": "Train (fastest + cheapest)"},
+      {"route": "Athens → Patras",       "bus_eur": 20, "train_eur": 20, "flight_eur": null, "winner": "Bus (more frequent)"},
+      {"route": "Athens → Meteora",      "bus_eur": 28, "train_eur": 22, "flight_eur": null, "winner": "Train (scenic + cheaper)"},
+      {"route": "Athens → Corinth",      "bus_eur": 9,  "train_eur": 8,  "flight_eur": null, "winner": "Either (very cheap)"},
+      {"route": "Athens → Delphi",       "bus_eur": 18, "train_eur": null,"flight_eur": null, "winner": "Bus only (no train)"},
+      {"route": "Athens → Nafplio",      "bus_eur": 14, "train_eur": null,"flight_eur": null, "winner": "Bus only (no train)"}
+    ]
+  },
+
+  "travel_to_athens": {
+    "note": "June is peak season — prices 15% higher than shoulder season. Book 6 weeks ahead.",
+    "budget_airlines": [
+      {
+        "airline": "Ryanair",
+        "flies_from": "22 European cities",
+        "avg_price_eur": 40,
+        "tip": "Cheapest from Bucharest, Sofia, Budapest, Warsaw"
+      },
+      {
+        "airline": "easyJet",
+        "flies_from": "16 European cities",
+        "avg_price_eur": 55,
+        "tip": "Good connections from London, Paris, Amsterdam, Berlin"
+      },
+      {
+        "airline": "Wizz Air",
+        "flies_from": "Eastern Europe",
+        "avg_price_eur": 35,
+        "tip": "Best option from Romania, Hungary, Poland, Ukraine"
+      }
+    ],
+    "nearest_cheap_departure_cities": [
+      {"city": "Bucharest", "country": "Romania", "avg_flight_eur": 35, "airline": "Wizz Air / Blue Air"},
+      {"city": "Sofia", "country": "Bulgaria", "avg_flight_eur": 30, "airline": "Ryanair / Bulgaria Air"},
+      {"city": "Budapest", "country": "Hungary", "avg_flight_eur": 40, "airline": "Ryanair / Wizz Air"},
+      {"city": "Belgrade", "country": "Serbia", "avg_flight_eur": 45, "airline": "Air Serbia / Ryanair"},
+      {"city": "Warsaw", "country": "Poland", "avg_flight_eur": 40, "airline": "Ryanair / LOT"},
+      {"city": "Vienna", "country": "Austria", "avg_flight_eur": 55, "airline": "Ryanair / Austrian"},
+      {"city": "Milan", "country": "Italy", "avg_flight_eur": 50, "airline": "Ryanair / easyJet"},
+      {"city": "London", "country": "UK", "avg_flight_eur": 70, "airline": "easyJet / Jet2"}
+    ],
+    "airport": "Athens International Airport — Eleftherios Venizelos (ATH)",
+    "airport_to_city": {
+      "metro_line_3": {"price_eur": 9, "duration_min": 40, "runs": "06:30–23:30"},
+      "bus_X95": {"price_eur": 6, "duration_min": 60, "runs": "24h"},
+      "taxi": {"price_eur": 38, "duration_min": 30, "tip": "Fixed rate to city center, negotiate before getting in"}
+    }
+  },
+
+  "telegram_summary": {
+    "message": "🏛️ Athens, Greece — Budget Travel Guide (June 5, 2025)\n\n💰 1-Week Budget: ~€428 (hostel + food + transport + top attractions)\n\n🍽️ Eat cheap:\n• Souvlaki pita: €2.50–3\n• Koulouri breakfast: €0.50–2\n• Taverna dinner: €10–15\n• Best spots: O Thanasis, Kostas Souvlaki, Tis Theatrou\n\n🛒 Cheapest supermarkets:\n• Lidl — water €0.29, bread €0.69, eggs €1.49\n• Bazaar — absolute cheapest, cash only\n• Sklavenitis — best for Greek products\n• Laiki Agora (street market) — fruit & veg 50% cheaper\n\n🏛️ Top paid attractions:\n• Acropolis: €30\n• Acropolis Museum: €15\n• National Archaeological Museum: €12\n• Combo deal: €83 (all 3 + audio)\n\n🆓 Free things:\n• Areopagus Hill, Filopappou, Pnyx Hill\n• Anafiotika village, National Garden\n• Free Walking Tour (tip €10)\n• Benaki Museum every Thursday\n\n✈️ Cheapest flights from:\n• Sofia → €30 (Ryanair)\n• Bucharest → €35 (Wizz Air)\n• Budapest → €40 (Ryanair)\n\n🚇 City transport: €1.40/90min or €22 for 3-day pass\n🛏️ Hostel dorm: €20–25/night (Koukaki or Monastiraki area)\n\n📅 Book 6 weeks ahead — June is peak season!"
+  }
+}

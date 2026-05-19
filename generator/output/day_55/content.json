@@ -1,0 +1,27 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "3 things your website should do automatically (but probably doesn't)",
+      "subtext": "Educational + Soft CTA"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Useful content with a natural CTA at the end. Not pushy.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "cta",
+      "text": "Want all 3? We set them up for you — DM us",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "3 things your website should do automatically (but probably doesn't)\n\nUseful content with a natural CTA at the end.\n\nNot pushy.\n\nWant all 3? We set them up for you — DM us\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 55,
+  "topic": "Educational + Soft CTA"
+}

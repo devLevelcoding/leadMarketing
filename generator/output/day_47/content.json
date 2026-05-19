@@ -1,0 +1,39 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "Your competitor just launched a better website. Here's what to do.",
+      "subtext": "Problem → Agitate → Solve"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Name a real pain",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "Twist the knife gently",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Offer the solution = you.",
+      "subtext": ""
+    },
+    {
+      "number": 5,
+      "type": "cta",
+      "text": "Ready to compete? DM us today",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "Your competitor just launched a better website. Here's what to do.\n\nName a real pain, twist the knife gently, offer the solution = you.\n\nReady to compete? DM us today\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 47,
+  "topic": "Problem → Agitate → Solve"
+}

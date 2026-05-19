@@ -1,0 +1,33 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "What is [concept] — explained so a 10-year-old gets it",
+      "subtext": "Concept Explained Simply"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Pick one tech concept (SEO",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "Automation). Explain it for non-technical people.",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "cta",
+      "text": "What concept should we explain next? Comment 👇",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "What is [concept] — explained so a 10-year-old gets it\n\nPick one tech concept (SEO, API, CRM, automation).\n\nExplain it for non-technical people.\n\nWhat concept should we explain next? Comment 👇\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 16,
+  "topic": "Concept Explained Simply"
+}

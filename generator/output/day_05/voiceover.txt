@@ -1,0 +1,48 @@
+DAY 5 — Voiceover Script (read this out loud)
+Duration: ~30 seconds | Calm, natural tone — talk like you're explaining to a friend
+
+────────────────────────────────────────────────
+SCRIPT
+────────────────────────────────────────────────
+
+"This is what a normal day looks like for us.
+
+Morning — coffee, open the laptop, check what's on fire.
+
+Most of the day is this: reading code, fixing things,
+making sure what we built yesterday still works today.
+
+No magic. No shortcuts.
+Just the process — understand the problem first, build second.
+
+We've been doing this for ten years.
+And honestly... we still enjoy it.
+
+If you want to see what we can build for you — link in bio."
+
+────────────────────────────────────────────────
+SHOT SYNC (rough guide)
+────────────────────────────────────────────────
+
+[hands typing]        → "This is what a normal day looks like for us."
+[desk / coffee]       → "Morning — coffee, open the laptop, check what's on fire."
+[screen / code]       → "Most of the day is this: reading code, fixing things..."
+[task board]          → "...making sure what we built yesterday still works today."
+[pause / silence]     → "No magic. No shortcuts."
+[before/after shot]   → "Just the process — understand the problem first, build second."
+[lean back / end]     → "We've been doing this for ten years. And honestly... we still enjoy it."
+[logo / link in bio]  → "If you want to see what we can build for you — link in bio."
+
+────────────────────────────────────────────────
+RECORDING TIPS
+────────────────────────────────────────────────
+- Record in a quiet room, mic close to mouth
+- Speak slowly — slower than you think is right
+- Leave a 1-second pause at the dots (...)
+- Do 2–3 takes, keep the most natural one
+- Run through: python reels/clean_audio.py voiceover.wav --preset voice
+
+────────────────────────────────────────────────
+MERGE COMMAND (after recording)
+────────────────────────────────────────────────
+python reels/merge_av.py video.mp4 output/audio/voiceover_clean.wav --trim

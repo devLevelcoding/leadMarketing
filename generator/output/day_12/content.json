@@ -1,0 +1,27 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "The most expensive website mistake we see every single week",
+      "subtext": "Most Common Website Mistake"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "The #1 mistake businesses make online. Give real examples.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "cta",
+      "text": "Tag a business owner who needs to see this",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "The most expensive website mistake we see every single week\n\nThe #1 mistake businesses make online.\n\nGive real examples.\n\nTag a business owner who needs to see this\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 12,
+  "topic": "Most Common Website Mistake"
+}

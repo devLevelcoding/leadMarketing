@@ -1,0 +1,27 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "How we built a system that saved a client 12 hours a week",
+      "subtext": "Case Study #2"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Different industry than case study #1. Same format.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "cta",
+      "text": "Want the same? DM us",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "How we built a system that saved a client 12 hours a week\n\nDifferent industry than case study #1.\n\nSame format.\n\nWant the same? DM us\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 43,
+  "topic": "Case Study #2"
+}

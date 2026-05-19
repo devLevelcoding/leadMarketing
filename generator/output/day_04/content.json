@@ -1,0 +1,27 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "Here's every tool we use to build fast, reliable digital systems",
+      "subtext": "Our Tech Stack"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "What tools and languages you use and why. Shows expertise.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "cta",
+      "text": "What's your go-to stack? Tell us 👇",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "Here's every tool we use to build fast, reliable digital systems\n\nWhat tools and languages you use and why.\n\nShows expertise.\n\nWhat's your go-to stack? Tell us 👇\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 4,
+  "topic": "Our Tech Stack"
+}

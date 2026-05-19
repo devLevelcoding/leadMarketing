@@ -1,0 +1,39 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "Before vs After: what we actually do when a client hires us",
+      "subtext": "Before / After"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Show a transformation — website",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "System",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Process. Mockup is fine if no real case.",
+      "subtext": ""
+    },
+    {
+      "number": 5,
+      "type": "cta",
+      "text": "Which result matters most to you?",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "Before vs After: what we actually do when a client hires us\n\nShow a transformation — website, system, process.\n\nMockup is fine if no real case.\n\nWhich result matters most to you?\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 17,
+  "topic": "Before / After"
+}

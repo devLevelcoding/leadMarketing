@@ -1,0 +1,27 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "How we helped a business go from 0 leads online to 40+ a month",
+      "subtext": "Case Study #1"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Problem → What you built → Result. Anonymize client if needed.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "cta",
+      "text": "DM us if you have the same problem",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "How we helped a business go from 0 leads online to 40+ a month\n\nProblem → What you built → Result.\n\nAnonymize client if needed.\n\nDM us if you have the same problem\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 22,
+  "topic": "Case Study #1"
+}

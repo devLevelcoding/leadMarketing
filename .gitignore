@@ -5,3 +5,7 @@ prisma/*.db-journal
 .env
 .env.local
 *.tsbuildinfo
+generator/.venv/
+generator/ffmpeg.exe
+generator/ffprobe.exe
+leadMarketinggenerator.venv/

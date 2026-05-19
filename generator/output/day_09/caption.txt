@@ -1,0 +1,17 @@
+CAPTION:
+Watch us fix a broken website in real time
+
+We received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.
+
+We opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.
+
+The client had no idea any of this was happening.
+
+Follow for more tech breakdowns
+
+#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
+
+@levelcoding
+
+HASHTAGS:
+#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas

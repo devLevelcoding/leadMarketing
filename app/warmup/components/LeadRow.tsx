@@ -206,6 +206,7 @@ function SegmentBadge({ domain, searchCategory }: { domain: string; searchCatego
   );
 }
 
+
 export default function LeadRow({ index, bl, batchDate, busy, onStatus, templates, lhScore, showPhone, showAudit, showEmailHistory, expectedPhase }: {
   index: number; bl: BatchLead; batchDate: string;
   busy: boolean; onStatus: (id: number, s: string) => void; templates: Template[];

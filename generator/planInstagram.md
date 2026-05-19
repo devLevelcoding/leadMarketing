@@ -149,3 +149,52 @@ Days 31–60 you sell, but the trust is already there.
 | Reel | 1080×1920 | 15–60s | Discovery, BTS, tutorials |
 | Static | 1080×1080 | — | Quick stats, quotes, announcements |
 | Story | 1080×1920 | 15s / static | Daily touch, polls, CTAs |
+
+---
+
+## Posting Schedule & Optimal Times
+
+### Best Time Per Post Type
+
+| Post type | Best time | Why |
+|---|---|---|
+| **Carousel** | Wed / Thu 18:30 | After work, highest saves & shares |
+| **Reel** | Tue / Thu 19:00 | Peak discovery window, algorithm pushes hard |
+| **Static** | Mon / Fri 08:00 | Quick morning scroll, low competition |
+| **Story** | Daily 08:00 + 20:00 | Twice a day keeps you top of mind |
+| **Engagement post** (poll, question) | Sun 19:00 | Relaxed evening, people interact more |
+
+**Best days:** Tuesday, Wednesday, Thursday consistently outperform weekends for service businesses.
+
+---
+
+### Recommended Weekly Schedule
+
+| Day | Content type | Time |
+|---|---|---|
+| Monday | Story | 08:00 |
+| Wednesday | Post (carousel / single) | 18:30 |
+| Friday | Story | 08:00 |
+| Sunday | Post (engagement bait) | 19:00 |
+
+> 4 touches/week is the sweet spot — enough to stay in the feed without burning out content.
+
+---
+
+### For Local Service Audiences (Beauty / Fitness / Restaurants)
+
+Target audience is mostly **women 25–45** checking Instagram in the evening.
+- Peak: **Wednesday & Thursday 18:00–21:00**
+- Schedule feed posts at **18:30**, stories at **08:00**
+
+---
+
+### Scheduling Tools
+
+| Tool | Best for |
+|---|---|
+| **Meta Business Suite** | Free, native, direct scheduling |
+| **Buffer** | Multi-platform, clean UI |
+| **Later** | Visual grid planner |
+
+> Each day's `content.json` should include a `scheduled_at` field with the exact datetime so posts can be copy-pasted directly into the scheduler.

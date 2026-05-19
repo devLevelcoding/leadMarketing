@@ -1,0 +1,63 @@
+DAY 5 — BTS Reel: "A day in your work life"
+Format: Reel (25–35s) | No talking needed | Text overlays carry the story
+
+────────────────────────────────────────────────
+SHOTS (3–5 seconds each)
+────────────────────────────────────────────────
+
+[1] HOOK — Close-up of hands typing fast. No face yet.
+    TEXT: "This is what building software actually looks like 👇"
+
+[2] DESK SETUP — Wide shot: monitor(s), coffee, keyboard, sticky notes.
+    TEXT: (none — let it breathe)
+
+[3] SCREEN — Code editor, Figma, or dashboard open. Blur client data if needed.
+    TEXT: "6 hours of this... every day."
+
+[4] PROCESS — Opening a task board (Jira/Trello/Notion) or reading a brief.
+    TEXT: "Before we write a line of code — we read your business."
+
+[5] FOCUS MOMENT — Face close-up OR tight shot on hands/keyboard (no talking).
+    TEXT: (none)
+
+[6] BEFORE / AFTER — Side-by-side: messy old site → your clean build.
+    TEXT: "Old → Ours"
+
+[7] END OF DAY — Close laptop, lean back. Human moment.
+    TEXT: "10 years of this. Still love it."
+
+────────────────────────────────────────────────
+FACE OPTIONAL
+────────────────────────────────────────────────
+No face needed. Hands + screen + desk works just as well.
+If skipping face: replace shot 5 with a screen recording —
+IDE with code scrolling or a live site you built.
+
+────────────────────────────────────────────────
+CAPTION
+────────────────────────────────────────────────
+A day in our world.
+
+No sales pitch. No polished demo.
+Just the work — screens, problems, coffee, solutions.
+
+We've been building software for 10 years.
+The tools change. The process stays the same:
+understand the problem first, code second.
+
+If you're curious what working with us actually looks like → link in bio.
+
+#devlife #behindthescenes #itcompany #webdevelopment #softwaredeveloper #codelife #buildinpublic #techbusiness
+
+────────────────────────────────────────────────
+MUSIC
+────────────────────────────────────────────────
+Pick from Instagram free library:
+- Chill / lo-fi  → calm focused vibe
+- Upbeat indie   → energetic vibe
+Keep volume low — text carries the story.
+
+────────────────────────────────────────────────
+POST TIME
+────────────────────────────────────────────────
+Tuesday or Thursday — 19:00

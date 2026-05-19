@@ -185,6 +185,40 @@ def full(
     console.print(f"   Files → {os.path.abspath(out_dir)}\n")
 
 
+# ── batch (auto-generate all days) ───────────────────────────────────────────
+
+@app.command()
+def batch(
+    start: int = typer.Option(1,    "--start", "-s", help="First day to generate"),
+    end:   int = typer.Option(60,   "--end",   "-e", help="Last day to generate"),
+    force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing days"),
+):
+    """Auto-generate + render all days using each day's direction as the idea."""
+    days = [d for d in PLAN if start <= d["day"] <= end]
+    console.print(f"\n[bold]Batch generating days {start}–{end} ({len(days)} days)[/bold]\n")
+
+    ok = skipped = failed = 0
+    for d in days:
+        day_num = d["day"]
+        json_path = os.path.join(cfg.OUTPUT_DIR, f"day_{day_num:02d}", "content.json")
+        if os.path.exists(json_path) and not force:
+            console.print(f"  [dim]Day {day_num:02d}  SKIP  (already exists — use --force to overwrite)[/dim]")
+            skipped += 1
+            continue
+        try:
+            idea = d["direction"]
+            content = generate(day_num, idea)
+            out_dir = os.path.join(cfg.OUTPUT_DIR, f"day_{day_num:02d}")
+            render(content, out_dir)
+            console.print(f"  [green]Day {day_num:02d}  OK    {d['type']:10s}  {d['topic'][:40]}[/green]")
+            ok += 1
+        except Exception as exc:
+            console.print(f"  [red]Day {day_num:02d}  FAIL  {exc}[/red]")
+            failed += 1
+
+    console.print(f"\n[bold]Done — {ok} generated, {skipped} skipped, {failed} failed[/bold]\n")
+
+
 # ── caption ───────────────────────────────────────────────────────────────────
 
 @app.command()

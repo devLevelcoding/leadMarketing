@@ -1,0 +1,16 @@
+{
+  "type": "reel",
+  "script": [
+    "[0:00–0:03]  HOOK — 'Watch us fix a broken website in real time'",
+    "[0:03–0:08]  Introduce the topic: Behind the Scenes — Building Something",
+    "[0:08–0:16]  Point 1: We received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.",
+    "[0:16–0:24]  Point 2: We opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.",
+    "[0:24–0:32]  Point 3: The client had no idea any of this was happening.",
+    "[0:50–1:00]  CTA — 'Follow for more tech breakdowns'",
+    "             Caption: @levelcoding"
+  ],
+  "caption": "Watch us fix a broken website in real time\n\nWe received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.\n\nWe opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.\n\nThe client had no idea any of this was happening.\n\nFollow for more tech breakdowns\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 9,
+  "topic": "Behind the Scenes — Building Something"
+}

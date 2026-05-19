@@ -1,0 +1,39 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "Here's everything we can do for your business (no tech jargon)",
+      "subtext": "Services Overview"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Everything you offer, clearly.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "No jargon.",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Who each service is for.",
+      "subtext": ""
+    },
+    {
+      "number": 5,
+      "type": "cta",
+      "text": "Which service do you need most? Comment 👇",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "Here's everything we can do for your business (no tech jargon)\n\nEverything you offer, clearly.\n\nNo jargon.\n\nWho each service is for.\n\nWhich service do you need most? Comment 👇\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 31,
+  "topic": "Services Overview"
+}

@@ -1,0 +1,39 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "Here's one of our favourite projects — the story behind it",
+      "subtext": "Portfolio Piece"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "One project.",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "Screenshots + the story behind it.",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "What was the problem, what did you build.",
+      "subtext": ""
+    },
+    {
+      "number": 5,
+      "type": "cta",
+      "text": "Full case study in our bio link",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "Here's one of our favourite projects — the story behind it\n\nOne project.\n\nScreenshots + the story behind it.\n\nWhat was the problem, what did you build.\n\nFull case study in our bio link\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 29,
+  "topic": "Portfolio Piece"
+}

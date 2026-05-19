@@ -1,0 +1,45 @@
+{
+  "type": "carousel",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "What you actually get when you hire us for web development",
+      "subtext": "Service Deep-Dive #1 — Web Development"
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "What's actually included",
+      "subtext": ""
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "What it costs roughly",
+      "subtext": ""
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Who it's for",
+      "subtext": ""
+    },
+    {
+      "number": 5,
+      "type": "point",
+      "text": "What happens after.",
+      "subtext": ""
+    },
+    {
+      "number": 6,
+      "type": "cta",
+      "text": "Book a free call — link in bio",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "What you actually get when you hire us for web development\n\nWhat's actually included, what it costs roughly, who it's for, what happens after.\n\nBook a free call — link in bio\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #leadgeneration #crmtools #automation #businessautomation #growthhacking #tech2025 #aitools #digitaltransformation #nocode #saas",
+  "day": 32,
+  "topic": "Service Deep-Dive #1 — Web Development"
+}
