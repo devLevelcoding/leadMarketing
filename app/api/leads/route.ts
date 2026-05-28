@@ -46,3 +46,31 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ leads, total, page, limit });
 }
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { name, category, phone, website, city, country, domain, phase, status, linkedinUrl, instagramUrl, note } = body;
+
+  if (!name?.trim() || !domain) {
+    return NextResponse.json({ error: "name and domain are required" }, { status: 400 });
+  }
+
+  const lead = await prisma.lead.create({
+    data: {
+      name: name.trim(),
+      category:    category    || null,
+      phone:       phone       || null,
+      website:     website     || null,
+      city:        city        || null,
+      country:     country     || null,
+      domain,
+      phase:       phase       ? parseInt(phase) : 1,
+      status:      status      || "NEW",
+      linkedinUrl: linkedinUrl || null,
+      instagramUrl:instagramUrl|| null,
+      ...(note?.trim() && { notes: { create: { content: note.trim() } } }),
+    },
+  });
+
+  return NextResponse.json(lead, { status: 201 });
+}
