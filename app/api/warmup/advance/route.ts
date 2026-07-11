@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     where: { phase },
     orderBy: { createdAt: "desc" },
   });
-  if (!plan) return NextResponse.json({ error: "No plan found" }, { status: 404 });
+  if (!plan) return NextResponse.json({ error: "No warmup plan found for this phase. Create a plan first." }, { status: 400 });
 
   const tomorrow = new Date();
   tomorrow.setHours(0, 0, 0, 0);
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!nextBatch) {
-    return NextResponse.json({ error: "No upcoming batches" }, { status: 404 });
+    return NextResponse.json({ error: "No upcoming batches — the campaign may already be on its last day." }, { status: 400 });
   }
 
   // Move it to today

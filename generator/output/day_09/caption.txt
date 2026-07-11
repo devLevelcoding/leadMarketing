@@ -1,13 +1,19 @@
 CAPTION:
-Watch us fix a broken website in real time
+What building a website actually looks like behind the scenes
 
-We received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.
+It starts with a blank screen and a list of requirements. No template. No shortcuts.
 
-We opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.
+We plan the structure before writing a single line of code.
 
-The client had no idea any of this was happening.
+Then comes the code — components, logic, layout, one by one.
 
-Follow for more tech breakdowns
+We test on every device. Mobile first. Then tablet. Then desktop.
+
+Performance check — we do not launch until it loads in under 3 seconds.
+
+This is what you are paying for when you hire a real dev team.
+
+Save this if you are thinking about building or rebuilding your website
 
 #itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
 

@@ -1,0 +1,32 @@
+CAPTION:
+What building a website actually looks like behind the scenes
+
+It starts with a blank screen and a list of requirements. No template. No shortcuts.
+
+We plan the structure before writing a single line of code.
+
+Then comes the code — components, logic, layout, one by one.
+
+We test on every device. Mobile first. Then tablet. Then desktop.
+
+Performance check — we do not launch until it loads in under 3 seconds.
+
+This is what you are paying for when you hire a real dev team.
+
+Save this if you are thinking about building or rebuilding your website
+
+#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
+
+@levelcoding
+
+HASHTAGS:
+#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
+
+SLIDES:
+1. HOOK  — "What building a website actually looks like behind the scenes"
+2. POINT — "It starts with a blank screen and a list of requirements. No template. No shortcuts."
+3. POINT — "We plan the structure before writing a single line of code."
+4. POINT — "Then comes the code — components, logic, layout, one by one."
+5. POINT — "We test on every device. Mobile first. Then tablet. Then desktop."
+6. POINT — "Performance check — we do not launch until it loads in under 3 seconds."
+7. CTA   — "This is what you are paying for when you hire a real dev team. @levelcoding"

@@ -32,20 +32,21 @@ function printProgress(label: string, done: number, total: number, startMs: numb
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const RESULTS_PER_SEARCH = 120; // Google Maps caps at ~120 per query
-const DETAIL_DELAY_MS    = 800; // delay between clicking each result
-const SCROLL_DELAY_MS    = 1200;
+const RESULTS_PER_SEARCH = 20;  // cap at 20 per query — enough leads, much faster
+const DETAIL_DELAY_MS    = 300; // delay between clicking each result
+const SCROLL_DELAY_MS    = 400;
 
 // ─── Search targets ───────────────────────────────────────────────────────────
 
 interface Target {
   country: string;
   city: string;
+  state?: string;      // US state abbreviation
   query: string;       // Google Maps search string
   searchCategory: string;
   niche: string;       // used for output filename
   domain: "b2b" | "crm" | "health" | "tourism" | "no_website";
-  phase?: number;      // 4 = DACH/Benelux, 5 = South/East Europe (default 4)
+  phase?: number;      // 3 = USA, 4 = DACH/Benelux, 5 = South/East Europe (default 4)
 }
 
 const TARGETS: Target[] = [
@@ -1366,11 +1367,131 @@ const TARGETS: Target[] = [
   { country: "Hungary", city: "Debrecen", query: "nyelviskolák Debrecen",          searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
   { country: "Hungary", city: "Miskolc",  query: "képzési központ Miskolc",        searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
   { country: "Hungary", city: "Gyor",     query: "language school Győr",           searchCategory: "Learning Center",       niche: "learning_centers",        domain: "crm", phase: 6 },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PHASE 3 — USA  (80 queries × ~20 results = ~1600 raw leads)
+  // Focus: dental, auto repair, law, gym, beauty, physio — high website+phone rate
+  // 20 cities across 20 different states
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ── New York, NY ──────────────────────────────────────────────────────────
+  { country: "USA", state: "NY", city: "New York",      query: "dental clinic New York",         searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "NY", city: "New York",      query: "auto repair shop New York",      searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "NY", city: "New York",      query: "law firm New York",              searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "NY", city: "New York",      query: "physical therapy New York",      searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+
+  // ── Los Angeles, CA ───────────────────────────────────────────────────────
+  { country: "USA", state: "CA", city: "Los Angeles",   query: "dental clinic Los Angeles",      searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "CA", city: "Los Angeles",   query: "auto repair shop Los Angeles",   searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "CA", city: "Los Angeles",   query: "beauty salon Los Angeles",       searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+  { country: "USA", state: "CA", city: "Los Angeles",   query: "gym fitness Los Angeles",        searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Houston, TX ───────────────────────────────────────────────────────────
+  { country: "USA", state: "TX", city: "Houston",       query: "dental clinic Houston",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "TX", city: "Houston",       query: "auto repair shop Houston",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "TX", city: "Houston",       query: "law firm Houston",               searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "TX", city: "Houston",       query: "beauty salon Houston",           searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+
+  // ── Miami, FL ─────────────────────────────────────────────────────────────
+  { country: "USA", state: "FL", city: "Miami",         query: "dental clinic Miami",            searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "FL", city: "Miami",         query: "auto repair shop Miami",         searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "FL", city: "Miami",         query: "law firm Miami",                 searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "FL", city: "Miami",         query: "gym fitness Miami",              searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Chicago, IL ───────────────────────────────────────────────────────────
+  { country: "USA", state: "IL", city: "Chicago",       query: "dental clinic Chicago",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "IL", city: "Chicago",       query: "auto repair shop Chicago",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "IL", city: "Chicago",       query: "law firm Chicago",               searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "IL", city: "Chicago",       query: "physical therapy Chicago",       searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+
+  // ── Phoenix, AZ ───────────────────────────────────────────────────────────
+  { country: "USA", state: "AZ", city: "Phoenix",       query: "dental clinic Phoenix",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "AZ", city: "Phoenix",       query: "auto repair shop Phoenix",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "AZ", city: "Phoenix",       query: "beauty salon Phoenix",           searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+  { country: "USA", state: "AZ", city: "Phoenix",       query: "gym fitness Phoenix",            searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Philadelphia, PA ──────────────────────────────────────────────────────
+  { country: "USA", state: "PA", city: "Philadelphia",  query: "dental clinic Philadelphia",     searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "PA", city: "Philadelphia",  query: "auto repair shop Philadelphia",  searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "PA", city: "Philadelphia",  query: "law firm Philadelphia",          searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "PA", city: "Philadelphia",  query: "physical therapy Philadelphia",  searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+
+  // ── Seattle, WA ───────────────────────────────────────────────────────────
+  { country: "USA", state: "WA", city: "Seattle",       query: "dental clinic Seattle",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "WA", city: "Seattle",       query: "auto repair shop Seattle",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "WA", city: "Seattle",       query: "law firm Seattle",               searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "WA", city: "Seattle",       query: "gym fitness Seattle",            searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Denver, CO ────────────────────────────────────────────────────────────
+  { country: "USA", state: "CO", city: "Denver",        query: "dental clinic Denver",           searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "CO", city: "Denver",        query: "auto repair shop Denver",        searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "CO", city: "Denver",        query: "law firm Denver",                searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "CO", city: "Denver",        query: "beauty salon Denver",            searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+
+  // ── Atlanta, GA ───────────────────────────────────────────────────────────
+  { country: "USA", state: "GA", city: "Atlanta",       query: "dental clinic Atlanta",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "GA", city: "Atlanta",       query: "auto repair shop Atlanta",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "GA", city: "Atlanta",       query: "law firm Atlanta",               searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "GA", city: "Atlanta",       query: "beauty salon Atlanta",           searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+
+  // ── Nashville, TN ─────────────────────────────────────────────────────────
+  { country: "USA", state: "TN", city: "Nashville",     query: "dental clinic Nashville",        searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "TN", city: "Nashville",     query: "auto repair shop Nashville",     searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "TN", city: "Nashville",     query: "law firm Nashville",             searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "TN", city: "Nashville",     query: "beauty salon Nashville",         searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+
+  // ── Portland, OR ──────────────────────────────────────────────────────────
+  { country: "USA", state: "OR", city: "Portland",      query: "dental clinic Portland",         searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "OR", city: "Portland",      query: "auto repair shop Portland",      searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "OR", city: "Portland",      query: "law firm Portland",              searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "OR", city: "Portland",      query: "physical therapy Portland",      searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+
+  // ── Las Vegas, NV ─────────────────────────────────────────────────────────
+  { country: "USA", state: "NV", city: "Las Vegas",     query: "dental clinic Las Vegas",        searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "NV", city: "Las Vegas",     query: "auto repair shop Las Vegas",     searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "NV", city: "Las Vegas",     query: "beauty salon Las Vegas",         searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+  { country: "USA", state: "NV", city: "Las Vegas",     query: "gym fitness Las Vegas",          searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Boston, MA ────────────────────────────────────────────────────────────
+  { country: "USA", state: "MA", city: "Boston",        query: "dental clinic Boston",           searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "MA", city: "Boston",        query: "law firm Boston",                searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "MA", city: "Boston",        query: "physical therapy Boston",        searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+  { country: "USA", state: "MA", city: "Boston",        query: "gym fitness Boston",             searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Charlotte, NC ─────────────────────────────────────────────────────────
+  { country: "USA", state: "NC", city: "Charlotte",     query: "dental clinic Charlotte",        searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "NC", city: "Charlotte",     query: "auto repair shop Charlotte",     searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "NC", city: "Charlotte",     query: "beauty salon Charlotte",         searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+  { country: "USA", state: "NC", city: "Charlotte",     query: "law firm Charlotte",             searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+
+  // ── Detroit, MI ───────────────────────────────────────────────────────────
+  { country: "USA", state: "MI", city: "Detroit",       query: "dental clinic Detroit",          searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "MI", city: "Detroit",       query: "auto repair shop Detroit",       searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "MI", city: "Detroit",       query: "law firm Detroit",               searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "MI", city: "Detroit",       query: "gym fitness Detroit",            searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
+
+  // ── Minneapolis, MN ───────────────────────────────────────────────────────
+  { country: "USA", state: "MN", city: "Minneapolis",   query: "dental clinic Minneapolis",      searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "MN", city: "Minneapolis",   query: "auto repair shop Minneapolis",   searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "MN", city: "Minneapolis",   query: "law firm Minneapolis",           searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "MN", city: "Minneapolis",   query: "physical therapy Minneapolis",   searchCategory: "Physiotherapy",   niche: "health",         domain: "health", phase: 3 },
+
+  // ── Columbus, OH ──────────────────────────────────────────────────────────
+  { country: "USA", state: "OH", city: "Columbus",      query: "dental clinic Columbus Ohio",    searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "OH", city: "Columbus",      query: "auto repair shop Columbus Ohio", searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "OH", city: "Columbus",      query: "law firm Columbus Ohio",         searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "OH", city: "Columbus",      query: "beauty salon Columbus Ohio",     searchCategory: "Beauty Salon",    niche: "beauty",         domain: "crm",    phase: 3 },
+
+  // ── Richmond, VA ──────────────────────────────────────────────────────────
+  { country: "USA", state: "VA", city: "Richmond",      query: "dental clinic Richmond Virginia",searchCategory: "Dental Clinic",   niche: "dental",         domain: "health", phase: 3 },
+  { country: "USA", state: "VA", city: "Richmond",      query: "auto repair shop Richmond VA",   searchCategory: "Auto Repair",     niche: "auto_workshops", domain: "crm",    phase: 3 },
+  { country: "USA", state: "VA", city: "Richmond",      query: "law firm Richmond Virginia",     searchCategory: "Law Firm",        niche: "law_firms",      domain: "b2b",    phase: 3 },
+  { country: "USA", state: "VA", city: "Richmond",      query: "gym fitness Richmond Virginia",  searchCategory: "Gym",             niche: "fitness",        domain: "crm",    phase: 3 },
 ];
 
 // ─── CSV helpers ──────────────────────────────────────────────────────────────
 
-const CSV_HEADER = "name,category,search_category,address,phone,website,rating,review_count,city,country,maps_url,scraped_at\n";
+const CSV_HEADER = "name,category,search_category,address,phone,whatsapp,website,rating,review_count,city,state,country,maps_url,scraped_at\n";
 
 function escCsv(v: string | null): string {
   if (!v) return "";
@@ -1381,8 +1502,8 @@ function escCsv(v: string | null): string {
 function toRow(r: Record<string, string | null>): string {
   return [
     r.name, r.category, r.search_category, r.address,
-    r.phone, r.website, r.rating, r.review_count,
-    r.city, r.country, r.maps_url, r.scraped_at,
+    r.phone, r.whatsapp, r.website, r.rating, r.review_count,
+    r.city, r.state, r.country, r.maps_url, r.scraped_at,
   ].map(escCsv).join(",") + "\n";
 }
 
@@ -1470,7 +1591,7 @@ async function main() {
       catch { console.log("    ⚠ No feed — skipping"); continue; }
 
       let prevCount = 0;
-      for (let s = 0; s < 15; s++) {
+      for (let s = 0; s < 5; s++) {
         await feed.evaluate(el => el.scrollBy(0, 1200));
         await delay(SCROLL_DELAY_MS);
         const count = await page.locator('[role="feed"] [role="article"]').count();
@@ -1518,6 +1639,14 @@ async function main() {
           const reviews  = await page.locator('[aria-label*="reviews"]').first().getAttribute("aria-label").catch(() => null);
           const mapsUrl  = page.url().includes("/place/") ? page.url().split("?")[0] : null;
 
+          // Detect WhatsApp link on GMaps listing
+          const waHref = await page.locator('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp.com/send"]').first().getAttribute("href").catch(() => null);
+          let whatsapp: string | null = null;
+          if (waHref) {
+            const m = waHref.match(/(?:wa\.me\/|phone=)(\+?[\d]{7,15})/);
+            if (m) whatsapp = "+" + m[1].replace(/^\+/, "");
+          }
+
           const reviewCount = reviews ? reviews.match(/[\d,]+/)?.[0]?.replace(",", "") ?? null : null;
 
           appendFileSync(csvPath, toRow({
@@ -1526,10 +1655,12 @@ async function main() {
             search_category: target.searchCategory,
             address:         address?.trim() ?? null,
             phone:           phone?.trim() ?? null,
+            whatsapp:        whatsapp,
             website:         website ?? null,
             rating:          rating?.trim().replace(",", ".") ?? null,
             review_count:    reviewCount,
             city:            target.city,
+            state:           target.state ?? null,
             country:         target.country,
             maps_url:        mapsUrl,
             scraped_at:      scrapedAt,

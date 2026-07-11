@@ -9,11 +9,12 @@ const PHASES = [
 ];
 
 const PHASE_TABS = [
-  { value: "",  label: "All Phases", flag: "🌍" },
+  { value: "", label: "All Phases",       flag: "🌍" },
   { value: "1", label: "Phase 1 — Europe", flag: "🇪🇺" },
   { value: "2", label: "Phase 2 — Dubai",  flag: "🇦🇪" },
   { value: "3", label: "Phase 3 — USA",    flag: "🇺🇸" },
 ];
+
 
 const DOMAINS = ["crm", "no_website", "health", "b2b", "tourism"];
 const DOMAIN_LABELS: Record<string, string> = {
@@ -64,7 +65,7 @@ export default function LeadsPage() {
   const [col, setCol] = useState({ name:"", domain:"", category:"", city:"", country:"", status:"", website:"", phone:"" });
   const setColFilter = (k: keyof typeof col, v: string) => setCol(c => ({ ...c, [k]: v }));
 
-  const fetchLeads = useCallback(async () => {
+const fetchLeads = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams({
       page: String(page), limit: "50",
@@ -223,6 +224,9 @@ export default function LeadsPage() {
         ))}
       </div>
 
+      {/* ── Regular leads tabs (All / Phase 1-3) ── */}
+      {<>
+
       {/* Filters */}
       <div className="bg-white border rounded-xl p-4 flex flex-wrap gap-3">
         <input
@@ -236,19 +240,47 @@ export default function LeadsPage() {
         <Select value={country} onChange={v => { setCountry(v); setPage(1); }} placeholder="All countries">
           {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
         </Select>
-        <Select value={status} onChange={v => { setStatus(v); setPage(1); }} placeholder="All statuses">
-          {STATUSES.map(s => <option key={s} value={s}>{s.replace("_"," ")}</option>)}
-        </Select>
         {(domain || country || status || search) && (
           <button
-            onClick={() => { setDomain(""); setCountry(""); setStatus(""); setSearch(""); setPage(1); setPhase(""); }}
+            onClick={() => { setDomain(""); setCountry(""); setStatus(""); setSearch(""); setPage(1); }}
             className="text-sm text-red-500 hover:underline px-2"
           >Clear</button>
         )}
       </div>
 
+      {/* Table + status sidebar */}
+      <div className="flex gap-3 items-start">
+
+        {/* Vertical status tabs */}
+        <div className="flex flex-col gap-1 shrink-0">
+          {[
+            { value: "",               label: "All",         color: "blue" },
+            { value: "NEW",            label: "New",         color: "gray" },
+            { value: "EMAILED",        label: "Emailed",     color: "blue" },
+            { value: "REPLIED",        label: "Replied",     color: "yellow" },
+            { value: "CONVERTED",      label: "Converted",   color: "green" },
+            { value: "NOT_INTERESTED", label: "Not int.",    color: "red" },
+          ].map(s => (
+            <button
+              key={s.value}
+              onClick={() => { setStatus(s.value); setPage(1); }}
+              className={`px-3 py-2.5 rounded-xl border text-xs font-semibold transition w-[88px] text-center ${
+                status === s.value
+                  ? s.color === "green"  ? "bg-green-50 border-green-400 text-green-700"
+                  : s.color === "yellow" ? "bg-yellow-50 border-yellow-400 text-yellow-700"
+                  : s.color === "red"    ? "bg-red-50 border-red-400 text-red-700"
+                  : s.color === "gray"   ? "bg-gray-100 border-gray-400 text-gray-700"
+                  : "bg-blue-50 border-blue-400 text-blue-700"
+                  : "bg-white border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700"
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
       {/* Table */}
-      <div className="bg-white border rounded-xl overflow-hidden">
+      <div className="bg-white border rounded-xl overflow-hidden flex-1 min-w-0">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
@@ -287,12 +319,7 @@ export default function LeadsPage() {
                 <td className="px-2 py-1.5">
                   <input value={col.country} onChange={e => setColFilter("country", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
                 </td>
-                <td className="px-2 py-1.5">
-                  <select value={col.status} onChange={e => setColFilter("status", e.target.value)} className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white">
-                    <option value="">All</option>
-                    {STATUSES.map(s => <option key={s} value={s}>{s.replace("_"," ")}</option>)}
-                  </select>
-                </td>
+                <td className="px-2 py-1.5" />
                 <td className="px-2 py-1.5">
                   <input value={col.website} onChange={e => setColFilter("website", e.target.value)} placeholder="Search…" className="w-full text-xs border rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400" />
                 </td>
@@ -364,6 +391,10 @@ export default function LeadsPage() {
           </div>
         )}
       </div>
+      {/* end flex gap-3 */}
+      </div>
+
+      </>}
     </div>
   );
 }

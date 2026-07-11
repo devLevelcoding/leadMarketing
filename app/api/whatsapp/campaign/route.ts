@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-function getQuota(day: number): number {
+function getQuota(day: number, phase?: number): number {
+  if (phase === 32) return 5;
   if (day <= 3)  return 15;
   if (day <= 7)  return 20;
   if (day <= 14) return 25;
@@ -86,16 +87,32 @@ export async function POST(req: NextRequest) {
     const startDate = body.startDate ? new Date(body.startDate) : new Date();
     startDate.setHours(0, 0, 0, 0);
 
-    // Use no_website leads when available; fall back to all phone leads for phases
-    // where GMaps-scraped data has no no_website segment (e.g. Phase 4, 5)
-    const noWebsiteCount = await prisma.lead.count({ where: { domain: "no_website", phone: { not: null }, phase } });
-    const rawLeads = await prisma.lead.findMany({
-      where: noWebsiteCount > 0
-        ? { domain: "no_website", phone: { not: null }, phase }
-        : { phone: { not: null }, phase },
-      select: { id: true, country: true, phone: true },
-      orderBy: { id: "asc" },
-    });
+    // Phase 3 (USA): only leads with WhatsApp + website
+    // Phase 32 (USA WA+Web): tagged subset — load directly
+    // Other phases: no_website leads if available, else all leads with phone
+    let rawLeads: { id: number; country: string | null; phone: string | null }[];
+    if (phase === 3) {
+      rawLeads = await prisma.lead.findMany({
+        where: { phase, hasWhatsapp: true, website: { not: null }, phone: { not: null } },
+        select: { id: true, country: true, phone: true },
+        orderBy: { id: "asc" },
+      });
+    } else if (phase === 32) {
+      rawLeads = await prisma.lead.findMany({
+        where: { phase: 32, phone: { not: null } },
+        select: { id: true, country: true, phone: true },
+        orderBy: { id: "asc" },
+      });
+    } else {
+      const noWebsiteCount = await prisma.lead.count({ where: { domain: "no_website", phone: { not: null }, phase } });
+      rawLeads = await prisma.lead.findMany({
+        where: noWebsiteCount > 0
+          ? { domain: "no_website", phone: { not: null }, phase }
+          : { phone: { not: null }, phase },
+        select: { id: true, country: true, phone: true },
+        orderBy: { id: "asc" },
+      });
+    }
 
     const seenPhones = new Set<string>();
     const leads = rawLeads.filter(l => {
@@ -111,7 +128,7 @@ export async function POST(req: NextRequest) {
       if (!byCountry.has(key)) byCountry.set(key, []);
       byCountry.get(key)!.push(l.id);
     }
-    const queues = [...byCountry.values()];
+    const queues = Array.from(byCountry.values());
     const interleaved: number[] = [];
     let qi = 0;
     while (interleaved.length < leads.length) {
@@ -126,7 +143,7 @@ export async function POST(req: NextRequest) {
 
     let used = 0;
     for (let day = 1; day <= 30 && used < interleaved.length; day++) {
-      const quota = getQuota(day);
+      const quota = getQuota(day, phase);
       const batchDate = new Date(startDate);
       batchDate.setDate(batchDate.getDate() + day - 1);
 

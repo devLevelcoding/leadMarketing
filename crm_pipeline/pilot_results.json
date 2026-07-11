@@ -1,0 +1,521 @@
+{
+  "run_at": "2026-06-25T12:29:05.384262",
+  "companies_scanned": 41,
+  "msi": [
+    {
+      "country": "NL",
+      "industry": "Construction",
+      "n": 3,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "PL",
+      "industry": "Real Estate",
+      "n": 3,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "IT",
+      "industry": "IT & Software",
+      "n": 4,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "IT",
+      "industry": "Construction",
+      "n": 3,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "PL",
+      "industry": "Construction",
+      "n": 3,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "NL",
+      "industry": "Real Estate",
+      "n": 4,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "IT",
+      "industry": "Real Estate",
+      "n": 4,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "IT",
+      "industry": "Logistics & Transport",
+      "n": 3,
+      "msi": 0.0,
+      "tier": "A",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "PL",
+      "industry": "IT & Software",
+      "n": 4,
+      "msi": 25.0,
+      "tier": "B",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "PL",
+      "industry": "Logistics & Transport",
+      "n": 3,
+      "msi": 33.3,
+      "tier": "B",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "NL",
+      "industry": "Logistics & Transport",
+      "n": 3,
+      "msi": 33.3,
+      "tier": "B",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    },
+    {
+      "country": "NL",
+      "industry": "IT & Software",
+      "n": 4,
+      "msi": 50.0,
+      "tier": "B",
+      "pct_modern": 50.0,
+      "pct_legacy": 0.0,
+      "pct_local": 0.0,
+      "pct_no_crm": 50.0,
+      "pct_unknown": 0.0
+    }
+  ],
+  "detections": [
+    {
+      "company": "Heijmans",
+      "country": "NL",
+      "industry": "Construction",
+      "website": "https://www.heijmans.nl",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Asseco Poland",
+      "country": "PL",
+      "industry": "IT & Software",
+      "website": "https://pl.asseco.com",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Rohlig Suus",
+      "country": "PL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.rohlig.com",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Morizon",
+      "country": "PL",
+      "industry": "Real Estate",
+      "website": "https://www.morizon.pl",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Comarch",
+      "country": "PL",
+      "industry": "IT & Software",
+      "website": "https://www.comarch.pl",
+      "crm": "HubSpot",
+      "category": "Modern",
+      "confidence": 0.17
+    },
+    {
+      "company": "Engineering",
+      "country": "IT",
+      "industry": "IT & Software",
+      "website": "https://www.eng.it",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "VolkerWessels",
+      "country": "NL",
+      "industry": "Construction",
+      "website": "https://www.volkerwessels.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Sygnity",
+      "country": "PL",
+      "industry": "IT & Software",
+      "website": "https://www.sygnity.pl",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Intive",
+      "country": "PL",
+      "industry": "IT & Software",
+      "website": "https://www.intive.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Webuild",
+      "country": "IT",
+      "industry": "Construction",
+      "website": "https://www.webuildgroup.com",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Unibep",
+      "country": "PL",
+      "industry": "Construction",
+      "website": "https://www.unibep.pl",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Erbud",
+      "country": "PL",
+      "industry": "Construction",
+      "website": "https://www.erbud.pl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "ERA Netherlands",
+      "country": "NL",
+      "industry": "Real Estate",
+      "website": "https://www.era.nl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Raben Group",
+      "country": "PL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.raben-group.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Idealista IT",
+      "country": "IT",
+      "industry": "Real Estate",
+      "website": "https://www.idealista.it",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "RE/MAX Italy",
+      "country": "IT",
+      "industry": "Real Estate",
+      "website": "https://www.remax.it",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "AlmavivA",
+      "country": "IT",
+      "industry": "IT & Software",
+      "website": "https://www.almaviva.it",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Vastned",
+      "country": "NL",
+      "industry": "Real Estate",
+      "website": "https://www.vastned.com",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Gabetti",
+      "country": "IT",
+      "industry": "Real Estate",
+      "website": "https://www.gabetti.it",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Savills NL",
+      "country": "NL",
+      "industry": "Real Estate",
+      "website": "https://www.savills.nl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Salcef Group",
+      "country": "IT",
+      "industry": "Construction",
+      "website": "https://www.salcef.it",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "BRT Bartolini",
+      "country": "IT",
+      "industry": "Logistics & Transport",
+      "website": "https://www.brt.it",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Ewals Cargo",
+      "country": "NL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.ewals.com",
+      "crm": "HubSpot",
+      "category": "Modern",
+      "confidence": 0.5
+    },
+    {
+      "company": "VOS Logistics",
+      "country": "NL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.vos-logistics.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "MVGM",
+      "country": "NL",
+      "industry": "Real Estate",
+      "website": "https://www.mvgm.com",
+      "crm": "WordPress Contact Form",
+      "category": "None",
+      "confidence": 0.5
+    },
+    {
+      "company": "Bolk Transport",
+      "country": "NL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.bolk.nl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Sogeti NL",
+      "country": "NL",
+      "industry": "IT & Software",
+      "website": "https://www.sogeti.nl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Var Group",
+      "country": "IT",
+      "industry": "IT & Software",
+      "website": "https://www.var.it",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Arcese",
+      "country": "IT",
+      "industry": "Logistics & Transport",
+      "website": "https://www.arcese.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "ID Logistics PL",
+      "country": "PL",
+      "industry": "Logistics & Transport",
+      "website": "https://www.id-logistics.com",
+      "crm": "Salesforce",
+      "category": "Modern",
+      "confidence": 0.33
+    },
+    {
+      "company": "Cegeka NL",
+      "country": "NL",
+      "industry": "IT & Software",
+      "website": "https://www.cegeka.com",
+      "crm": "HubSpot",
+      "category": "Modern",
+      "confidence": 0.67
+    },
+    {
+      "company": "Ctac",
+      "country": "NL",
+      "industry": "IT & Software",
+      "website": "https://www.ctac.nl",
+      "crm": "HubSpot",
+      "category": "Modern",
+      "confidence": 0.33
+    },
+    {
+      "company": "FERCAM",
+      "country": "IT",
+      "industry": "Logistics & Transport",
+      "website": "https://www.fercam.com",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Atos NL",
+      "country": "NL",
+      "industry": "IT & Software",
+      "website": "https://atos.net/nl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Tecnocasa",
+      "country": "IT",
+      "industry": "Real Estate",
+      "website": "https://www.tecnocasa.it",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "BAM Group",
+      "country": "NL",
+      "industry": "Construction",
+      "website": "https://www.bam.nl",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Home Broker",
+      "country": "PL",
+      "industry": "Real Estate",
+      "website": "https://www.homebroker.pl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "Emmerson Realty",
+      "country": "PL",
+      "industry": "Real Estate",
+      "website": "https://www.emmerson.pl",
+      "crm": "None",
+      "category": "None",
+      "confidence": 1.0
+    },
+    {
+      "company": "CMC Cooperativa",
+      "country": "IT",
+      "industry": "Construction",
+      "website": "https://www.cmc.coop",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Polimex-Mostostal",
+      "country": "PL",
+      "industry": "Construction",
+      "website": "https://www.polimex.pl",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    },
+    {
+      "company": "Softlab",
+      "country": "IT",
+      "industry": "IT & Software",
+      "website": "https://www.softlab.it",
+      "crm": "Unknown",
+      "category": "Unknown",
+      "confidence": 0.0
+    }
+  ]
+}

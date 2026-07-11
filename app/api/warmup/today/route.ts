@@ -19,7 +19,10 @@ export async function GET(req: NextRequest) {
     leads: {
       include: {
         lead: {
-          include: { emailLogs: { orderBy: { sentAt: "desc" as const }, take: 3 } },
+          include: {
+            emailLogs: { orderBy: { sentAt: "desc" as const }, take: 3 },
+            warmupLeads: { where: { status: "SENT" }, select: { batchId: true } },
+          },
         },
       },
       orderBy: { id: "asc" as const },
@@ -40,6 +43,14 @@ export async function GET(req: NextRequest) {
       include: batchInclude,
     }));
 
+  // Drop leads already SENT in a previous batch — they should not appear again
+  if (batch) {
+    (batch as any).leads = batch.leads.filter((bl: any) => {
+      const sentElsewhere = bl.lead.warmupLeads.filter((wl: any) => wl.batchId !== batch!.id);
+      return sentElsewhere.length === 0;
+    });
+  }
+
   // Reorder leads round-robin by country for diversity (1 per country before repeating)
   if (batch) {
     const groups = new Map<string, typeof batch.leads>();
@@ -49,7 +60,7 @@ export async function GET(req: NextRequest) {
       groups.get(key)!.push(bl);
     }
     const interleaved: typeof batch.leads = [];
-    const queues = [...groups.values()];
+    const queues = Array.from(groups.values());
     let i = 0;
     while (interleaved.length < batch.leads.length) {
       const q = queues[i % queues.length];

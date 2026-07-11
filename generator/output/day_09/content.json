@@ -1,16 +1,26 @@
 {
   "type": "reel",
-  "script": [
-    "[0:00–0:03]  HOOK — 'Watch us fix a broken website in real time'",
-    "[0:03–0:08]  Introduce the topic: Behind the Scenes — Building Something",
-    "[0:08–0:16]  Point 1: We received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.",
-    "[0:16–0:24]  Point 2: We opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.",
-    "[0:24–0:32]  Point 3: The client had no idea any of this was happening.",
-    "[0:50–1:00]  CTA — 'Follow for more tech breakdowns'",
-    "             Caption: @levelcoding"
-  ],
-  "caption": "Watch us fix a broken website in real time\n\nWe received a client site that had broken images, no SSL certificate, and a contact form that was sending emails to nowhere for 6 months.\n\nWe opened the code, found the bug in the form handler, fixed the SSL, compressed all images, and the site went from 8 seconds load time to under 2 seconds.\n\nThe client had no idea any of this was happening.\n\nFollow for more tech breakdowns\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
-  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas",
   "day": 9,
-  "topic": "Behind the Scenes — Building Something"
+  "topic": "Behind the Scenes of Building Something",
+  "format": "1080x1920",
+  "duration_seconds": 60,
+  "scheduled_at": "2025-05-27T19:00:00",
+  "script": [
+    "[0:00–0:03]  HOOK — 'Nobody shows you this part of web development'",
+    "[0:03–0:08]  Screen: blank project opens — folder structure, file names appearing",
+    "[0:08–0:20]  Fast-forward: writing components, code filling the screen line by line",
+    "[0:20–0:32]  Testing on mobile and desktop — spotting a layout bug, fixing it live",
+    "[0:32–0:45]  Final result: clean website loads in under 2 seconds on every screen",
+    "[0:45–0:55]  Text overlay: 'No template. No shortcuts. Just clean code.'",
+    "[0:55–1:00]  CTA — 'Follow @levelcoding to see more of the process'"
+  ],
+  "shoot_notes": [
+    "Screen record VS Code with a project open — blur any client name in file names",
+    "Use 2x–4x fast-forward for coding sections to keep energy high",
+    "Add lo-fi or upbeat background music (no lyrics)",
+    "Show browser DevTools open — signals credibility",
+    "End with the browser refresh reveal shot"
+  ],
+  "caption": "Nobody shows you this part\n\nThis is what actually goes into building a website from scratch.\n\nNo templates. No drag and drop. Just clean code, real problem-solving, and obsessing over details most people never notice.\n\nThe result? A site that loads fast, looks right on every device, and actually works for your business.\n\nFollow @levelcoding to see more of the process\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas"
 }

@@ -1,19 +1,17 @@
 CAPTION:
-73% of SMBs have no web analytics. Here's why that's a disaster.
-
 73% of small businesses have no analytics on their website.
 
-That means they have no idea who visits, where they come from, what pages they read, or why they leave without buying.
+That means they are flying completely blind.
 
-You would never run a physical store blindfolded.
+Without analytics you do not know how many people visit your site — could be 10 or 10,000.
 
-But that is exactly what most businesses do online.
+You do not know where they come from, so you cannot double down on what works.
 
-Google Analytics is free and takes 10 minutes to install.
+You do not know which page makes people leave — and that page is costing you customers every day.
 
-Yet most business owners we talk to have never even heard of it.
+The fix? Google Analytics and Search Console. Both free. Both set up in 10 minutes.
 
-Do you track your website data? Comment Yes/No
+Save this and set it up this week.
 
 #itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
 

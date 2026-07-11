@@ -1,0 +1,53 @@
+{
+  "type": "carousel",
+  "day": 11,
+  "topic": "Tool of the Week — VS Code",
+  "format": "1080x1080",
+  "scheduled_at": "2025-05-29T18:30:00",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "The one tool every developer on our team uses every single day",
+      "subtext": "And it is completely free."
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "VS Code — the code editor built by Microsoft and trusted by millions of developers",
+      "subtext": "Fast, lightweight, and works on any operating system."
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "Extensions for every language — JavaScript, Python, PHP, TypeScript, and more",
+      "subtext": "One editor. Every project. No switching tools."
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Built-in Git integration so you commit, push, and review code without leaving the editor",
+      "subtext": "Fewer windows open. More focus. Faster work."
+    },
+    {
+      "number": 5,
+      "type": "point",
+      "text": "Live Share lets our whole team collaborate on the same file in real time",
+      "subtext": "Like Google Docs — but for code."
+    },
+    {
+      "number": 6,
+      "type": "point",
+      "text": "IntelliSense autocomplete catches errors before they become bugs",
+      "subtext": "It pays attention so you do not have to remember everything."
+    },
+    {
+      "number": 7,
+      "type": "cta",
+      "text": "Free. Fast. Used by every serious developer. Download it today.",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "The one tool every developer on our team uses every single day — and it is completely free.\n\nVS Code by Microsoft.\n\nExtensions for every language. Built-in Git. Live Share for real-time collaboration. IntelliSense that catches errors before they become bugs.\n\nOne editor. Every project. No switching tools.\n\nIf you are a developer and not using VS Code yet — this is your sign.\n\nSave this and share it with your team.\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas"
+}

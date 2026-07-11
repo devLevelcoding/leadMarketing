@@ -28,6 +28,7 @@ model Lead {
   domain          String    // crm | no_website | health | b2b | tourism
   phase          Int         @default(1) // 1=Europe | 2=Dubai/UAE | 3=USA
   state          String?                 // US state (phase 3 only)
+  hasWhatsapp    Boolean     @default(false) @map("has_whatsapp") // WA link found on GMaps
   status         String      @default("NEW")
   createdAt      DateTime    @default(now()) @map("created_at")
   updatedAt      DateTime    @updatedAt @map("updated_at")
@@ -198,6 +199,19 @@ model LighthouseScan {
   lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
 
   @@map("lighthouse_scans")
+}
+
+model AuditRequest {
+  id        Int      @id @default(autoincrement())
+  url       String
+  name      String?
+  email     String?
+  company   String?
+  status    String   @default("PENDING") // PENDING | DONE | SKIPPED
+  notes     String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("audit_requests")
 }
 
 model LeadReport {

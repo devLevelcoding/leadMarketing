@@ -1,0 +1,53 @@
+{
+  "type": "carousel",
+  "day": 9,
+  "topic": "Behind the Scenes of Building a Website",
+  "format": "1080x1080",
+  "scheduled_at": "2025-05-27T18:30:00",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "What building a website actually looks like behind the scenes",
+      "subtext": "No client name. Just the real process."
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "It starts with a blank screen and a list of requirements",
+      "subtext": "No template. No shortcuts. Every project from zero."
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "We plan the structure before writing a single line of code",
+      "subtext": "Pages, components, data flow — all mapped out first."
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "Then comes the code — components, logic, layout, one by one",
+      "subtext": "This part takes the longest. And it should."
+    },
+    {
+      "number": 5,
+      "type": "point",
+      "text": "We test on every device. Mobile first. Then tablet. Then desktop.",
+      "subtext": "If it breaks on a phone, it does not ship."
+    },
+    {
+      "number": 6,
+      "type": "point",
+      "text": "Performance check — we do not launch until it loads in under 3 seconds",
+      "subtext": "Speed is not optional. It is the product."
+    },
+    {
+      "number": 7,
+      "type": "cta",
+      "text": "This is what you are paying for when you hire a real dev team",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "What building a website actually looks like behind the scenes\n\nIt starts with a blank screen and a list of requirements. No template. No shortcuts.\n\nWe plan the structure before writing a single line of code.\n\nThen comes the code — components, logic, layout, one by one.\n\nWe test on every device. Mobile first. Then tablet. Then desktop.\n\nPerformance check — we do not launch until it loads in under 3 seconds.\n\nThis is what you are paying for when you hire a real dev team.\n\nSave this if you are thinking about building or rebuilding your website\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas"
+}

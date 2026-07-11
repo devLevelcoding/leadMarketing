@@ -57,7 +57,9 @@ async function importFolder(folder: string, domain: string, phase: number) {
         data: {
           name, category: row.category || null,
           searchCategory: row.search_category || null, address: row.address || null,
-          phone: row.phone || null, website: row.website || null,
+          phone: row.whatsapp || row.phone || null,
+          hasWhatsapp: !!(row.whatsapp),
+          website: row.website || null,
           rating: row.rating || null, reviewCount: row.review_count || null,
           city: row.city || null, state: row.state || null,
           country: row.country || null, mapsUrl: row.maps_url || null,
@@ -92,7 +94,9 @@ async function importFile(file: string, domain: string, phase: number) {
       data: {
         name, category: row.category || null,
         searchCategory: row.search_category || null, address: row.address || null,
-        phone: row.phone || null, website: row.website || null,
+        phone: row.whatsapp || row.phone || null,
+        hasWhatsapp: !!(row.whatsapp),
+        website: row.website || null,
         rating: row.rating || null, reviewCount: row.review_count || null,
         city: row.city || null, state: row.state || null,
         country: row.country || null, mapsUrl: row.maps_url || null,
@@ -185,6 +189,7 @@ async function main() {
     if (file.includes("government_universities")) return "b2b";
     if (file.includes("private_universities"))    return "b2b";
     if (file.includes("learning_centers"))        return "crm";
+    if (file.includes("dental"))                  return "health";
     if (file.includes("law_firms"))               return "b2b";
     if (file.includes("architects"))              return "b2b";
     if (file.includes("professional_services"))   return "b2b";
@@ -204,12 +209,13 @@ async function main() {
   }
 
   const phaseLabels: Record<number, string> = {
+    3: "USA — scraped",
     4: "Benelux / DACH / Scandinavia",
     5: "South & East Europe",
     6: "Education — Universities & Learning Centers",
   };
 
-  for (const phaseNum of [4, 5, 6]) {
+  for (const phaseNum of [3, 4, 5, 6]) {
     const phaseDir = path.join(SCRAPER_DIR, `phase${phaseNum}`);
     const label = phaseLabels[phaseNum];
     if (!fs.existsSync(phaseDir)) {

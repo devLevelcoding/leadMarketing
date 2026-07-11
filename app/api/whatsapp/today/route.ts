@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
         groups.get(key)!.push(bl);
       }
       const interleaved: typeof batch.leads = [];
-      const queues = [...groups.values()];
+      const queues = Array.from(groups.values());
       let i = 0;
       while (interleaved.length < batch.leads.length) {
         const q = queues[i % queues.length];

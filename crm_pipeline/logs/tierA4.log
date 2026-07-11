@@ -1,0 +1,186 @@
+─────────────────────────────── Lead Collector ────────────────────────────────
+Segments to collect: 8
+Target per segment:  300 leads
+LinkedIn enrichment: yes
+No GOOGLE_MAPS_API_KEY — using Overpass (OSM) as primary source
+To use Google Maps: add GOOGLE_MAPS_API_KEY to .env
+
+────────────────────────────── NL / Construction ──────────────────────────────
+  [  1] overpass     Movares
+  [  2] overpass     Nobleo Bouw & Infra
+  [  3] overpass     Getinge
+  [  4] overpass     TNO Delft - Stieltjesweg
+  [  5] overpass     ABT
+  [  6] overpass     TNO Delft - Pieter Calandweg
+  [  7] overpass     TNO Delft - Leeghwaterstraat
+  [  8] overpass     RoboHouse
+  [  9] overpass     RoboValley
+  [ 10] overpass     Allseas
+  [ 11] overpass     Peutz
+  [ 12] overpass     Klussenbedrijf Brandt
+  [ 13] overpass     Yami
+  [ 14] overpass     Witteveen+Bos
+  [ 15] overpass     Companjen
+  [ 16] overpass     Breman
+  [ 17] overpass     Kappert Bouw
+  [ 18] overpass     Dijkman Bouw
+  [ 19] overpass     Norel
+  [ 20] overpass     Romédes Engineering
+  [ 21] overpass     Bilfinger Tebodin
+  [ 22] overpass     Haskoning
+  [ 23] overpass     Bouwbedrijf van de Vuurst
+  [ 24] overpass     Heijmans Wegenbouw
+  [ 25] overpass     VDL Lasindustrie
+  [ 26] overpass     Bouwbedrijf Van Laar
+  [ 27] overpass     Protakt Engineering
+  [ 28] overpass     BouwRisk
+  [ 29] overpass     PT-Structural
+  [ 30] overpass     Powerspex
+  [ 31] overpass     Enconsol
+  [ 32] overpass     Aalberts Installaties
+  [ 33] overpass     Keurhorst Constructie
+  [ 34] overpass     INNAX
+  [ 35] overpass     Nobleo Technology
+  [ 36] overpass     Bergevoet Doetinchem BV
+  [ 37] overpass     Lam Research
+  [ 38] overpass     reparaad
+  [ 39] overpass     Future Factory
+  [ 40] overpass     Aannemersbedrijf Tonnie Jansen BV
+  [ 41] overpass     Roel van der Heijden Bouwservice
+  [ 42] overpass     G.V. Bouwservice brandbeveiliging
+  [ 43] overpass     Stubbe
+  [ 44] overpass     Mos Grondwatertechniek Rayon Zuid
+  [ 45] overpass     PureBlue Water
+  [ 46] overpass     Aannemersbedrijf M. Holtkamp
+  [ 47] overpass     Zwart Techniek
+  [ 48] overpass     Ortageo West
+  [ 49] overpass     Bouwonderneming van Pruijssen
+  [ 50] overpass     Stokhorst
+  [ 51] overpass     Installatie Coöperatie Nederland
+  [ 52] overpass     DT Hydraulics
+  [ 53] overpass     Notebomer Surhuisterveen
+  [ 54] overpass     Duyts Bouwconstructies BV
+  [ 55] overpass     Toekomstgroep
+  [ 56] overpass     ProtoIoT
+  [ 57] overpass     Loon- en Aannemingsbedrijf van der Es
+  [ 58] overpass     Niebouw
+  [ 59] overpass     Kojo Engineering
+  [ 60] overpass     Kwastimo//Rotiko
+  [ 61] overpass     Bouwbedrijf L. Jobse
+  [ 62] overpass     Peutz bv
+  [ 63] overpass     Bouwbedrijf Kremer en Zonen
+  [ 64] overpass     Bouwbedrijf De Ridder B.V.
+  [ 65] overpass     Zetstra Bouwbedrijf
+  [ 66] overpass     Notebomers Bouwgroep
+  [ 67] overpass     Fa. W. de Wit en Zn.
+  [ 68] overpass     Paulissen
+  [ 69] overpass     Eenhoog Bouwservice
+  [ 70] overpass     Gils Bouw
+  [ 71] overpass     Brainworkz B.V.
+  [ 72] overpass     Katcon Engineering
+  [ 73] overpass     Macon BV
+  [ 74] overpass     Artec
+  [ 75] overpass     Alferink-van Schieveen
+  [ 76] overpass     Nieman
+  [ 77] overpass     W. Tijmstra Bouw B.V.
+  [ 78] overpass     J. Boom
+  [ 79] overpass     Bouwbedrijv Gebroeders Winkelaar
+  [ 80] overpass     Bouwbedrijf Heerooms
+  [ 81] overpass     Bouwbedrijf Jonkers
+  [ 82] overpass     J. Bijlard Technisch Installatiebedrijf
+  [ 83] overpass     Wolbers Bouw en Renovatie
+  [ 84] overpass     Van der Veen Installatietechniek
+  [ 85] overpass     Gebr. Scholten B.V.
+  [ 86] overpass     Smit's Bouwbedrijf Beverwijk
+  [ 87] overpass     Pedak Meettechniek
+  [ 88] overpass     Coolen Engineering
+  [ 89] overpass     Bouwbedrijf Vellinga Heeg
+  [ 90] overpass     Huisman Etech Experts
+  [ 91] overpass     Peerenboom Vastgoed- en Erfgoedadvies
+  [ 92] overpass     H2hOlland
+  [ 93] overpass     Roba Bouwbedrijf
+  [ 94] overpass     Teko Techniek BV
+  [ 95] overpass     Duflex Mechatronics
+  [ 96] overpass     Bouwbedrijf De Vries
+  [ 97] overpass     NACO
+  [ 98] overpass     BV Aannemersbedrijf B. van Hees en Zonen
+  [ 99] overpass     Nikkels
+  [100] overpass     Nathan
+  [101] overpass     Beenen
+  [102] overpass     BRControls
+  [103] overpass     Hydrauvision
+  [104] overpass     Mercuur Bouw
+  [105] overpass     De Jong
+  [106] overpass     Cebro
+  [107] overpass     TASS International
+  [108] overpass     TASS International Safety Center
+  [109] overpass     InMotion
+  [110] overpass     DC Engineers
+  [111] overpass     De Aquanoom
+  [112] overpass     Climatic Design Consult
+  [113] overpass     Pentacon
+  [114] overpass     Voskamp
+  [115] overpass     Beele Engineering
+  [116] overpass     CRUX
+  [117] overpass     Bouwbederijf J. van Velde
+  [118] overpass     De Groene Boog Construction V.O.F.
+  [119] overpass     De Groene Boog Maintenance B.V.
+  [120] overpass     Matro Engineering
+  [121] overpass     ABB
+  [122] overpass     Vacutech
+  [123] overpass     Alpine Engineering
+  [124] overpass     Kropman
+  [125] overpass     Dijksterhuis bouwbedrijf
+  [126] overpass     Bastiaan
+  [127] overpass     Yelloo
+  [128] overpass     Ceetak Sealing Solutions
+  [129] overpass     In Weelde
+  [130] overpass     Faber Stukadoors
+  [131] overpass     Oldelft Ultrasound
+  [132] overpass     TNO Delft - Amstelpark - Bouwinnovatie Lab
+  [133] overpass     Brink
+  [134] overpass     Solidhome Group
+  [135] overpass     Cañete Electro & Groene Energie
+  [136] overpass     Delft Hyperloop
+  [137] overpass     Veerhhuis Bouwsystemen
+  [138] overpass     Steel Framing Company
+  [139] overpass     Bouwservice Noordholland
+  [140] overpass     Eleo
+  [141] overpass     TBP
+  [142] overpass     DENS
+  [143] overpass     Bellaart Bouw b.v.
+  [144] overpass     RVSteel
+  [145] overpass     Connect Bouw B.V.
+  [146] overpass     De Wolf Maritime Safety
+  [147] overpass     Van der Wiel
+  [148] overpass     CEMS
+  [149] overpass     TWD
+  [150] overpass     Pondera
+  [151] overpass     Uticon
+  [152] overpass     Nobleo Manufacturing
+  [153] overpass     Flow Engineering
+  [154] overpass     Desto Group
+  [155] overpass     Districon
+  [156] overpass     Teneo Sales B.V.
+  [157] overpass     Breed
+  [158] overpass     Alstom
+  [159] overpass     Dicomob
+  [160] overpass     Deltares
+  [161] overpass     Bartec
+
+  Discovered 161 companies
+  Finding LinkedIn URLs (this takes ~11 min)…
+    ✓ Movares                                        
+https://www.linkedin.com/company/movares/
+    – Getinge                                        
+    – Nobleo Bouw & Infra                            
+    – TNO Delft - Stieltjesweg                       
+    – ABT                                            
+    – TNO Delft - Pieter Calandweg                   
+    – TNO Delft - Leeghwaterstraat                   
+    ✓ RoboValley                                     
+https://www.linkedin.com/company/robovalley/
+    – RoboHouse                                      
+    – Allseas                                        
+    – Peutz                                          
+    – Klussenbedrijf Brandt                          

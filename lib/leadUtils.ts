@@ -17,7 +17,7 @@ export function countryFlag(country: string | null): string {
   if (!country) return "";
   const code = COUNTRY_CODE[country];
   if (!code) return "";
-  return [...code.toUpperCase()].map(c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65)).join("");
+  return Array.from(code.toUpperCase()).map(c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65)).join("");
 }
 
 export function fmtDate(d: string | Date) {

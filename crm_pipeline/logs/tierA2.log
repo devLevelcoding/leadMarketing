@@ -1,0 +1,723 @@
+─────────────────────────────── Lead Collector ────────────────────────────────
+Segments to collect: 8
+Target per segment:  300 leads
+LinkedIn enrichment: yes
+No GOOGLE_MAPS_API_KEY — using Overpass (OSM) as primary source
+To use Google Maps: add GOOGLE_MAPS_API_KEY to .env
+
+────────────────────────────── NL / Construction ──────────────────────────────
+  [  1] overpass     Movares
+  [  2] overpass     Nobleo Bouw & Infra
+  [  3] overpass     Getinge
+  [  4] overpass     TNO Delft - Stieltjesweg
+  [  5] overpass     ABT
+  [  6] overpass     TNO Delft - Pieter Calandweg
+  [  7] overpass     TNO Delft - Leeghwaterstraat
+  [  8] overpass     RoboHouse
+  [  9] overpass     RoboValley
+  [ 10] overpass     Allseas
+  [ 11] overpass     Peutz
+  [ 12] overpass     Klussenbedrijf Brandt
+  [ 13] overpass     Yami
+  [ 14] overpass     Witteveen+Bos
+  [ 15] overpass     Companjen
+  [ 16] overpass     Breman
+  [ 17] overpass     Kappert Bouw
+  [ 18] overpass     Dijkman Bouw
+  [ 19] overpass     Norel
+  [ 20] overpass     Romédes Engineering
+  [ 21] overpass     Bilfinger Tebodin
+  [ 22] overpass     Haskoning
+  [ 23] overpass     Bouwbedrijf van de Vuurst
+  [ 24] overpass     Heijmans Wegenbouw
+  [ 25] overpass     VDL Lasindustrie
+  [ 26] overpass     Bouwbedrijf Van Laar
+  [ 27] overpass     Protakt Engineering
+  [ 28] overpass     BouwRisk
+  [ 29] overpass     PT-Structural
+  [ 30] overpass     Powerspex
+  [ 31] overpass     Enconsol
+  [ 32] overpass     Aalberts Installaties
+  [ 33] overpass     Keurhorst Constructie
+  [ 34] overpass     INNAX
+  [ 35] overpass     Nobleo Technology
+  [ 36] overpass     Bergevoet Doetinchem BV
+  [ 37] overpass     Lam Research
+  [ 38] overpass     reparaad
+  [ 39] overpass     Future Factory
+  [ 40] overpass     Aannemersbedrijf Tonnie Jansen BV
+  [ 41] overpass     Roel van der Heijden Bouwservice
+  [ 42] overpass     G.V. Bouwservice brandbeveiliging
+  [ 43] overpass     Stubbe
+  [ 44] overpass     Mos Grondwatertechniek Rayon Zuid
+  [ 45] overpass     PureBlue Water
+  [ 46] overpass     Aannemersbedrijf M. Holtkamp
+  [ 47] overpass     Zwart Techniek
+  [ 48] overpass     Ortageo West
+  [ 49] overpass     Bouwonderneming van Pruijssen
+  [ 50] overpass     Stokhorst
+  [ 51] overpass     Installatie Coöperatie Nederland
+  [ 52] overpass     DT Hydraulics
+  [ 53] overpass     Notebomer Surhuisterveen
+  [ 54] overpass     Duyts Bouwconstructies BV
+  [ 55] overpass     Toekomstgroep
+  [ 56] overpass     ProtoIoT
+  [ 57] overpass     Loon- en Aannemingsbedrijf van der Es
+  [ 58] overpass     Niebouw
+  [ 59] overpass     Kojo Engineering
+  [ 60] overpass     Kwastimo//Rotiko
+  [ 61] overpass     Bouwbedrijf L. Jobse
+  [ 62] overpass     Peutz bv
+  [ 63] overpass     Bouwbedrijf Kremer en Zonen
+  [ 64] overpass     Bouwbedrijf De Ridder B.V.
+  [ 65] overpass     Zetstra Bouwbedrijf
+  [ 66] overpass     Notebomers Bouwgroep
+  [ 67] overpass     Fa. W. de Wit en Zn.
+  [ 68] overpass     Paulissen
+  [ 69] overpass     Eenhoog Bouwservice
+  [ 70] overpass     Gils Bouw
+  [ 71] overpass     Brainworkz B.V.
+  [ 72] overpass     Katcon Engineering
+  [ 73] overpass     Macon BV
+  [ 74] overpass     Artec
+  [ 75] overpass     Alferink-van Schieveen
+  [ 76] overpass     Nieman
+  [ 77] overpass     W. Tijmstra Bouw B.V.
+  [ 78] overpass     J. Boom
+  [ 79] overpass     Bouwbedrijv Gebroeders Winkelaar
+  [ 80] overpass     Bouwbedrijf Heerooms
+  [ 81] overpass     Bouwbedrijf Jonkers
+  [ 82] overpass     J. Bijlard Technisch Installatiebedrijf
+  [ 83] overpass     Wolbers Bouw en Renovatie
+  [ 84] overpass     Van der Veen Installatietechniek
+  [ 85] overpass     Gebr. Scholten B.V.
+  [ 86] overpass     Smit's Bouwbedrijf Beverwijk
+  [ 87] overpass     Pedak Meettechniek
+  [ 88] overpass     Coolen Engineering
+  [ 89] overpass     Bouwbedrijf Vellinga Heeg
+  [ 90] overpass     Huisman Etech Experts
+  [ 91] overpass     Peerenboom Vastgoed- en Erfgoedadvies
+  [ 92] overpass     H2hOlland
+  [ 93] overpass     Roba Bouwbedrijf
+  [ 94] overpass     Teko Techniek BV
+  [ 95] overpass     Duflex Mechatronics
+  [ 96] overpass     Bouwbedrijf De Vries
+  [ 97] overpass     NACO
+  [ 98] overpass     BV Aannemersbedrijf B. van Hees en Zonen
+  [ 99] overpass     Nikkels
+  [100] overpass     Nathan
+  [101] overpass     Beenen
+  [102] overpass     BRControls
+  [103] overpass     Hydrauvision
+  [104] overpass     Mercuur Bouw
+  [105] overpass     De Jong
+  [106] overpass     Cebro
+  [107] overpass     TASS International
+  [108] overpass     TASS International Safety Center
+  [109] overpass     InMotion
+  [110] overpass     DC Engineers
+  [111] overpass     De Aquanoom
+  [112] overpass     Climatic Design Consult
+  [113] overpass     Pentacon
+  [114] overpass     Voskamp
+  [115] overpass     Beele Engineering
+  [116] overpass     CRUX
+  [117] overpass     Bouwbederijf J. van Velde
+  [118] overpass     De Groene Boog Construction V.O.F.
+  [119] overpass     De Groene Boog Maintenance B.V.
+  [120] overpass     Matro Engineering
+  [121] overpass     ABB
+  [122] overpass     Vacutech
+  [123] overpass     Alpine Engineering
+  [124] overpass     Kropman
+  [125] overpass     Dijksterhuis bouwbedrijf
+  [126] overpass     Bastiaan
+  [127] overpass     Yelloo
+  [128] overpass     Ceetak Sealing Solutions
+  [129] overpass     In Weelde
+  [130] overpass     Faber Stukadoors
+  [131] overpass     Oldelft Ultrasound
+  [132] overpass     TNO Delft - Amstelpark - Bouwinnovatie Lab
+  [133] overpass     Brink
+  [134] overpass     Solidhome Group
+  [135] overpass     Cañete Electro & Groene Energie
+  [136] overpass     Delft Hyperloop
+  [137] overpass     Veerhhuis Bouwsystemen
+  [138] overpass     Steel Framing Company
+  [139] overpass     Bouwservice Noordholland
+  [140] overpass     Eleo
+  [141] overpass     TBP
+  [142] overpass     DENS
+  [143] overpass     Bellaart Bouw b.v.
+  [144] overpass     RVSteel
+  [145] overpass     Connect Bouw B.V.
+  [146] overpass     De Wolf Maritime Safety
+  [147] overpass     Van der Wiel
+  [148] overpass     CEMS
+  [149] overpass     TWD
+  [150] overpass     Pondera
+  [151] overpass     Uticon
+  [152] overpass     Nobleo Manufacturing
+  [153] overpass     Flow Engineering
+  [154] overpass     Desto Group
+  [155] overpass     Districon
+  [156] overpass     Teneo Sales B.V.
+  [157] overpass     Breed
+  [158] overpass     Alstom
+  [159] overpass     Dicomob
+  [160] overpass     Deltares
+  [161] overpass     Bartec
+
+  Discovered 161 companies
+  Finding LinkedIn URLs (this takes ~11 min)…
+    ✓ Movares                                        
+https://www.linkedin.com/company/movares/
+    ✓ Nobleo Bouw & Infra                            
+https://www.linkedin.com/company/nobleo-bouw-infra/
+    – Getinge                                        
+    – TNO Delft - Stieltjesweg                       
+    – ABT                                            
+    – TNO Delft - Pieter Calandweg                   
+    – TNO Delft - Leeghwaterstraat                   
+    – RoboHouse                                      
+    – RoboValley                                     
+    – Allseas                                        
+    – Peutz                                          
+    – Klussenbedrijf Brandt                          
+    – Yami                                           
+    – Witteveen+Bos                                  
+    – Companjen                                      
+    – Breman                                         
+    – Kappert Bouw                                   
+    – Dijkman Bouw                                   
+    – Norel                                          
+    – Romédes Engineering                            
+    – Bilfinger Tebodin                              
+    – Haskoning                                      
+    – Bouwbedrijf van de Vuurst                      
+    – Heijmans Wegenbouw                             
+    ✓ Bouwbedrijf Van Laar                           
+https://www.linkedin.com/company/vanlaar/
+    – VDL Lasindustrie                               
+    ✓ BouwRisk                                       
+https://www.linkedin.com/company/bouwrisk/
+    – Protakt Engineering                            
+    – PT-Structural                                  
+    – Powerspex                                      
+    – Enconsol                                       
+    – Aalberts Installaties                          
+    – Keurhorst Constructie                          
+    – INNAX                                          
+    – Nobleo Technology                              
+    – Bergevoet Doetinchem BV                        
+    – Lam Research                                   
+    – reparaad                                       
+    – Future Factory                                 
+    – Aannemersbedrijf Tonnie Jansen BV              
+    – Roel van der Heijden Bouwservice               
+    ✓ Stubbe                                         
+https://www.linkedin.com/company/stubbe/
+    – G.V. Bouwservice brandbeveiliging              
+    – Mos Grondwatertechniek Rayon Zuid              
+    – PureBlue Water                                 
+    – Aannemersbedrijf M. Holtkamp                   
+    – Zwart Techniek                                 
+    – Ortageo West                                   
+    – Bouwonderneming van Pruijssen                  
+    – Stokhorst                                      
+    – Installatie Coöperatie Nederland               
+    ✓ Notebomer Surhuisterveen                       
+https://www.linkedin.com/company/notebomer-surhuisterveen/
+    – DT Hydraulics                                  
+    – Toekomstgroep                                  
+    – Duyts Bouwconstructies BV                      
+    – ProtoIoT                                       
+    – Loon- en Aannemingsbedrijf van der Es          
+    ✓ Kojo Engineering                               
+https://www.linkedin.com/company/kojo/
+    – Niebouw                                        
+    ✓ Kwastimo//Rotiko                               
+https://www.linkedin.com/company/kwastimo-rotiko/
+    – Peutz bv                                       
+    – Bouwbedrijf L. Jobse                           
+    – Bouwbedrijf Kremer en Zonen                    
+    – Bouwbedrijf De Ridder B.V.                     
+    – Zetstra Bouwbedrijf                            
+    ✓ Fa. W. de Wit en Zn.                           
+https://www.linkedin.com/company/fa-w-de-wit-en-zn/
+    – Notebomers Bouwgroep                           
+    – Paulissen                                      
+    – Eenhoog Bouwservice                            
+    – Gils Bouw                                      
+    – Brainworkz B.V.                                
+    – Katcon Engineering                             
+    – Macon BV                                       
+    – Artec                                          
+    – Alferink-van Schieveen                         
+    – Nieman                                         
+    – W. Tijmstra Bouw B.V.                          
+    – J. Boom                                        
+    – Bouwbedrijv Gebroeders Winkelaar               
+    – Bouwbedrijf Heerooms                           
+    – Bouwbedrijf Jonkers                            
+    – J. Bijlard Technisch Installatiebedrijf        
+    ✓ Van der Veen Installatietechniek               
+https://www.linkedin.com/company/van-der-veen-installatietechniek/
+    – Wolbers Bouw en Renovatie                      
+    – Gebr. Scholten B.V.                            
+    – Smit's Bouwbedrijf Beverwijk                   
+    – Pedak Meettechniek                             
+    – Coolen Engineering                             
+    – Bouwbedrijf Vellinga Heeg                      
+    – Huisman Etech Experts                          
+    – Peerenboom Vastgoed- en Erfgoedadvies          
+    – H2hOlland                                      
+    – Roba Bouwbedrijf                               
+    – Teko Techniek BV                               
+    – Duflex Mechatronics                            
+    – Bouwbedrijf De Vries                           
+    – NACO                                           
+    – BV Aannemersbedrijf B. van Hees en Zonen       
+    – Nikkels                                        
+    – Nathan                                         
+    ✓ BRControls                                     
+https://www.linkedin.com/company/brcontrols/
+    – Beenen                                         
+    – Hydrauvision                                   
+    ✓ De Jong                                        
+https://www.linkedin.com/company/de-jong/
+    – Mercuur Bouw                                   
+    – Cebro                                          
+    – TASS International                             
+    – TASS International Safety Center               
+    – InMotion                                       
+    – DC Engineers                                   
+    – De Aquanoom                                    
+    – Climatic Design Consult                        
+    – Pentacon                                       
+    – Voskamp                                        
+    ✓ CRUX                                           
+https://www.linkedin.com/company/crux/
+    – Beele Engineering                              
+    – Bouwbederijf J. van Velde                      
+    – De Groene Boog Construction V.O.F.             
+    – De Groene Boog Maintenance B.V.                
+    – Matro Engineering                              
+    – ABB                                            
+    – Vacutech                                       
+    – Alpine Engineering                             
+    – Kropman                                        
+    – Dijksterhuis bouwbedrijf                       
+    – Bastiaan                                       
+    – Yelloo                                         
+    – Ceetak Sealing Solutions                       
+    – In Weelde                                      
+    – Faber Stukadoors                               
+    – Oldelft Ultrasound                             
+    – TNO Delft - Amstelpark - Bouwinnovatie Lab     
+    – Brink                                          
+    – Solidhome Group                                
+    – Cañete Electro & Groene Energie                
+    – Delft Hyperloop                                
+    – Veerhhuis Bouwsystemen                         
+    – Steel Framing Company                          
+    – Bouwservice Noordholland                       
+    – Eleo                                           
+    – TBP                                            
+    – DENS                                           
+    – RVSteel                                        
+    – Bellaart Bouw b.v.                             
+    – Connect Bouw B.V.                              
+    – De Wolf Maritime Safety                        
+    – Van der Wiel                                   
+    – CEMS                                           
+    – TWD                                            
+    – Pondera                                        
+    – Uticon                                         
+    ✓ Flow Engineering                               
+https://www.linkedin.com/company/flow-engineering/
+    – Nobleo Manufacturing                           
+    – Desto Group                                    
+    – Districon                                      
+    ✓ Teneo Sales B.V.                               
+https://www.linkedin.com/company/teneo-iot/
+    – Alstom                                         
+    – Breed                                          
+    – Dicomob                                        
+    – Deltares                                       
+    – Bartec                                         
+
+  LinkedIn found: 15/161
+  Saved 131 new leads to DB
+  CSV → leads_export\leads_NL_Construction.csv  (161 rows)
+
+────────────────────────────── PL / Real Estate ───────────────────────────────
+  [  1] overpass     Święty 71
+  [  2] overpass     Bonus
+  [  3] overpass     Lex house
+  [  4] overpass     Home Broker
+  [  5] overpass     Dolnośląskie Centrum Nieruchomości
+  [  6] overpass     Nieruchomości Gracjan
+  [  7] overpass     Józef Kufel Nieruchomości
+  [  8] overpass     Baltic Cliff Apartments
+  [  9] overpass     Nieruchomości
+  [ 10] overpass     Wynajem pokoi
+  [ 11] overpass     Matexi
+  [ 12] overpass     Pośrednictwo i Wyceny Nieruchomości DOMUS s.c.
+  [ 13] overpass     Nieruchomości Lokum
+  [ 14] overpass     Prestige
+  [ 15] overpass     Nieruchomości Expert
+  [ 16] overpass     Best
+  [ 17] overpass     eDOM Biuro Nieruchomości
+  [ 18] overpass     Osiedle pod Dębem
+  [ 19] overpass     Handbud
+  [ 20] overpass     AS nieruchomości
+  [ 21] overpass     Property Management
+  [ 22] overpass     Meritum House
+  [ 23] overpass     BZM Nieruchomości
+  [ 24] overpass     ABM Invest
+  [ 25] overpass     West Real Estate S.A.
+  [ 26] overpass     Aleksandra Powierska
+  [ 27] overpass     golden home
+  [ 28] overpass     ŁUCZNIK
+  [ 29] overpass     Przedsiębiorstwo Produkcyjno-Handlowe Orion
+  [ 30] overpass     RAI Przedsiębiorstwo Budowlane
+  [ 31] overpass     Inpro
+  [ 32] overpass     madej
+  [ 33] overpass     4 Kąty
+  [ 34] overpass     Wiki-Art Architektura Reklama Nieruchomości
+  [ 35] overpass     Muraszko nieruchomości
+  [ 36] overpass     Imobiliare Polonia
+  [ 37] overpass     Invest-Bud
+  [ 38] overpass     Marka Nieruchomości
+  [ 39] overpass     Centrum Nieruchomości Lege Artis
+  [ 40] overpass     Kancelaria Nieruchomości Sitniccy
+  [ 41] overpass     Troczyńska sp.j
+  [ 42] overpass     Krzewscy. Nieruchomości
+  [ 43] overpass     Stawarz A
+  [ 44] overpass     Metro house
+  [ 45] overpass     Dobry Pośrednik
+  [ 46] overpass     neodom.pl
+  [ 47] overpass     F48
+  [ 48] overpass     M-DOM
+  [ 49] overpass     metrohouse
+  [ 50] overpass     Profit
+  [ 51] overpass     Deve Invest Sp. z o.o.
+  [ 52] overpass     Re
+  [ 53] overpass     Takumi Polska
+  [ 54] overpass     Pil-Kaz
+  [ 55] overpass     Investor
+  [ 56] overpass     SP-Partners Biuro Nieruchomości Gdynia
+  [ 57] overpass     Mój dom
+  [ 58] overpass     Północ nieruchomości
+  [ 59] overpass     Atelie. Oliwskie Biuro Nieruchomości
+  [ 60] overpass     WGN
+  [ 61] overpass     Buiro nieruchomości Widok
+  [ 62] overpass     Arcan Nieruchomości
+  [ 63] overpass     Agencja nieruchomości Klif
+  [ 64] overpass     Biuro Obrotu Nieruchomości DOM
+  [ 65] overpass     Sun&Snow
+  [ 66] overpass     Biuro Pośrednictwa Ewa Jagielska
+  [ 67] overpass     Adresowo
+  [ 68] overpass     3city Invest
+  [ 69] overpass     Promesa
+  [ 70] overpass     Biuro sprzedaży Moderna
+  [ 71] overpass     Dommat
+  [ 72] overpass     Mowago
+  [ 73] overpass     VAX
+  [ 74] overpass     Atrium Nieruchomości
+  [ 75] overpass     Partner
+  [ 76] overpass     Stależak
+  [ 77] overpass     Akces
+  [ 78] overpass     ALMAT
+  [ 79] overpass     Kaczorowski Nieruchomości Into
+  [ 80] overpass     ZZN Sp. z o.o. Oddział Trójmiasto
+  [ 81] overpass     Apartamenty Black&White
+  [ 82] overpass     K. Myszka Nieruchomości
+  [ 83] overpass     Marymont nieruchomości
+  [ 84] overpass     Develia
+  [ 85] overpass     Strzelczyk
+  [ 86] overpass     Dom&House
+  [ 87] overpass     Posesja
+  [ 88] overpass     Agencja Obrotu Nieruchomościami Joanna Kulska
+  [ 89] overpass     Prodom
+  [ 90] overpass     Arkada Nieruchomości
+  [ 91] overpass     My Home
+  [ 92] overpass     Biuro Sprzedaży Mieszkań
+  [ 93] overpass     Leach & Lang
+  [ 94] overpass     Vega
+  [ 95] overpass     Mak Dom
+  [ 96] overpass     Zaleski
+  [ 97] overpass     Astra Nieruchomości
+  [ 98] overpass     Forum Nieruchomości
+  [ 99] overpass     Mieszkanioteka
+  [100] overpass     Społdzielnia Mieszkaniowa Anin
+  [101] overpass     Manaja
+  [102] overpass     Musiał Nieruchomości
+  [103] overpass     Nieruchomości Golden House
+  [104] overpass     Villa nieruchomości
+  [105] overpass     Hacjenda
+  [106] overpass     Eurodomy
+  [107] overpass     BIURO NIERUCHOMOŚCI Michał Chabałowski
+  [108] overpass     Nowe Banino
+  [109] overpass     Mikulski
+  [110] overpass     System Plus
+  [111] overpass     Tacit Investment
+  [112] overpass     Realty
+  [113] overpass     Centrum Nieruchomości
+  [114] overpass     Jardom Nieruchomości
+  [115] overpass     PB EKONBUD-FADOM
+  [116] overpass     RB Nieruchomości
+  [117] overpass     FID Group
+  [118] overpass     _Buchwald_ fair finance
+  [119] overpass     Agent Nieruchomości
+  [120] overpass     Lauren
+  [121] overpass     Home Broker / Open Finance
+  [122] overpass     Golden Leo Sp. z o.o.
+  [123] overpass     Szerbud
+  [124] overpass     Majdom
+  [125] overpass     REMA Nieruchomości
+  [126] overpass     Semrau
+  [127] overpass     Tecnocasa Agencja Nieruchomości
+  [128] overpass     Biuro Sprzedaży Oaza Bronowice
+  [129] overpass     Fundament
+  [130] overpass     Magenda
+  [131] overpass     Atrium-duo
+  [132] overpass     KAMEL Nieruchomości
+  [133] overpass     TOP MK
+  [134] overpass     BUSSE Nieruchomości
+  [135] overpass     Tecnocasa
+  [136] overpass     Prima
+  [137] overpass     Księżopolscy
+  [138] overpass     Re/Max DUO
+  [139] overpass     Alking Nieruchomości
+  [140] overpass     Krupa Nieruchomości
+  [141] overpass     Drągowski
+  [142] overpass     Robyg
+  [143] overpass     Immobilien Nieruchomości
+  [144] overpass     Tyszkiewicz nieruchomości
+  [145] overpass     Agencja nieruchomości "TEBO"
+  [146] overpass     Homedom Mój Dom generalne wykonastwo
+  [147] overpass     Torus
+  [148] overpass     A. S. Sędek
+  [149] overpass     Własny Kąt
+  [150] overpass     Kaczmarek Nieruchomości
+  [151] overpass     Odrzywolska & Wójcik Nieruchomości
+  [152] overpass     ARTFLAT Nieruchomości
+  [153] overpass     Nordhome
+  [154] overpass     Biuro Nieruchomości Józef Kufel Nieruchomości
+  [155] overpass     Minterglobal Andrzej Izdebski
+  [156] overpass     Wiślany Mokotów
+  [157] overpass     Dobrzenieccy Nieruchomości / Todex
+  [158] overpass     Krawczak
+  [159] overpass     Zachód Nieruchomości
+  [160] overpass     Cimerman
+  [161] overpass     Kamienica Wiedeńska
+  [162] overpass     MH Construction
+  [163] overpass     Piasecka Nieruchomości
+  [164] overpass     Inter-Haus
+  [165] overpass     Kanon nieruchomości
+  [166] overpass     Bliskie Centrum Nieruchomości
+  [167] overpass     Borowicz nieruchomości
+  [168] overpass     Sverum
+  [169] overpass     Fort Służew
+  [170] overpass     Savana
+  [171] overpass     Kurmańska
+  [172] overpass     WGN Nieruchomości
+  [173] overpass     Terra Nieruchomości
+  [174] overpass     Nieruchomości Domex
+  [175] overpass     Biuro Obsługi Nieruchomości BON
+  [176] overpass     Mościcki Nieruchomości
+  [177] overpass     Nieruchomości Plus+ s.c.
+  [178] overpass     Wesserling Nieruchomości
+  [179] overpass     Biuro Nieruchomości Jarosław Byrwa
+  [180] overpass     Świat Nieruchomości - Bracia Juszczak
+  [181] overpass     Nieruchomości Karkonoskie
+  [182] overpass     Hewelt Nieruchomości
+  [183] overpass     Nieruchomości Wilanów
+  [184] overpass     Agencja Baranowski
+  [185] overpass     4sale
+  [186] overpass     Marsta
+  [187] overpass     Pionier
+  [188] overpass     Domi Nieruchomości
+  [189] overpass     SK Nieruchomości
+  [190] overpass     NLiberty
+  [191] overpass     Technocasa
+  [192] overpass     Multiagencja Dom
+  [193] overpass     Filar
+  [194] overpass     Biuro sprzedarzy
+  [195] overpass     Baszta Nieruchomości
+  [196] overpass     Firma deweloperska "KOS-BUD" Andrzej Kostrzewski
+  [197] overpass     Dąbrowscy Nieruchomości EM4
+  [198] overpass     Sikorska & Szmaja
+  [199] overpass     Gruno nieruchomości
+  [200] overpass     Osiedle Malownicze Sp. z o.o. Biuro Sprzedaży
+  [201] overpass     Apartamentowiec
+  [202] overpass     Budziak Nieruchomości
+  [203] overpass     Magnat Nieruchomości
+  [204] overpass     ARG Sp. z o.o.
+  [205] overpass     Florczyk Mikołaj
+  [206] overpass     Uni-Group
+  [207] overpass     Elite Nieruchomości
+  [208] overpass     Investing
+  [209] overpass     M-Doradcy
+  [210] overpass     Gawra nieruchomości
+  [211] overpass     Lokum
+  [212] overpass     LEGRA
+  [213] overpass     Biuro Sprzedaży Apartamentów
+  [214] overpass     Świat Nieruchomości
+  [215] overpass     Rentumi properties
+  [216] overpass     Izyda Nieruchomości
+  [217] overpass     HOMELA Nieruchomości
+  [218] overpass     Home
+  [219] overpass     Ericpol Nieruchomości Sp. z o.o.
+  [220] overpass     Siemaszko
+  [221] overpass     nieruchomości Brożek
+  [222] overpass     Better Life
+  [223] overpass     Sablik
+  [224] overpass     Finans
+  [225] overpass     Nyczka nieruchomości
+  [226] overpass     Vista nieuchomości
+  [227] overpass     PW Biuro Nieruchomości
+  [228] overpass     Nieruchomości "Jaśkiewicz"
+  [229] overpass     Bracia Miklewscy
+  [230] overpass     ELLEMAK
+  [231] overpass     Optimum Nieruchomości
+  [232] overpass     Architecture Vento
+  [233] overpass     Karsznia Nieruchomości
+  [234] overpass     Gotan
+  [235] overpass     Apartamenty Platinium
+  [236] overpass     "Kamienica" Nieruchomości
+  [237] overpass     Rezydent
+  [238] overpass     Dommar Nieruchomości
+  [239] overpass     MK Nieruchomości
+  [240] overpass     Invicus
+  [241] overpass     Ekonbud-Fadom
+  [242] overpass     Kantor Nieruchomości
+  [243] overpass     Mytych
+  [244] overpass     Ardom
+  [245] overpass     Progres-A
+  [246] overpass     Randal Nieruchomosci
+  [247] overpass     Agrobex
+  [248] overpass     "Sylmar" Nieruchomości
+  [249] overpass     specHouse
+  [250] overpass     spravia
+  [251] overpass     "Dalar" Nieruchomości
+  [252] overpass     Nieruchomości WEX
+  [253] overpass     SOBE Nieruchomości
+  [254] overpass     Vivir
+  [255] overpass     Gep House Development
+  [256] overpass     Master Invest
+  [257] overpass     Arenda
+  [258] overpass     Biuro nieruchomości Interior
+  [259] overpass     Kontrakt Plus
+  [260] overpass     T1 Deweloper
+  [261] overpass     Capital-Invest
+  [262] overpass     Bem Nieruchomości
+  [263] overpass     Bissmyk
+  [264] overpass     Martex Consulting
+  [265] overpass     Nieruchomości Centrum
+  [266] overpass     ShortStayPoland.com
+  [267] overpass     Partner Nieruchomości
+  [268] overpass     Nieruchomości ABC
+  [269] overpass     Area House
+  [270] overpass     Biuro Obrotu Nieruchomościami
+  [271] overpass     EuroHome
+  [272] overpass     MOREK Nieruchomości
+  [273] overpass     UR.place
+  [274] overpass     MiT
+  [275] overpass     Wasilewski Development
+  [276] overpass     Grodzki Development
+  [277] overpass     Freedom
+  [278] overpass     assethome
+  [279] overpass     Zachodniopomorskie Centrum Nieruchomości
+  [280] overpass     Nieruchomości Suliga
+  [281] overpass     Fort
+  [282] overpass     Proxin
+  [283] overpass     Biuro Sprzedaży Inwestycji "Ursus Centralny"
+  [284] overpass     Empire
+  [285] overpass     Danax Nieruchomości
+  [286] overpass     Kieleckie Towarzystwo Budownictwa Społecznego Sp. 
+  [287] overpass     Azbud
+  [288] overpass     To jest To Biuro Nieruchomośći
+  [289] overpass     Megakot
+  [290] overpass     Dom-Krak
+  [291] overpass     Centrum Obsługi Rynku Nieruchomości
+  [292] overpass     Express home
+  [293] overpass     House point
+  [294] overpass     ARIA WRC Development
+  [295] overpass     Wrocław For Rent
+  [296] overpass     Goat Nieruchomości
+  [297] overpass     Biuro Obsługi Rezerwacji Jantar Apartamenty Kołobr
+
+  Discovered 297 companies
+  Finding LinkedIn URLs (this takes ~20 min)…
+    – Święty 71                                      
+    – Bonus                                          
+    – Lex house                                      
+    – Home Broker                                    
+    – Dolnośląskie Centrum Nieruchomości             
+    – Nieruchomości Gracjan                          
+    – Józef Kufel Nieruchomości                      
+    – Baltic Cliff Apartments                        
+    – Nieruchomości                                  
+    ✓ Matexi                                         
+https://www.linkedin.com/company/matexi/
+    – Wynajem pokoi                                  
+    – Nieruchomości Lokum                            
+    – Pośrednictwo i Wyceny Nieruchomości DOMUS s.c  
+    – Prestige                                       
+    – Nieruchomości Expert                           
+    – Best                                           
+    – eDOM Biuro Nieruchomości                       
+    – Osiedle pod Dębem                              
+    – Handbud                                        
+    – AS nieruchomości                               
+    – Property Management                            
+    – Meritum House                                  
+    – BZM Nieruchomości                              
+    – ABM Invest                                     
+    – West Real Estate S.A.                          
+    – Aleksandra Powierska                           
+    – golden home                                    
+    – ŁUCZNIK                                        
+    – Przedsiębiorstwo Produkcyjno-Handlowe Orion    
+    – RAI Przedsiębiorstwo Budowlane                 
+    – Inpro                                          
+    – madej                                          
+    – 4 Kąty                                         
+    – Wiki-Art Architektura Reklama Nieruchomości    
+    – Muraszko nieruchomości                         
+    – Imobiliare Polonia                             
+    – Invest-Bud                                     
+    – Marka Nieruchomości                            
+    – Centrum Nieruchomości Lege Artis               
+    – Kancelaria Nieruchomości Sitniccy              
+    – Troczyńska sp.j                                
+    ✓ Stawarz A                                      
+https://www.linkedin.com/company/stawarz-a/
+    – Krzewscy. Nieruchomości                        
+    – Metro house                                    
+    – Dobry Pośrednik                                
+    – neodom.pl                                      
+    – F48                                            
+    – M-DOM                                          
+    ✓ Profit                                         
+https://www.linkedin.com/company/profit/
+    – metrohouse                                     
+    – Re                                             
+    – Deve Invest Sp. z o.o.                         
+    – Takumi Polska                                  
+    – Pil-Kaz                                        
+    – Investor                                       
+    – SP-Partners Biuro Nieruchomości Gdynia         
+    – Mój dom                                        
+    – Północ nieruchomości                           
+    – Atelie. Oliwskie Biuro Nieruchomości           
+    – WGN                                            
+    – Buiro nieruchomości Widok                      
+    – Arcan Nieruchomości                            
+    ✓ Biuro Obrotu Nieruchomości DOM                 
+https://www.linkedin.com/company/bondom/
+    – Agencja nieruchomości Klif                     
+    – Sun&Snow                                       

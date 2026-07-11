@@ -1,0 +1,15 @@
+aiohttp>=3.9.5
+aiofiles>=23.2.1
+sqlalchemy>=2.0.30
+alembic>=1.13.1
+pandas>=2.2.2
+beautifulsoup4>=4.12.3
+lxml>=5.2.2
+tqdm>=4.66.4
+tenacity>=8.3.0
+python-dotenv>=1.0.1
+httpx>=0.27.0
+playwright>=1.44.0        # optional — for JS-heavy sites
+rich>=13.7.1              # CLI progress / tables
+click>=8.1.7              # CLI entry-point
+psycopg2-binary>=2.9.9   # swap SQLite → Postgres in prod

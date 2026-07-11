@@ -6,10 +6,11 @@ import { usePathname } from "next/navigation";
 const NAV = [
   { href: "/admin",                label: "Dashboard" },
   { href: "/admin/leads",          label: "Leads" },
+  { href: "/admin/crm",            label: "CRM Intel" },
   { href: "/admin/templates",      label: "Templates" },
   { href: "/admin/warmup",         label: "Warmup" },
   { href: "/admin/whatsapp",       label: "WhatsApp" },
-  { href: "/admin/country",        label: "🌍 Country" },
+  { href: "/admin/country",        label: "Country" },
   { href: "/admin/lighthouse",     label: "Lighthouse" },
   { href: "/admin/settings",       label: "Settings" },
 ];

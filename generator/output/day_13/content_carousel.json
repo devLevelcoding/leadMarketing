@@ -1,0 +1,47 @@
+{
+  "type": "carousel",
+  "day": 13,
+  "topic": "Meet the Team — Who Is Behind LevelCoding",
+  "format": "1080x1080",
+  "scheduled_at": "2025-05-31T18:30:00",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "You have seen our work. Now meet the people behind it.",
+      "subtext": "We are not a faceless agency."
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "We are a small team — and that is our advantage",
+      "subtext": "No account managers. No middlemen. You talk directly to the person building your product."
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "Combined we have over 10 years of hands-on development experience",
+      "subtext": "Web apps, CRMs, automations, and everything in between."
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "We have worked with businesses across Romania, Europe, and the USA",
+      "subtext": "Different industries. Different problems. Same obsession with clean, working solutions."
+    },
+    {
+      "number": 5,
+      "type": "point",
+      "text": "Our workspace is wherever the problem is — remote, on-site, or both",
+      "subtext": "We adapt to how you work, not the other way around."
+    },
+    {
+      "number": 6,
+      "type": "cta",
+      "text": "We build for businesses that are serious about growing. Is that you?",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "You have seen our work. Now meet the people behind it.\n\nWe are not a faceless agency. We are a small team — and that is our biggest advantage.\n\nNo account managers. No middlemen. You talk directly to the person building your product.\n\nOver 10 years of hands-on experience across web apps, CRMs, automations, and custom systems.\n\nWe have worked with businesses in Romania, Europe, and the USA — different industries, same obsession with things that actually work.\n\nWe build for businesses that are serious about growing.\n\nIs that you? Send us a DM.\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas"
+}

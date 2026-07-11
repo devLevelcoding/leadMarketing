@@ -1,0 +1,47 @@
+{
+  "type": "carousel",
+  "day": 10,
+  "topic": "73% of SMBs Have No Analytics — Here Is Why It Matters",
+  "format": "1080x1080",
+  "scheduled_at": "2025-05-28T18:30:00",
+  "slides": [
+    {
+      "number": 1,
+      "type": "hook",
+      "text": "73% of small businesses have no analytics on their website",
+      "subtext": "That means they are flying completely blind."
+    },
+    {
+      "number": 2,
+      "type": "point",
+      "text": "Without analytics you do not know how many people visit your site",
+      "subtext": "You could have 10 visitors a month or 10,000 — and you would not know."
+    },
+    {
+      "number": 3,
+      "type": "point",
+      "text": "You do not know where they come from — Google, Instagram, or word of mouth",
+      "subtext": "So you cannot double down on what is already working."
+    },
+    {
+      "number": 4,
+      "type": "point",
+      "text": "You do not know which page makes people leave without contacting you",
+      "subtext": "That page is costing you customers every single day."
+    },
+    {
+      "number": 5,
+      "type": "point",
+      "text": "The fix is free — Google Analytics and Search Console take 10 minutes to set up",
+      "subtext": "No excuses. Free tools. Real data. Better decisions."
+    },
+    {
+      "number": 6,
+      "type": "cta",
+      "text": "Save this. Set up analytics this week. Know your numbers.",
+      "subtext": "@levelcoding  ·  levelcoding.com"
+    }
+  ],
+  "caption": "73% of small businesses have no analytics on their website.\n\nThat means they are flying completely blind.\n\nWithout analytics you do not know how many people visit your site — could be 10 or 10,000.\n\nYou do not know where they come from, so you cannot double down on what works.\n\nYou do not know which page makes people leave — and that page is costing you customers every day.\n\nThe fix? Google Analytics and Search Console. Both free. Both set up in 10 minutes.\n\nSave this and set it up this week.\n\n#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas\n\n@levelcoding",
+  "hashtags": "#itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas"
+}

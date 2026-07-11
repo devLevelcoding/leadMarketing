@@ -1,11 +1,21 @@
 CAPTION:
 Before vs After: what we actually do when a client hires us
 
-Show a transformation — website, system, process.
+BEFORE
+Website built on a template from 2017. Loads in 8 seconds. No one knows it exists.
+Leads come in by phone or word of mouth. Everything tracked in a spreadsheet.
+No idea which marketing is working. No idea why sales dropped last month.
 
-Mockup is fine if no real case.
+AFTER
+Custom site. Loads in under 2 seconds. Optimised for search from day one.
+Leads captured automatically and sent to a CRM. Sales team gets notified instantly.
+Dashboard shows exactly where every customer came from. Decisions take minutes, not meetings.
 
-Which result matters most to you?
+This is not magic. It is just systems that work the way your business actually works.
+
+Most clients see the difference in 30 days.
+
+Which part of the BEFORE sounds familiar? Drop it in the comments 👇
 
 #itcompany #webdevelopment #digitalmarketing #techstartup #softwarecompany #webdev #coding #techeducation #learntech #devtips #tech2025 #aitools #digitaltransformation #nocode #saas
 

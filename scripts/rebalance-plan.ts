@@ -45,7 +45,7 @@ async function main() {
   const allLeads = await prisma.lead.findMany({
     where: {
       ...(phase !== 0 ? { phase } : {}),
-      ...(usedIds.size > 0 ? { id: { notIn: [...usedIds] } } : {}),
+      ...(usedIds.size > 0 ? { id: { notIn: Array.from(usedIds) } } : {}),
     },
     select: { id: true, country: true },
     orderBy: { id: "asc" },
@@ -60,10 +60,10 @@ async function main() {
     if (!byCountry.has(key)) byCountry.set(key, []);
     byCountry.get(key)!.push(l);
   }
-  const countries = [...byCountry.keys()];
+  const countries = Array.from(byCountry.keys());
   console.log(`Countries (${countries.length}): ${countries.join(", ")}`);
 
-  const queues = [...byCountry.values()];
+  const queues = Array.from(byCountry.values());
   const pool: number[] = [];
   let i = 0;
   while (pool.length < allLeads.length) {

@@ -1,0 +1,576 @@
+─────────────────────────────── Lead Collector ────────────────────────────────
+Segments to collect: 4
+Target per segment:  300 leads
+LinkedIn enrichment: yes
+No GOOGLE_MAPS_API_KEY — using Overpass (OSM) as primary source
+To use Google Maps: add GOOGLE_MAPS_API_KEY to .env
+
+───────────────────────────── PL / IT & Software ──────────────────────────────
+  [  1] overpass     Concept Intermedia
+  [  2] overpass     Clockwork Bits Software
+  [  3] overpass     UNISOFT
+  [  4] overpass     7RS WEB STUDIO
+  [  5] overpass     Soft Różycki Piotr
+  [  6] overpass     TEXcomp
+  [  7] overpass     Timaco
+  [  8] overpass     Comarch
+  [  9] overpass     ZXStudio!
+  [ 10] overpass     QNT
+  [ 11] overpass     IT Solutions
+  [ 12] overpass     Polska Netgaleria
+  [ 13] overpass     Insert (drukarki - komputery )
+  [ 14] overpass     Impuls
+  [ 15] overpass     Proxeo
+  [ 16] overpass     AVSystem
+  [ 17] overpass     Climax
+  [ 18] overpass     Ram-serwis Odzyskiwanie danych
+  [ 19] overpass     VML Enterprise Solutions
+  [ 20] overpass     Grupa TENSE
+  [ 21] overpass     Centrum Oprogramowania Profisoft
+  [ 22] overpass     Firma Dominnet
+  [ 23] overpass     StudioWIDERA.NET
+  [ 24] overpass     JCommerce SA
+  [ 25] overpass     Senetic Sp. z o.o. S.K.A.
+  [ 26] overpass     CERI International Sp. z o.o.
+  [ 27] overpass     Matti
+  [ 28] overpass     Falconn Tomasz Falkowski
+  [ 29] overpass     Dataspace.pl
+  [ 30] overpass     AVATEC - Strony Internetowe
+  [ 31] overpass     Avito Internet
+  [ 32] overpass     AcomNEX
+  [ 33] overpass     Enterso
+  [ 34] overpass     CVD s.c.
+  [ 35] overpass     Marcin Wujek - PROGRAMISTA
+  [ 36] overpass     INSOFT
+  [ 37] overpass     Internet TSUNAMI
+  [ 38] overpass     Propeller
+  [ 39] overpass     'merce
+  [ 40] overpass     Asseco Poland
+  [ 41] overpass     Max-Serwis
+  [ 42] overpass     Net-ARN
+  [ 43] overpass     Schibsted Tech Polska sp. z o.o.
+  [ 44] overpass     Onet.pl
+  [ 45] overpass     REC Global Sp. z o. o.
+  [ 46] overpass     Tietoevry
+  [ 47] overpass     KOBA - Serwis komputerowy
+  [ 48] overpass     HP
+  [ 49] overpass     Mobica
+  [ 50] overpass     Infomex Sp. z o.o.
+  [ 51] overpass     Polixel
+  [ 52] overpass     Treston
+  [ 53] overpass     NES EuroCon Sp. z. o.o.
+  [ 54] overpass     Bitstrefa
+  [ 55] overpass     EUVIC Sp. z o.o.
+  [ 56] overpass     HiSpeed
+  [ 57] overpass     ADE Internet
+  [ 58] overpass     Artnet Sp. z o.o.
+  [ 59] overpass     Synergy Automation
+  [ 60] overpass     Sygnity
+  [ 61] overpass     Polman Software
+  [ 62] overpass     PC Serwis
+  [ 63] overpass     InterPc
+  [ 64] overpass     BT Electronics
+  [ 65] overpass     mw4it Systemy Informatyczne
+  [ 66] overpass     MAT Usługi Informatyczne
+  [ 67] overpass     Asseco Poland S.A
+  [ 68] overpass     Atos Polska S.A.
+  [ 69] overpass     Interka
+  [ 70] overpass     Eversoft
+  [ 71] overpass     Power Media S.A.
+  [ 72] overpass     PIW "ANFA" s.c.
+  [ 73] overpass     Nowa technologia
+  [ 74] overpass     T-Matic Grupa Computer Plus Sp. z o.o.
+  [ 75] overpass     MGM Systems S.A.
+  [ 76] overpass     Asseco Data Systems S.A.
+  [ 77] overpass     DreamLab Onet.pl
+  [ 78] overpass     AW.NET Polska Sp. z o.o.
+  [ 79] overpass     Asseco Data Systems
+  [ 80] overpass     SEDACO
+  [ 81] overpass     ZAP-Kooperacja sp. z o.o.
+  [ 82] overpass     Transition Technologies S.A.
+  [ 83] overpass     Agencja Kreatywna Magico
+  [ 84] overpass     Infover
+  [ 85] overpass     TextPartner
+  [ 86] overpass     RST Software Masters
+  [ 87] overpass     Informatyk.eu
+  [ 88] overpass     IT Engineering
+  [ 89] overpass     craws
+  [ 90] overpass     Avidata
+  [ 91] overpass     SHOCKStudio Sp. z o.o. - Strony www, grafika, gadż
+  [ 92] overpass     Biuro Informacji Turystycznej
+  [ 93] overpass     O.I.S. Audax sp. z o.o.
+  [ 94] overpass     Verall s.j.
+  [ 95] overpass     Audax sp. z o.o. KSIĘGOWOŚĆ
+  [ 96] overpass     SI-Consulting
+  [ 97] overpass     Yesnet.pl
+  [ 98] overpass     Afisz Media
+  [ 99] overpass     IT Wic Feniks
+  [100] overpass     Setapp
+  [101] overpass     PROXIMA
+  [102] overpass     Tech-Instal Marcin Osemka
+  [103] overpass     Cer-Tech
+  [104] overpass     Rozbark-Net
+  [105] overpass     Iware sp. z o.o.
+  [106] overpass     Syncron Poland
+  [107] overpass     E-Triton
+  [108] overpass     UBS Offshore Development Center
+  [109] overpass     Les Comp
+  [110] overpass     Asklepios. Usługi informatyczne. Knaziuk J
+  [111] overpass     Toucan Systems - software house
+  [112] overpass     Arthizm
+  [113] overpass     Hostovita.pl
+  [114] overpass     KOPnet S.C.
+  [115] overpass     Multinet Sp. z o.o.
+  [116] overpass     DES ART sp. z o.o.
+  [117] overpass     Cador Constulting sp. z o.o.
+  [118] overpass     Info-Partner
+  [119] overpass     RavenIT
+  [120] overpass     GemsNet - Agencja interaktywna
+  [121] overpass     LIFE SYSTEM Artur Fic
+  [122] overpass     Multisoft S.A.
+  [123] overpass     GSD Software Polska Sp. z o.o.
+  [124] overpass     RankHouse
+  [125] overpass     InfoDetect Agencja Detektywistyczna
+  [126] overpass     Usługi Informatyczne Leszek Leloch
+  [127] overpass     TOP S.A.
+  [128] overpass     Asseco Business Solutions SA
+  [129] overpass     Google Campus Warsaw
+  [130] overpass     wFirma.pl
+  [131] overpass     Luxoft
+  [132] overpass     DOTSENS
+  [133] overpass     Lufthansa Systems Poland
+  [134] overpass     Agencja Marketingowa M16.pl
+  [135] overpass     Capgemini
+  [136] overpass     Atem Polska - Dział Inwestycji i Wdrożeń
+  [137] overpass     AlphaNet
+  [138] overpass     More From It
+  [139] overpass     Ideative
+  [140] overpass     Visacom
+  [141] overpass     LastLevel
+  [142] overpass     Programiści
+  [143] overpass     CHARGELITY
+  [144] overpass     EKOSYSTEM
+  [145] overpass     Comp S.A.
+  [146] overpass     TiMSI
+  [147] overpass     Ailleron S.A.
+  [148] overpass     OWL Sp z oo
+  [149] overpass     Logintrade
+  [150] overpass     Veracomp S.A.
+  [151] overpass     FUTURITI
+  [152] overpass     BrainworkZ
+  [153] overpass     EMM8
+  [154] overpass     Mobica Limited
+  [155] overpass     Centrum Informatyki
+  [156] overpass     Google Polska
+  [157] overpass     SJSI
+  [158] overpass     DPS
+  [159] overpass     Talex
+  [160] overpass     ITeam
+  [161] overpass     Onwelo
+  [162] overpass     Aptus.pl Sp. z o.o.
+  [163] overpass     AttHost Sp. z o.o.
+  [164] overpass     Amrad Komputer S.C.
+  [165] overpass     Monterail
+  [166] overpass     Gorrion Software House
+  [167] overpass     Transition Technologies
+  [168] overpass     Webkon
+  [169] overpass     InterBit
+  [170] overpass     Infopark Polska
+  [171] overpass     World Support Service Sp. z o.o.
+  [172] overpass     Wejher-Komputer
+  [173] overpass     Salumanus Sp. z o.o.
+  [174] overpass     Ailleron S.A. Biuro Warszawa
+  [175] overpass     Platforma biznesu
+  [176] overpass     Sollers
+  [177] overpass     Floralabels.pl
+  [178] overpass     Great Call
+  [179] overpass     GIS-Expert sp. z o.o.
+  [180] overpass     tech.net.pl Paweł Mejza
+  [181] overpass     EINSER - Strony Internetowe Białystok
+  [182] overpass     Edge One Solutions
+  [183] overpass     eLeader
+  [184] overpass     NEVCOM
+  [185] overpass     Silvair
+  [186] overpass     Digpro
+  [187] overpass     Gryftec
+  [188] overpass     Easykomp
+  [189] overpass     Moonbite S.A.
+  [190] overpass     Signati Spółka z o.o.
+  [191] overpass     Geo-System
+  [192] overpass     Konwerga
+  [193] overpass     IBM
+  [194] overpass     Bluepoint
+  [195] overpass     Scope-IT
+  [196] overpass     squareTec
+  [197] overpass     Ocado Technology
+  [198] overpass     Nomad
+  [199] overpass     VS DATA
+  [200] overpass     dr Laptop
+  [201] overpass     Output42
+  [202] overpass     Internet Media Polska
+  [203] overpass     Intellect s.c.
+  [204] overpass     Britenet
+  [205] overpass     Billennium S.A.
+  [206] overpass     Wytwórnia Telewizyjno-Filmowa Alfa
+  [207] overpass     home.pl
+  [208] overpass     Delkom Group
+  [209] overpass     LBweb
+  [210] overpass     Edicom sp. z o.o.
+  [211] overpass     Matinternet s.c.
+  [212] overpass     Siteimpulse
+  [213] overpass     Starnet Telecom
+  [214] overpass     Citimedia.pl
+  [215] overpass     Cybercom Poland Sp. z o.o.
+  [216] overpass     Galvatron
+  [217] overpass     Atinea
+  [218] overpass     SoftServe
+  [219] overpass     Informatyk
+  [220] overpass     Alterkom
+  [221] overpass     SEBprojekt.pl | strony www
+  [222] overpass     Perceptus sp. z o.o. Laboratorium badawcze
+  [223] overpass     Miquido
+  [224] overpass     ERICSSON
+  [225] overpass     Amazon Development Center Poland z o.o.
+  [226] overpass     eiNET
+  [227] overpass     Fingo
+  [228] overpass     R-SOFT STUDIO Sp. z o. o.
+  [229] overpass     VentureDevs
+  [230] overpass     Nokia
+  [231] overpass     Softwebo
+  [232] overpass     Live Production
+  [233] overpass     Grupa Badawcza DSC Sp. z o.o.
+  [234] overpass     Merixstudio
+  [235] overpass     Azimo
+  [236] overpass     Brainly
+  [237] overpass     Huuuge games
+  [238] overpass     j-labs
+  [239] overpass     falmar.com.pl
+  [240] overpass     Dział Obsługi i Eksploatacji
+  [241] overpass     NetTeam Solutions S.A.
+  [242] overpass     Hydrosolar
+  [243] overpass     Formax IT
+  [244] overpass     Xebia Poland
+  [245] overpass     QAD Polska
+  [246] overpass     ABots.pl
+  [247] overpass     EuroLinux Sp. z o.o.
+  [248] overpass     Bloober Team S.A.
+  [249] overpass     Centralny Ośrodek Informatyki
+  [250] overpass     INCATA
+  [251] overpass     Grid Dynamics
+  [252] overpass     Paxos Lech Rzedzicki
+  [253] overpass     AIQA technologies
+  [254] overpass     PwC IT Services
+  [255] overpass     Kgraf-Serwis. Grzechynia K.
+  [256] overpass     Sirino
+  [257] overpass     CodeTwo
+  [258] overpass     Software Things
+  [259] overpass     Egida System
+  [260] overpass     Turoń
+  [261] overpass     Lingaro
+  [262] overpass     Galeo Grupa - Technologie dla biznesu
+  [263] overpass     ZETO Świdnica
+  [264] overpass     Atomium Systemy Informatyczne
+  [265] overpass     Favourite Computer Systems
+  [266] overpass     ACNS Informatyka dla firm
+  [267] overpass     JD System
+  [268] overpass     PAK CUI
+  [269] overpass     Sii Polska
+  [270] overpass     ARiMR Departament Informatyki
+  [271] overpass     Railsware
+  [272] overpass     K4SYSTEM Sp. z O.O.
+  [273] overpass     Ironsoft Kamil Puchała
+  [274] overpass     Trukszyn
+  [275] overpass     Pulsar Projekt
+  [276] overpass     Codesite
+  [277] overpass     SAP
+  [278] overpass     ACME
+  [279] overpass     Ata Szczecin Sp. z o.o.
+  [280] overpass     NTI Polska
+  [281] overpass     ESence.pl
+  [282] overpass     Diebold Nixdorf
+  [283] overpass     ESSAteam
+  [284] overpass     DMZ.PL
+  [285] overpass     Sunrise System
+  [286] overpass     Procad
+  [287] overpass     Agat
+  [288] overpass     PDTec sp. z o.o.
+  [289] overpass     OPGK RZESZÓW
+  [290] overpass     daneodzyskaj.pl
+  [291] overpass     Crystalcomp
+  [292] overpass     Forweb
+  [293] overpass     ONTP.NET Sp. z o.o.
+  [294] overpass     Usługi informatyczne "NET" Paweł Jankowski
+  [295] overpass     Matic
+  [296] overpass     Malkom
+  [297] overpass     FCQ.pl Krzysztof Styc
+  [298] overpass     SupportIt
+  [299] overpass     PHU Spomi
+
+  Discovered 299 companies
+  Finding LinkedIn URLs (this takes ~20 min)…
+    ✓ Concept Intermedia                             
+https://www.linkedin.com/company/concept-intermedia/
+    – UNISOFT                                        
+    – Clockwork Bits Software                        
+    – Soft Różycki Piotr                             
+    – 7RS WEB STUDIO                                 
+    – TEXcomp                                        
+    ✓ Comarch                                        
+https://www.linkedin.com/company/comarch/
+    – Timaco                                         
+    – ZXStudio!                                      
+    – QNT                                            
+    – IT Solutions                                   
+    – Polska Netgaleria                              
+    – Insert (drukarki - komputery )                 
+    – Impuls                                         
+    – Proxeo                                         
+    – AVSystem                                       
+    – Climax                                         
+    ✓ Ram-serwis Odzyskiwanie danych                 
+https://www.linkedin.com/company/ram-serwis/
+    – Grupa TENSE                                    
+    – VML Enterprise Solutions                       
+    – Centrum Oprogramowania Profisoft               
+    – Firma Dominnet                                 
+    – StudioWIDERA.NET                               
+    – JCommerce SA                                   
+    – Senetic Sp. z o.o. S.K.A.                      
+    – CERI International Sp. z o.o.                  
+    ✓ Matti                                          
+https://www.linkedin.com/company/matti/
+    ✓ Dataspace.pl                                   
+https://www.linkedin.com/company/dataspace/
+    – Falconn Tomasz Falkowski                       
+    – AVATEC - Strony Internetowe                    
+    – Avito Internet                                 
+    ✓ Enterso                                        
+https://www.linkedin.com/company/enterso/
+    – AcomNEX                                        
+    – CVD s.c.                                       
+    – Marcin Wujek - PROGRAMISTA                     
+    – INSOFT                                         
+    – Internet TSUNAMI                               
+    – Propeller                                      
+    – 'merce                                         
+    – Asseco Poland                                  
+    – Max-Serwis                                     
+    – Net-ARN                                        
+    – Schibsted Tech Polska sp. z o.o.               
+    – Onet.pl                                        
+    – REC Global Sp. z o. o.                         
+    – Tietoevry                                      
+    – KOBA - Serwis komputerowy                      
+    – HP                                             
+    – Mobica                                         
+    – Infomex Sp. z o.o.                             
+    ✓ Treston                                        
+https://www.linkedin.com/company/treston/
+    – Polixel                                        
+    – NES EuroCon Sp. z. o.o.                        
+    – Bitstrefa                                      
+    – HiSpeed                                        
+    ✓ ADE Internet                                   
+https://www.linkedin.com/company/ade/
+    – EUVIC Sp. z o.o.                               
+    – Artnet Sp. z o.o.                              
+    – Synergy Automation                             
+    – Sygnity                                        
+    – Polman Software                                
+    – PC Serwis                                      
+    – InterPc                                        
+    – BT Electronics                                 
+    ✓ MAT Usługi Informatyczne                       
+https://www.linkedin.com/company/mat/
+    – mw4it Systemy Informatyczne                    
+    – Asseco Poland S.A                              
+    – Atos Polska S.A.                               
+    – Interka                                        
+    – Eversoft                                       
+    – Power Media S.A.                               
+    – PIW "ANFA" s.c.                                
+    – Nowa technologia                               
+    – T-Matic Grupa Computer Plus Sp. z o.o.         
+    – MGM Systems S.A.                               
+    – Asseco Data Systems S.A.                       
+    – DreamLab Onet.pl                               
+    – AW.NET Polska Sp. z o.o.                       
+    ✓ SEDACO                                         
+https://www.linkedin.com/company/sedaco/
+    – Asseco Data Systems                            
+    – ZAP-Kooperacja sp. z o.o.                      
+    – Transition Technologies S.A.                   
+    – Agencja Kreatywna Magico                       
+    – Infover                                        
+    – TextPartner                                    
+    – RST Software Masters                           
+    – Informatyk.eu                                  
+    – IT Engineering                                 
+    – craws                                          
+    – Avidata                                        
+    ✓ Biuro Informacji Turystycznej                  
+https://www.linkedin.com/company/biuro-informacji-turystycznej/
+    – SHOCKStudio Sp. z o.o. - Strony www, grafika,  
+    – O.I.S. Audax sp. z o.o.                        
+    – Verall s.j.                                    
+    – Audax sp. z o.o. KSIĘGOWOŚĆ                    
+    – SI-Consulting                                  
+    – Yesnet.pl                                      
+    – Afisz Media                                    
+    – IT Wic Feniks                                  
+    – Setapp                                         
+    – PROXIMA                                        
+    – Tech-Instal Marcin Osemka                      
+    – Cer-Tech                                       
+    – Rozbark-Net                                    
+    – Iware sp. z o.o.                               
+    – Syncron Poland                                 
+    – E-Triton                                       
+    – UBS Offshore Development Center                
+    – Les Comp                                       
+    – Asklepios. Usługi informatyczne. Knaziuk J     
+    – Toucan Systems - software house                
+    – Arthizm                                        
+    – Hostovita.pl                                   
+    – KOPnet S.C.                                    
+    ✓ DES ART sp. z o.o.                             
+https://www.linkedin.com/company/des-art/
+    – Multinet Sp. z o.o.                            
+    – Cador Constulting sp. z o.o.                   
+    – Info-Partner                                   
+    – RavenIT                                        
+    – GemsNet - Agencja interaktywna                 
+    – LIFE SYSTEM Artur Fic                          
+    – Multisoft S.A.                                 
+    ✓ RankHouse                                      
+https://www.linkedin.com/company/rankhouse/
+    – GSD Software Polska Sp. z o.o.                 
+    – InfoDetect Agencja Detektywistyczna            
+    – Usługi Informatyczne Leszek Leloch             
+    – TOP S.A.                                       
+    – Asseco Business Solutions SA                   
+    – Google Campus Warsaw                           
+    – wFirma.pl                                      
+    – Luxoft                                         
+    – DOTSENS                                        
+    ✓ Agencja Marketingowa M16.pl                    
+https://www.linkedin.com/company/m16/
+    – Lufthansa Systems Poland                       
+    – Capgemini                                      
+    – Atem Polska - Dział Inwestycji i Wdrożeń       
+    – AlphaNet                                       
+    – More From It                                   
+    – Ideative                                       
+    – Visacom                                        
+    – LastLevel                                      
+    – Programiści                                    
+    – CHARGELITY                                     
+    – EKOSYSTEM                                      
+    – Comp S.A.                                      
+    ✓ Ailleron S.A.                                  
+https://www.linkedin.com/company/ailleron/
+    – TiMSI                                          
+    ✓ Logintrade                                     
+https://www.linkedin.com/company/logintrade/
+    – OWL Sp z oo                                    
+    – Veracomp S.A.                                  
+    – FUTURITI                                       
+    – BrainworkZ                                     
+    – EMM8                                           
+    – Mobica Limited                                 
+    – Centrum Informatyki                            
+    – Google Polska                                  
+    – SJSI                                           
+    – DPS                                            
+    – Talex                                          
+    – ITeam                                          
+    – Onwelo                                         
+    – Aptus.pl Sp. z o.o.                            
+    – AttHost Sp. z o.o.                             
+    – Amrad Komputer S.C.                            
+    – Monterail                                      
+    – Gorrion Software House                         
+    – Transition Technologies                        
+    ✓ InterBit                                       
+https://www.linkedin.com/company/interbit/
+    – Webkon                                         
+    – Infopark Polska                                
+    – World Support Service Sp. z o.o.               
+    – Wejher-Komputer                                
+    – Salumanus Sp. z o.o.                           
+    – Ailleron S.A. Biuro Warszawa                   
+    – Platforma biznesu                              
+    – Sollers                                        
+    – Floralabels.pl                                 
+    – Great Call                                     
+    – GIS-Expert sp. z o.o.                          
+    – tech.net.pl Paweł Mejza                        
+    – EINSER - Strony Internetowe Białystok          
+    – Edge One Solutions                             
+    ✓ NEVCOM                                         
+https://www.linkedin.com/company/nevcom/
+    – eLeader                                        
+    – Silvair                                        
+    – Digpro                                         
+    – Gryftec                                        
+    – Easykomp                                       
+    – Moonbite S.A.                                  
+    ✓ Geo-System                                     
+https://www.linkedin.com/company/geo-system/
+    – Signati Spółka z o.o.                          
+    – Konwerga                                       
+    – IBM                                            
+    – Bluepoint                                      
+    – Scope-IT                                       
+    ✓ Ocado Technology                               
+https://www.linkedin.com/company/ocado-technology/
+    – squareTec                                      
+    – Nomad                                          
+    – VS DATA                                        
+    – dr Laptop                                      
+    – Output42                                       
+    – Internet Media Polska                          
+    – Intellect s.c.                                 
+    – Britenet                                       
+    – Billennium S.A.                                
+    – Wytwórnia Telewizyjno-Filmowa Alfa             
+    – home.pl                                        
+    – Delkom Group                                   
+    – LBweb                                          
+    – Edicom sp. z o.o.                              
+    ✓ Siteimpulse                                    
+https://www.linkedin.com/company/siteimpulse/
+    – Matinternet s.c.                               
+    – Starnet Telecom                                
+    – Citimedia.pl                                   
+    – Cybercom Poland Sp. z o.o.                     
+    – Galvatron                                      
+    ✓ SoftServe                                      
+https://www.linkedin.com/company/softserve/
+    – Atinea                                         
+    ✓ Informatyk                                     
+https://www.linkedin.com/company/facebook/
+    – Alterkom                                       
+    – SEBprojekt.pl | strony www                     
+    – Perceptus sp. z o.o. Laboratorium badawcze     
+    – Miquido                                        
+    ✓ Amazon Development Center Poland z o.o.        
+https://www.linkedin.com/company/amazon/
+    – ERICSSON                                       
+    – eiNET                                          
+    – Fingo                                          
+    – VentureDevs                                    
+    – R-SOFT STUDIO Sp. z o. o.                      
+    – Softwebo                                       
+    – Nokia                                          
+    – Live Production                                
+    – Grupa Badawcza DSC Sp. z o.o.                  
+    – Merixstudio                                    
+    – Azimo                                          
+    – Brainly                                        
+    – Huuuge games                                   
+    – j-labs                                         
+    – falmar.com.pl                                  
+    – Dział Obsługi i Eksploatacji                   
+    – NetTeam Solutions S.A.                         
+    – Hydrosolar                                     
