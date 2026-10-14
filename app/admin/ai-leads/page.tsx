@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { buildSalesEmail, type SiteScan } from "@/lib/salesEmail";
 
 interface AiLead {
   id: number;
@@ -40,7 +41,48 @@ interface ApiResponse {
     todo: number; sent: number; skipped: number; campaign: number;
   };
   countries: { country: string; n: number }[];
+  industries: { industry: string; n: number }[];
   error?: string;
+}
+
+const SORTS = [
+  ["fit", "Best fit"], ["reviews", "Most reviews"], ["rating", "Top rated"],
+  ["newest", "Newest analyzed"], ["name", "Name A–Z"],
+] as const;
+
+/** 1 … 4 5 [6] 7 8 … 20 */
+function pageList(page: number, pages: number): (number | "…")[] {
+  const out: (number | "…")[] = [];
+  for (let p = 1; p <= pages; p++) {
+    if (p === 1 || p === pages || Math.abs(p - page) <= 2) out.push(p);
+    else if (out[out.length - 1] !== "…") out.push("…");
+  }
+  return out;
+}
+
+function Pager({ page, pages, total, pageSize, go }: {
+  page: number; pages: number; total: number; pageSize: number; go: (p: number) => void;
+}) {
+  if (!total) return null;
+  const btn = "min-w-[2.25rem] px-2.5 py-1.5 rounded-lg border text-sm transition-colors disabled:opacity-40 disabled:cursor-default";
+  const idle = `${btn} bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700`;
+  return (
+    <div className="flex items-center justify-between flex-wrap gap-3 text-sm text-gray-500">
+      <span>
+        Showing {((page - 1) * pageSize + 1).toLocaleString()}–{Math.min(page * pageSize, total).toLocaleString()} of {total.toLocaleString()}
+      </span>
+      {pages > 1 && (
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <button disabled={page <= 1} onClick={() => go(page - 1)} className={idle}>‹ Prev</button>
+          {pageList(page, pages).map((p, i) => p === "…"
+            ? <span key={`e${i}`} className="px-1 text-gray-600">…</span>
+            : <button key={p} onClick={() => go(p)}
+                className={p === page ? `${btn} bg-blue-600 border-blue-500 text-white` : idle}>{p}</button>)}
+          <button disabled={page >= pages} onClick={() => go(page + 1)} className={idle}>Next ›</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 const INPUT = "bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
@@ -67,12 +109,97 @@ function webmailBase(url: string): string | null {
 }
 
 /** Compose screen with address, subject and message filled in: webmail if set, else the email app. */
-function mailto(l: AiLead, webmail: string | null) {
-  const to = encodeURIComponent(l.email ?? ""), subject = encodeURIComponent(l.subject),
-        body = encodeURIComponent(l.message);
+function mailto(l: AiLead, webmail: string | null, mail: { subject: string; body: string } = { subject: l.subject, body: l.message }) {
+  const to = encodeURIComponent(l.email ?? ""), subject = encodeURIComponent(mail.subject),
+        body = encodeURIComponent(mail.body);
   return webmail
     ? `${webmail}?_task=mail&_action=compose&_to=${to}&_subject=${subject}&_body=${body}`
     : `mailto:${l.email}?subject=${subject}&body=${body}`;
+}
+
+function scoreColor(n: number) {
+  return n >= 70 ? "text-green-300" : n >= 40 ? "text-yellow-300" : "text-red-300";
+}
+
+// The email column of an open lead: Lighthouse audit of the site (scanned on first open)
+// and the long sales email built from it, or the agent's short original.
+function EmailPanel({ l, webmail, onDone }: { l: AiLead; webmail: string | null; onDone: () => void }) {
+  const [scan, setScan] = useState<SiteScan | null>(null);
+  const [scanning, setScanning] = useState(false);
+  const [scanError, setScanError] = useState<string | null>(null);
+  const [style, setStyle] = useState<"sales" | "short">("sales");
+
+  const runScan = useCallback(async () => {
+    setScanning(true); setScanError(null);
+    try {
+      const r = await fetch(`/api/ai-leads/${l.id}/audit`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: l.website }),
+      }).then(r => r.json());
+      if (r.error) setScanError(r.error); else setScan(r.scan);
+    } catch (e) {
+      setScanError((e as Error).message);
+    } finally {
+      setScanning(false);
+    }
+  }, [l.id, l.website]);
+
+  useEffect(() => {
+    let live = true;
+    fetch(`/api/ai-leads/${l.id}/audit`).then(r => r.json()).then(r => {
+      if (!live) return;
+      if (r.scan) setScan(r.scan);
+      else if (l.website) runScan();
+    }).catch(() => {});
+    return () => { live = false; };
+  }, [l.id, l.website, runScan]);
+
+  const mail = style === "sales" ? buildSalesEmail(l, scan) : { subject: l.subject, body: l.message };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="text-xs uppercase text-gray-500">📧 Email</div>
+        <div className="flex rounded-lg overflow-hidden border border-gray-700 text-xs">
+          {([["sales", "📈 Sales + audit"], ["short", "✂️ Short"]] as const).map(([k, label]) => (
+            <button key={k} onClick={() => setStyle(k)}
+              className={`px-2.5 py-1 ${style === k ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-400 hover:bg-gray-700"}`}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-gray-900 rounded-lg px-3 py-2 text-xs flex items-center gap-4 flex-wrap">
+        <span className="text-gray-500">🔍 Site audit</span>
+        {scanning && <span className="text-gray-400">Scanning {l.website?.split(";")[0]}…</span>}
+        {!scanning && scan && !scan.error && (
+          <>
+            <span>🔒 Security <b className={scoreColor(scan.secScore)}>{scan.secScore}</b></span>
+            <span>🔎 SEO <b className={scoreColor(scan.seoScore)}>{scan.seoScore}</b></span>
+            <span>📊 Tracking <b className={scoreColor(scan.semScore)}>{scan.semScore}</b></span>
+          </>
+        )}
+        {!scanning && scan?.error && <span className="text-yellow-300" title={scan.error}>Site didn't respond, so the email uses the AI analysis only</span>}
+        {!scanning && scanError && <span className="text-yellow-300">{scanError}</span>}
+        {!scanning && !scan && !scanError && !l.website && <span className="text-gray-500">No website</span>}
+        {l.website && (
+          <button onClick={runScan} disabled={scanning}
+            className="ml-auto text-gray-400 hover:text-white disabled:opacity-50">↻ Rescan</button>
+        )}
+      </div>
+
+      <div className="text-white text-sm font-medium">{mail.subject}</div>
+      <pre className="whitespace-pre-wrap text-gray-300 text-xs bg-gray-900 rounded-lg p-3 font-sans max-h-96 overflow-y-auto">{mail.body}</pre>
+      <div className="flex gap-2 flex-wrap">
+        {l.email && <a href={mailto(l, webmail, mail)} target={webmail ? "_blank" : undefined} rel="noopener noreferrer"
+           className="text-xs px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
+          ✉️ {webmail ? "Open in webmail" : "Open in email app"}</a>}
+        {l.email && <CopyButton text={l.email} label="Copy address" />}
+        <CopyButton text={mail.subject} label="Copy subject" />
+        <CopyButton text={mail.body} label="Copy email" />
+        <StatusButtons l={l} onDone={onDone} />
+      </div>
+    </div>
+  );
 }
 
 // No profile link in the CRM: search for the company instead.
@@ -236,6 +363,8 @@ function AiLeadsInner() {
   const view    = sp.get("view") === "done" ? "done" : "todo";
   const country = sp.get("country") || "";
   const minFit  = sp.get("minFit") || "";
+  const industry = sp.get("industry") || "";
+  const sort    = sp.get("sort") || "";
   const q       = sp.get("q") || "";
   const page    = parseInt(sp.get("page") || "1");
 
@@ -249,15 +378,18 @@ function AiLeadsInner() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const p = new URLSearchParams({
-        email: channel === "email" ? "yes" : "no", view, country, minFit, q, page: String(page),
-      });
+      // A search looks through every lead: To send and Done, with or without email.
+      const p = new URLSearchParams(q.trim()
+        ? { email: "", view: "all", country, industry, sort, minFit, q: q.trim(), page: String(page) }
+        : { email: channel === "email" ? "yes" : "no", view, country, industry, sort, minFit, q, page: String(page) });
       const res = await fetch(`/api/ai-leads?${p}`);
       setData(await res.json());
     } finally {
       setLoading(false);
     }
-  }, [channel, view, country, minFit, q, page]);
+  }, [channel, view, country, industry, sort, minFit, q, page]);
+
+  const goPage = (p: number) => { setParam("page", p > 1 ? String(p) : ""); window.scrollTo({ top: 0 }); };
 
   useEffect(() => { load(); }, [load]);
 
@@ -331,22 +463,39 @@ function AiLeadsInner() {
             </button>
           ))}
         </div>
-        <input type="text" placeholder="Search name, city, website, industry…" value={q}
+        <input type="text" placeholder="Search name, email, phone, website, city, #id…" value={q}
+          title="Searches all leads: To send and Done, Email and DM tabs"
           onChange={e => setParam("q", e.target.value)} className={`${INPUT} w-72`} />
         <select value={country} onChange={e => setParam("country", e.target.value)} className={INPUT}>
           <option value="">All countries</option>
           {data?.countries?.map(c => <option key={c.country} value={c.country}>{c.country} ({c.n})</option>)}
+        </select>
+        <select value={industry} onChange={e => setParam("industry", e.target.value)} className={`${INPUT} max-w-[260px]`}
+          title="Show one industry, or all">
+          <option value="">All industries</option>
+          {industry && !data?.industries?.some(i => i.industry === industry) && <option value={industry}>{industry}</option>}
+          {data?.industries?.map(i => <option key={i.industry} value={i.industry}>{i.industry} ({i.n})</option>)}
+        </select>
+        <select value={sort} onChange={e => setParam("sort", e.target.value)} className={INPUT} title="Order of the leads">
+          {SORTS.map(([k, label]) => <option key={k} value={k === "fit" ? "" : k}>↕ {label}</option>)}
         </select>
         <select value={minFit} onChange={e => setParam("minFit", e.target.value)} className={INPUT}>
           <option value="">Any fit</option>
           <option value="70">🔥 Fit 70+</option>
           <option value="50">Fit 50+</option>
         </select>
-        {(country || minFit || q) && (
+        {q.trim() && data && !data.error && (
+          <span className="text-xs text-blue-300">🔎 {data.total.toLocaleString()} found in all leads (To send + Done, Email + DM)</span>
+        )}
+        {(country || minFit || q || industry || sort) && (
           <button onClick={() => router.push(`/admin/ai-leads?channel=${channel}${view === "done" ? "&view=done" : ""}`)}
             className="text-xs text-gray-500 hover:text-red-400">Clear filters</button>
         )}
       </div>
+
+      {data && !data.error && data.pages > 1 && (
+        <Pager page={page} pages={data.pages} total={data.total} pageSize={data.pageSize} go={goPage} />
+      )}
 
       {/* Table */}
       <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
@@ -387,7 +536,7 @@ function AiLeadsInner() {
                         {l.reviews?.toLocaleString() ?? "—"}{l.rating ? ` · ${l.rating}★` : ""}
                       </td>
                       <td className="px-4 py-3 text-lg space-x-2 whitespace-nowrap">
-                        <Icon href={l.email ? mailto(l, webmail) : undefined} title={l.email ? `Email ${l.email} (opens with message)` : "No email found"}>✉️</Icon>
+                        <Icon href={l.email ? mailto(l, webmail) : undefined} title={l.email ? `Email ${l.email} (short message; open the row for the sales + audit version)` : "No email found"}>✉️</Icon>
                         <Icon href={l.instagram_url ?? undefined} title={l.instagram_url ? "Open Instagram" : "No Instagram in CRM"}>📸</Icon>
                         <Icon href={l.linkedin_url ?? undefined} title={l.linkedin_url ? "Open LinkedIn" : "No LinkedIn in CRM"}>💼</Icon>
                         <Icon href={l.phone ? `tel:${l.phone.split(";")[0]}` : undefined} title={l.phone ?? "No phone"}>📞</Icon>
@@ -427,20 +576,7 @@ function AiLeadsInner() {
                               </div>
                               <div className="text-xs text-gray-600">Lead #{l.id} · confidence {l.confidence} · {l.analyzed_at?.slice(0, 16)}</div>
                             </div>
-                            <div className="space-y-2">
-                              <div className="text-xs uppercase text-gray-500">📧 Email</div>
-                              <div className="text-white text-sm font-medium">{l.subject}</div>
-                              <pre className="whitespace-pre-wrap text-gray-300 text-xs bg-gray-900 rounded-lg p-3 font-sans">{l.message}</pre>
-                              <div className="flex gap-2 flex-wrap">
-                                {l.email && <a href={mailto(l, webmail)} target={webmail ? "_blank" : undefined} rel="noopener noreferrer"
-                                   className="text-xs px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">
-                                  ✉️ {webmail ? "Open in webmail" : "Open in email app"}</a>}
-                                {l.email && <CopyButton text={l.email} label="Copy address" />}
-                                <CopyButton text={l.subject} label="Copy subject" />
-                                <CopyButton text={l.message} label="Copy email" />
-                                <StatusButtons l={l} onDone={load} />
-                              </div>
-                            </div>
+                            <EmailPanel l={l} webmail={webmail} onDone={load} />
                             <div className="space-y-2">
                               <div className="text-xs uppercase text-gray-500">💬 DM for Instagram / LinkedIn</div>
                               <pre className="whitespace-pre-wrap text-gray-300 text-xs bg-gray-900 rounded-lg p-3 font-sans">{l.dm}</pre>
@@ -466,22 +602,8 @@ function AiLeadsInner() {
         )}
       </div>
 
-      {data && data.pages > 1 && (
-        <div className="flex items-center justify-between text-sm text-gray-500">
-          <span>
-            Showing {((page - 1) * data.pageSize) + 1}–{Math.min(page * data.pageSize, data.total)} of {data.total.toLocaleString()}
-          </span>
-          <div className="flex gap-2">
-            {page > 1 && (
-              <button onClick={() => setParam("page", String(page - 1))}
-                className="bg-gray-800 hover:bg-gray-700 border border-gray-700 px-3 py-1.5 rounded-lg text-gray-300">Previous</button>
-            )}
-            {page < data.pages && (
-              <button onClick={() => setParam("page", String(page + 1))}
-                className="bg-gray-800 hover:bg-gray-700 border border-gray-700 px-3 py-1.5 rounded-lg text-gray-300">Next</button>
-            )}
-          </div>
-        </div>
+      {data && !data.error && (
+        <Pager page={page} pages={data.pages} total={data.total} pageSize={data.pageSize} go={goPage} />
       )}
     </div>
   );
