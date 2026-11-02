@@ -1,18 +1,15 @@
 "use client";
 
-// Sales Copilot: chat with the AI lead agent (F:\AiAgent\lead-intelligence-agent) over its
-// WebSocket. Protocol: that repo's docs/ws-events.md — ready, tool_start / tool_end, token,
-// confirm_request, campaign (a lead grid from build_campaign), final, error; we send
-// message / confirm.
+// Sales Copilot: chat with the AI lead agent (F:\AiAgent\lead-intelligence-agent, local or on
+// Cloud Run) over its WebSocket. Protocol: that repo's docs/ws-events.md — ready, tool_start /
+// tool_end, token, confirm_request, campaign (a lead grid from build_campaign), final, error;
+// we send message / confirm.
+// The browser never holds the agent's API key: /api/agent/ticket (this app's server, which
+// has AGENT_API_URL + AGENT_API_KEY) returns a 5-minute chat ticket and the socket URL, and
+// the grid's calls go through /api/agent/campaigns/... on the same server.
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const WS_URL = process.env.NEXT_PUBLIC_AGENT_WS_URL || "ws://127.0.0.1:8000/ws/chat";
-// Local API runs without a key. A deployed one needs it: never ship a production key in
-// NEXT_PUBLIC_ variables (they end up in the browser); proxy through the server instead.
-const TOKEN = process.env.NEXT_PUBLIC_AGENT_TOKEN || "";
 const STORE = "copilot.v1";
-// REST base of the same API: ws://host:8000/ws/chat -> http://host:8000
-const API_URL = WS_URL.replace(/^ws/, "http").replace(/\/ws\/chat$/, "");
 
 type Step = { id: string; name: string; args: Record<string, unknown>; ok?: boolean; summary?: string };
 type CampaignRow = {
@@ -82,14 +79,11 @@ function StepChip({ step }: { step: Step }) {
   );
 }
 
+/** The agent's /campaigns/... calls, through this app's server (it adds the key). */
 function api(path: string, init?: RequestInit) {
-  return fetch(`${API_URL}${path}`, {
+  return fetch(`/api/agent${path}`, {
     ...init,
-    headers: {
-      ...(init?.headers || {}),
-      ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
-      ...(init?.body ? { "Content-Type": "application/json" } : {}),
-    },
+    headers: { ...(init?.headers || {}), ...(init?.body ? { "Content-Type": "application/json" } : {}) },
   });
 }
 
@@ -200,12 +194,23 @@ export default function CopilotPage() {
     });
   }, []);
 
-  const connect = useCallback(() => {
+  const connect = useCallback(async () => {
     setStatus("connecting");
-    const params = new URLSearchParams();
-    if (TOKEN) params.set("token", TOKEN);
+    // A fresh ticket for every (re)connect: it only has to be valid while the socket opens.
+    let t: { ticket: string; ws_url: string };
+    try {
+      const r = await fetch("/api/agent/ticket", { method: "POST" });
+      if (!r.ok) throw new Error(String(r.status));
+      t = await r.json();
+    } catch {
+      setStatus("offline");
+      const wait = Math.min(30, 2 ** retry.current++) * 1000;
+      setTimeout(() => { if (ws.current === null || ws.current.readyState === WebSocket.CLOSED) connect(); }, wait);
+      return;
+    }
+    const params = new URLSearchParams({ ticket: t.ticket });
     if (convRef.current) params.set("conversation_id", convRef.current);
-    const sock = new WebSocket(`${WS_URL}${params.toString() ? "?" + params : ""}`);
+    const sock = new WebSocket(`${t.ws_url}?${params}`);
     ws.current = sock;
 
     sock.onmessage = (e) => {
@@ -370,7 +375,7 @@ export default function CopilotPage() {
       </form>
       {status === "offline" && (
         <p className="text-xs text-gray-500 mt-2">
-          Agent offline — start it: <code className="text-gray-400">uv run uvicorn app.main:app</code> in F:\AiAgent\lead-intelligence-agent. Reconnecting…
+          Agent offline. Locally, start it: <code className="text-gray-400">uv run uvicorn app.main:app</code> in F:\AiAgent\lead-intelligence-agent; for the cloud one, set AGENT_API_URL and AGENT_API_KEY in .env. Reconnecting…
         </p>
       )}
     </div>

@@ -42,7 +42,7 @@ export async function crmContactedLists() {
 
 // The AI lead agent's REST API (F:\AiAgent\lead-intelligence-agent). Server-side only:
 // the key never reaches the browser.
-const AGENT_API_URL = (process.env.AGENT_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+export const AGENT_API_URL = (process.env.AGENT_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
 
 export class AgentApiError extends Error {
   constructor(message: string, public status: number) { super(message); }
@@ -61,6 +61,18 @@ export async function agentApi<T>(path: string, init: RequestInit = {}): Promise
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new AgentApiError(body?.detail ? String(body.detail) : `Agent API error ${res.status}`, res.status);
   return body as T;
+}
+
+/** The agent API's raw response (e.g. a CSV), with the server-side key. */
+export async function agentFetch(path: string, init: RequestInit = {}): Promise<Response> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (process.env.AGENT_API_KEY) headers.Authorization = `Bearer ${process.env.AGENT_API_KEY}`;
+  try {
+    return await fetch(`${AGENT_API_URL}${path}`, { ...init, headers, cache: "no-store" });
+  } catch {
+    return new Response(JSON.stringify({ detail: `The AI agent API is not reachable at ${AGENT_API_URL}.` }),
+      { status: 503, headers: { "Content-Type": "application/json" } });
+  }
 }
 
 export async function crmContacted() {
