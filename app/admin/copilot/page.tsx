@@ -2,7 +2,8 @@
 
 // Sales Copilot: chat with the AI lead agent (F:\AiAgent\lead-intelligence-agent) over its
 // WebSocket. Protocol: that repo's docs/ws-events.md — ready, tool_start / tool_end, token,
-// confirm_request, final, error; we send message / confirm.
+// confirm_request, campaign (a lead grid from build_campaign), final, error; we send
+// message / confirm.
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const WS_URL = process.env.NEXT_PUBLIC_AGENT_WS_URL || "ws://127.0.0.1:8000/ws/chat";
@@ -10,15 +11,27 @@ const WS_URL = process.env.NEXT_PUBLIC_AGENT_WS_URL || "ws://127.0.0.1:8000/ws/c
 // NEXT_PUBLIC_ variables (they end up in the browser); proxy through the server instead.
 const TOKEN = process.env.NEXT_PUBLIC_AGENT_TOKEN || "";
 const STORE = "copilot.v1";
+// REST base of the same API: ws://host:8000/ws/chat -> http://host:8000
+const API_URL = WS_URL.replace(/^ws/, "http").replace(/\/ws\/chat$/, "");
 
 type Step = { id: string; name: string; args: Record<string, unknown>; ok?: boolean; summary?: string };
+type CampaignRow = {
+  id: number; name: string; country: string; city: string | null; industry: string;
+  fit: number | null; email: string | null; https: boolean | null; pain_point: string | null;
+  subject: string | null; message: string | null; state: string | null; flags: string[];
+};
+type Campaign = {
+  campaign_id: number; name: string; total: number; with_email: number; avg_fit: number | null;
+  rows: CampaignRow[];
+};
 type Msg =
   | { role: "user"; text: string }
-  | { role: "agent"; text: string; steps: Step[]; done: boolean; tokens?: string; error?: string };
+  | { role: "agent"; text: string; steps: Step[]; done: boolean; tokens?: string; error?: string; campaign?: Campaign };
 type Confirm = { call_id: string; action: string; message: string };
 type Saved = { conversationId: string | null; messages: Msg[] };
 
 const EXAMPLES = [
+  "Make a campaign: dental clinics in the UAE with an email, fit 70+",
   "Find 5 dental clinics in the UAE with an email but no HTTPS",
   "Which industries have the most leads with an email?",
   "How many emails a day can I send while warming up?",
@@ -65,6 +78,100 @@ function StepChip({ step }: { step: Step }) {
       {open && step.summary && (
         <pre className="px-3 pb-2 whitespace-pre-wrap font-sans text-gray-400">{step.summary}</pre>
       )}
+    </div>
+  );
+}
+
+function api(path: string, init?: RequestInit) {
+  return fetch(`${API_URL}${path}`, {
+    ...init,
+    headers: {
+      ...(init?.headers || {}),
+      ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+      ...(init?.body ? { "Content-Type": "application/json" } : {}),
+    },
+  });
+}
+
+/** build_campaign's leads: click a row for its draft, export CSV, mark the whole list. */
+function CampaignGrid({ campaign, onChange }: { campaign: Campaign; onChange: (c: Campaign) => void }) {
+  const [open, setOpen] = useState<number | null>(null);
+  const [note, setNote] = useState<string | null>(null);
+
+  async function exportCsv() {
+    const r = await api(`/campaigns/${campaign.campaign_id}/csv`);
+    if (!r.ok) { setNote(`Export failed (${r.status})`); return; }
+    const url = URL.createObjectURL(await r.blob());
+    const a = Object.assign(document.createElement("a"), { href: url, download: `campaign-${campaign.campaign_id}.csv` });
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function markAll(status: "SENT" | "NEW") {
+    const label = status === "NEW" ? "back to the to-send queue" : `as ${status}`;
+    if (!window.confirm(`Mark all ${campaign.total} leads of "${campaign.name}" ${label}?`)) return;
+    const r = await api(`/campaigns/${campaign.campaign_id}/status`, { method: "POST", body: JSON.stringify({ status }) });
+    if (!r.ok) { setNote(`Failed (${r.status})`); return; }
+    const { updated } = await r.json();
+    setNote(`${updated} leads marked ${status}.`);
+    onChange({ ...campaign, rows: campaign.rows.map(row => ({ ...row, state: status === "NEW" ? null : status })) });
+  }
+
+  return (
+    <div className="border border-blue-900 bg-gray-950 rounded-xl overflow-hidden text-xs">
+      <div className="flex flex-wrap items-center gap-2 px-3 py-2 bg-blue-950/40 border-b border-blue-900">
+        <span className="font-medium text-blue-200">Campaign #{campaign.campaign_id}: {campaign.name}</span>
+        <span className="text-gray-400">
+          {campaign.total} leads · {campaign.with_email} with email · avg fit {campaign.avg_fit ?? "–"}
+        </span>
+        <span className="ml-auto flex gap-1.5">
+          <button onClick={exportCsv} className="px-2.5 py-1 rounded bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-200">Export CSV</button>
+          <button onClick={() => markAll("SENT")} className="px-2.5 py-1 rounded bg-green-800 hover:bg-green-700 text-white">Mark all sent</button>
+          <button onClick={() => markAll("NEW")} className="px-2.5 py-1 rounded bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-300">Undo</button>
+        </span>
+      </div>
+      {note && <div className="px-3 py-1.5 text-gray-300 border-b border-gray-800">{note}</div>}
+      <div className="max-h-96 overflow-auto">
+        <table className="w-full">
+          <thead className="sticky top-0 bg-gray-900 text-gray-400">
+            <tr className="text-left">
+              <th className="px-2 py-1.5">#</th><th className="px-2">Company</th><th className="px-2">Where</th>
+              <th className="px-2">Fit</th><th className="px-2">Email</th><th className="px-2">Main problem</th>
+              <th className="px-2">Subject</th><th className="px-2">State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {campaign.rows.map(r => [
+              <tr key={r.id} onClick={() => setOpen(open === r.id ? null : r.id)}
+                className="border-t border-gray-800 hover:bg-gray-900 cursor-pointer text-gray-300 align-top">
+                <td className="px-2 py-1.5 text-gray-500">{r.id}</td>
+                <td className="px-2 py-1.5 text-white">
+                  {r.name}
+                  {r.flags.length > 0 && <span title={r.flags.join(", ")} className="ml-1 text-yellow-400">⚠</span>}
+                </td>
+                <td className="px-2 py-1.5">{[r.city, r.country].filter(Boolean).join(", ")}</td>
+                <td className={`px-2 py-1.5 font-medium ${(r.fit ?? 0) >= 70 ? "text-green-400" : "text-gray-400"}`}>{r.fit ?? "–"}</td>
+                <td className="px-2 py-1.5">{r.email ?? <span className="text-gray-600">none</span>}</td>
+                <td className="px-2 py-1.5">
+                  {r.pain_point ?? ""}
+                  {r.https === false && <span className="ml-1 text-red-400">no https</span>}
+                </td>
+                <td className="px-2 py-1.5">{r.subject ?? ""}</td>
+                <td className="px-2 py-1.5">{r.state ?? <span className="text-blue-300">to send</span>}</td>
+              </tr>,
+              open === r.id && (
+                <tr key={`${r.id}-draft`} className="bg-gray-900/70">
+                  <td />
+                  <td colSpan={7} className="px-2 py-2">
+                    <div className="text-gray-400 mb-1">{r.industry}</div>
+                    <pre className="whitespace-pre-wrap font-sans text-gray-200">{r.message ?? "No draft."}</pre>
+                  </td>
+                </tr>
+              ),
+            ])}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
@@ -124,6 +231,9 @@ export default function CopilotPage() {
           // looking it up): drop it and show why; the corrected answer streams next.
           patchAgent(m => ({ ...m, text: "", steps: [...m.steps,
             { id: `retract-${m.steps.length}`, name: "guardrail", args: {}, ok: false, summary: ev.reason }] }));
+          break;
+        case "campaign":
+          patchAgent(m => ({ ...m, campaign: ev }));
           break;
         case "confirm_request":
           setConfirm({ call_id: ev.call_id, action: ev.action, message: ev.message });
@@ -223,6 +333,10 @@ export default function CopilotPage() {
         ) : (
           <div key={i} className="space-y-2">
             {m.steps.map(s => <StepChip key={s.id} step={s} />)}
+            {m.campaign && (
+              <CampaignGrid campaign={m.campaign}
+                onChange={c => setMessages(prev => prev.map((x, j) => j === i && x.role === "agent" ? { ...x, campaign: c } : x))} />
+            )}
             {(m.text || !m.done) && (
               <div className="max-w-[90%] px-4 py-3 rounded-2xl bg-gray-900 border border-gray-800 text-sm text-gray-200">
                 {m.text ? <Rich text={m.text} /> : <span className="text-gray-500 animate-pulse">Thinking…</span>}
